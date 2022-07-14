@@ -1,5 +1,7 @@
 
 <template>
+<div>
+  <Title>MyMenu | Digital menu in customers mobile phones</Title>
   <!-- Hero Section -->
   <div class="relative bg-white overflow-hidden">
     <div class="mx-auto">
@@ -282,7 +284,7 @@
     </div>
   </footer>
 
-
+</div>
 </template>
 
 <script setup>
