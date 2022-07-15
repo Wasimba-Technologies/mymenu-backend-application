@@ -55,7 +55,6 @@
     <!-- Static sidebar for desktop -->
     <div class="flex min-h-full">
     <div v-if="sidebarStaticOpen" class="hidden md:flex md:w-64 md:flex-col" >
-      <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
         <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
           <div class="flex items-center flex-shrink-0 px-4">
