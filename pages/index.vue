@@ -16,12 +16,12 @@
             <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
               <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                 <div class="flex items-center justify-between w-full md:w-auto">
-                  <a href="/" class="font-bold text-red-600 text-xl">
+                  <a href="/" class="font-bold text-rose-600 text-xl">
                     MyMenu
                   </a>
                   <div class="-mr-2 flex items-center md:hidden">
                     <PopoverButton
-                      class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600">
+                      class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-600">
                       <span class="sr-only">Open main menu</span>
                       <MenuIcon class="h-6 w-6" aria-hidden="true" />
                     </PopoverButton>
@@ -31,7 +31,7 @@
               <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
                 <a v-for="item in navigation" :key="item.name" :href="item.href"
                   class="font-medium text-gray-500 hover:text-gray-900">{{ item.name }}</a>
-                <a href="/login" class="font-medium text-red-600 hover:text-red-600">Log in</a>
+                <a href="/login" class="font-medium text-rose-600 hover:text-rose-600">Log in</a>
               </div>
             </nav>
           </div>
@@ -44,11 +44,11 @@
               <div class="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div class="px-5 pt-4 flex items-center justify-between">
                   <div>
-                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-red-600.svg" alt="" />
+                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-rose-600.svg" alt="" />
                   </div>
                   <div class="-mr-2">
                     <PopoverButton
-                      class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600">
+                      class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-600">
                       <span class="sr-only">Close main menu</span>
                       <XIcon class="h-6 w-6" aria-hidden="true" />
                     </PopoverButton>
@@ -61,7 +61,7 @@
                     }}</a>
                 </div>
                 <a href="#"
-                  class="block w-full px-5 py-3 text-center font-medium text-red-600 bg-gray-50 hover:bg-gray-100"> Log
+                  class="block w-full px-5 py-3 text-center font-medium text-rose-600 bg-gray-50 hover:bg-gray-100"> Log
                   in </a>
               </div>
             </PopoverPanel>
@@ -73,7 +73,7 @@
             <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
               <span class="block xl:inline">Their mobile phones</span>
               {{ ' ' }}
-              <span class="block text-red-600 xl:inline">is your menu now!</span>
+              <span class="block text-rose-600 xl:inline">is your menu now!</span>
             </h1>
             <p
               class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
@@ -82,12 +82,12 @@
             <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <div class="rounded-md shadow">
                 <a href="/register"
-                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-600 md:py-4 md:text-lg md:px-10">
+                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-rose-600 hover:bg-rose-600 md:py-4 md:text-lg md:px-10">
                   Get started </a>
               </div>
               <div class="mt-3 sm:mt-0 sm:ml-3">
                 <a href="#"
-                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-red-600 bg-red-100 hover:bg-red-200 md:py-4 md:text-lg md:px-10">
+                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-rose-600 bg-rose-100 hover:bg-rose-200 md:py-4 md:text-lg md:px-10">
                   Live demo </a>
               </div>
             </div>
@@ -107,22 +107,22 @@
       <p class="text-center text-base font-semibold text-gray-600 tracking-wider">Trusted by these six restaurants so
         fars</p>
       <div class="mt-6 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-8">
-        <div class="col-span-1 flex justify-center py-8 px-8 bg-red-50">
+        <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
           <img class="max-h-16" src="https://cdn.worldvectorlogo.com/logos/kfc-4.svg" alt="KFC" />
         </div>
-        <div class="col-span-1 flex justify-center py-8 px-8 bg-red-50">
+        <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
           <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/ken-mary.svg" alt="Ken-Mary" />
         </div>
-        <div class="col-span-1 flex justify-center py-8 px-8 bg-red-50">
+        <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
           <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/coca-cola-6.svg" alt="Coca" />
         </div>
-        <div class="col-span-1 flex justify-center py-8 px-8 bg-red-50">
+        <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
           <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/pepsi.svg" alt="Pepsi" />
         </div>
-        <div class="col-span-1 flex justify-center py-8 px-8 bg-red-50">
+        <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
           <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/pizza-hut.svg" alt="PizzaHut" />
         </div>
-        <div class="col-span-1 flex justify-center py-8 px-8 bg-red-50">
+        <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
           <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/b-king.svg" alt="BKing" />
         </div>
       </div>
@@ -152,13 +152,13 @@
             <div class="pt-6 pb-8">
               <ul role="list" class="mt-6 space-y-4">
                 <li v-for="feature in feature.includedFeatures" :key="feature" class="flex space-x-3">
-                  <CheckCircleIcon class="flex-shrink-0 h-5 w-5 text-red-500" aria-hidden="true" />
+                  <CheckCircleIcon class="flex-shrink-0 h-5 w-5 text-rose-500" aria-hidden="true" />
                   <span class="text-lg text-gray-500">{{ feature }}</span>
                 </li>
               </ul>
             </div>
             <a :href="feature.href"
-              class="mt-8 block w-full bg-red-600  rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-red-900">{{
+              class="mt-8 block w-full bg-rose-600  rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-rose-900">{{
                   feature.button
               }}</a>
           </div>
@@ -183,10 +183,10 @@
         <div class="flex-1">
           <h3 class="text-xl font-semibold text-gray-900">{{ tier.title }}</h3>
           <p v-if="tier.mostPopular"
-            class="absolute top-0 py-1.5 px-4 bg-red-600 rounded-full text-xs font-semibold uppercase tracking-wide text-white transform -translate-y-1/2">
+            class="absolute top-0 py-1.5 px-4 bg-rose-600 rounded-full text-xs font-semibold uppercase tracking-wide text-white transform -translate-y-1/2">
             Most popular</p>
           <p class="mt-4 flex items-baseline text-gray-900">
-            <span class="text-5xl font-extrabold tracking-tight">$<span class="text-red-600">{{ tier.price
+            <span class="text-5xl font-extrabold tracking-tight">$<span class="text-rose-600">{{ tier.price
             }}</span></span>
             <span class="ml-1 text-xl font-semibold">{{ tier.frequency }}</span>
           </p>
@@ -195,14 +195,14 @@
           <!-- Feature list -->
           <ul role="list" class="mt-6 space-y-6">
             <li v-for="feature in tier.features" :key="feature" class="flex">
-              <CheckIcon class="flex-shrink-0 w-6 h-6 text-red-600" aria-hidden="true" />
+              <CheckIcon class="flex-shrink-0 w-6 h-6 text-rose-600" aria-hidden="true" />
               <span class="ml-3 text-gray-500">{{ feature }}</span>
             </li>
           </ul>
         </div>
 
         <a href="#"
-          :class="[tier.mostPopular ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-red-50 text-red-700 hover:bg-red-100', 'mt-8 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium']">{{
+          :class="[tier.mostPopular ? 'bg-rose-600 text-white hover:bg-rose-700' : 'bg-rose-50 text-rose-700 hover:bg-rose-100', 'mt-8 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium']">{{
               tier.cta
           }}</a>
       </div>
@@ -229,7 +229,7 @@
 
           <div class="relative lg:ml-10">
             <svg
-              class="absolute top-0 left-0 transform -translate-x-8 -translate-y-24 h-36 w-36 text-red-200 opacity-50"
+              class="absolute top-0 left-0 transform -translate-x-8 -translate-y-24 h-36 w-36 text-rose-200 opacity-50"
               stroke="currentColor" fill="none" viewBox="0 0 144 144" aria-hidden="true">
               <path stroke-width="2"
                 d="M41.485 15C17.753 31.753 1 59.208 1 89.455c0 24.664 14.891 39.09 32.109 39.09 16.287 0 28.386-13.03 28.386-28.387 0-15.356-10.703-26.524-24.663-26.524-2.792 0-6.515.465-7.446.93 2.327-15.821 17.218-34.435 32.11-43.742L41.485 15zm80.04 0c-23.268 16.753-40.02 44.208-40.02 74.455 0 24.664 14.891 39.09 32.109 39.09 15.822 0 28.386-13.03 28.386-28.387 0-15.356-11.168-26.524-25.129-26.524-2.792 0-6.049.465-6.98.93 2.327-15.821 16.753-34.435 31.644-43.742L121.525 15z" />
@@ -247,7 +247,7 @@
                   </div>
                   <div class="ml-4 lg:ml-0">
                     <div class="text-base font-medium text-gray-900">Jovenal Bantulaki</div>
-                    <div class="text-base font-medium text-red-600">CEO, Makarwe Restaurant</div>
+                    <div class="text-base font-medium text-rose-600">CEO, Makarwe Restaurant</div>
                   </div>
                 </div>
               </footer>
@@ -260,7 +260,7 @@
 
   <!-- Demo online menu -->
 
-  <div class="mx-auto py-24 px-4 bg-red-50 flex flex-col justify-center  sm:px-6 lg:px-8">
+  <div class="mx-auto py-24 px-4 bg-rose-50 flex flex-col justify-center  sm:px-6 lg:px-8">
     <h2
       class="text-xl text-center font-extrabold text-gray-900 sm:text-3xl sm:leading-none sm:tracking-tight lg:text-4xl">
       See a demo online menu</h2>
@@ -350,7 +350,7 @@ const features = [
     button: "Go mobile",
     description: 'Now your visitors will use their mobile phone camera to access your menu.',
     includedFeatures: [
-      'No mobile app required',
+      'No mobile app requirose',
       'Super-fast online menu - PWA',
       'View analytics',
     ],
@@ -372,7 +372,7 @@ const features = [
     button: 'Accept countactless payments',
     description: 'Your customers can pay order directly via card or mobile money',
     includedFeatures: [
-      'Accept and Credit and Debit Card ',
+      'Accept and Croseit and Debit Card ',
       'All mobile money payments accepted',
       'Secure online payments',
       'Print receipt'
