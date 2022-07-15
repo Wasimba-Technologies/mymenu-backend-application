@@ -16,7 +16,7 @@
             <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
               <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                 <div class="flex items-center justify-between w-full md:w-auto">
-                  <a href="#" class="font-bold text-red-600 text-xl">
+                  <a href="/" class="font-bold text-red-600 text-xl">
                     MyMenu
                   </a>
                   <div class="-mr-2 flex items-center md:hidden">
@@ -31,7 +31,7 @@
               <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
                 <a v-for="item in navigation" :key="item.name" :href="item.href"
                   class="font-medium text-gray-500 hover:text-gray-900">{{ item.name }}</a>
-                <a href="#" class="font-medium text-red-600 hover:text-red-600">Log in</a>
+                <a href="/login" class="font-medium text-red-600 hover:text-red-600">Log in</a>
               </div>
             </nav>
           </div>
@@ -81,7 +81,7 @@
               the QR code on their table and have your menu instantly on their phone.</p>
             <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <div class="rounded-md shadow">
-                <a href="#"
+                <a href="/register"
                   class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-600 md:py-4 md:text-lg md:px-10">
                   Get started </a>
               </div>
