@@ -1,5 +1,5 @@
 <template>
-<h2 class="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">Recent activity</h2>
+<h2 class="mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">Recent activity</h2>
 
           <!-- Activity list (smallest breakpoint only) -->
           <div class="shadow sm:hidden">
@@ -33,7 +33,7 @@
 
           <!-- Activity table (small breakpoint and up) -->
           <div class="hidden sm:block">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8">
               <div class="flex flex-col mt-2">
                 <div class="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg">
                   <table class="min-w-full divide-y divide-gray-200">
@@ -115,30 +115,30 @@ const orders = [
     id: 1,
     name: 'Table Zebra Inside',
     href: '#',
-    amount: '$20,000',
+    amount: '$900',
     currency: 'USD',
     status: 'success',
-    date: 'July 11, 2020',
+    date: 'July 11, 2022',
     datetime: '2020-07-11',
   },
   {
     id: 2,
     name: 'Table Lion Inside',
     href: '#',
-    amount: '$20,000',
+    amount: '$200',
     currency: 'USD',
     status: 'rejected',
-    date: 'July 11, 2020',
+    date: 'July 11, 2022',
     datetime: '2020-07-11',
   },
   {
     id: 1,
     name: 'Table Antelope Outside',
     href: '#',
-    amount: '$20,000',
+    amount: '$600',
     currency: 'USD',
     status: 'processing',
-    date: 'July 11, 2020',
+    date: 'July 11, 2022',
     datetime: '2020-07-11',
   },
   // More orders...
