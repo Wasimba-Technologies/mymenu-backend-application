@@ -57,8 +57,17 @@
         </div>
       </div>
     </div>
-    <div class="hidden lg:block relative h-full flex-1">
-      <img class="h-full w-full object-cover  blur-sm" src="https://menusavvy.com/channel/menusavvy/img/photos/cocktail.jpg" alt="" />
+    <div class="hidden lg:block relative w-0 flex-1">
+      <img class="absolute inset-0 h-full w-full object-cover blur-sm" src="https://menusavvy.com/channel/menusavvy/img/photos/cocktail.jpg" alt="" />
     </div>
   </div>
 </template>
+
+
+<script setup>
+useHead({
+ style: [
+      { children: 'html,body,#__nuxt {height:100%}', type: 'text/css' }
+    ]
+})
+</script>

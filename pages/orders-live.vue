@@ -1,9 +1,9 @@
 <template>
-    <div class="w-full">
+    <div class="w-full h-full">
         <h2 class="text-xl text-gray-700 font-bold md:text-2xl lg:text-3xl">Live Orders</h2>
 
         <!-- Boards go here -->
-        <div class="flex flex-wrap  divide-y divide-gray-200 mt-8 gap-4 w-full justify-between ">
+        <div class="flex flex-wrap  divide-y divide-gray-200 mt-8 gap-4 w-full h-full justify-between ">
             <div class="flex flex-col divide-y divide-gray-200 bg-white rounded drop-shadow-md grow ">
                 <!-- New orders -->
                 <h3 class="text-lg font-bold text-gray-700 px-8 py-4">New Orders</h3>
@@ -23,7 +23,7 @@
             </div>
 
             <!-- Accepted orders -->
-            <div class="flex flex-col divide-y divide-gray-200 bg-white rounded drop-shadow-md grow  ">
+            <div class="flex flex-col divide-y divide-gray-200 bg-white rounded drop-shadow-md grow h-full  ">
                 <h3 class="text-lg font-bold text-gray-700 px-8 py-4">Accepted Orders</h3>
                 <ul role="list" class="divide-y divide-gray-200 p-8 ">
                     <li v-for="order in newOrders" :key="order.id" class="py-4 flex flex-col">

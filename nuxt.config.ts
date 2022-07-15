@@ -16,13 +16,5 @@ export default defineNuxtConfig({
   },
   css: [
     "~/assets/css/tailwind.css"
-  ],
-  app: {
-    head: {
-      style: [
-        // <style type="text/css">:root { color: red }</style>
-        { children: 'html { height: 100% } body { height: 100% } ', type: 'text/css' }
-      ]
-    }
-  }
+  ]
 })

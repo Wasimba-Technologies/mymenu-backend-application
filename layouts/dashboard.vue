@@ -1,6 +1,6 @@
 
 <template>
-  <div  class="bg-gray-100 z-10 h-full">
+  <div  class="bg-gray-100 z-10 h-full overflow-y-auto ">
     <Title>MyMenu | Home</Title>
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog as="div" class="relative z-40 md:hidden" @close="sidebarOpen = false">
@@ -53,7 +53,7 @@
     </TransitionRoot>
 
     <!-- Static sidebar for desktop -->
-    <div class="flex h-full">
+    <div class="flex min-h-full">
     <div v-if="sidebarStaticOpen" class="hidden md:flex md:w-64 md:flex-col" >
       <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
@@ -147,4 +147,9 @@ const navigation = [
 
 const sidebarOpen = ref(false)
 const sidebarStaticOpen = ref(true)
+useHead({
+ style: [
+      { children: 'html,body,#__nuxt {height: 100%;}', type: 'text/css' }
+    ]
+})
 </script>
