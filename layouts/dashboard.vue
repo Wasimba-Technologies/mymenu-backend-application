@@ -62,11 +62,11 @@
             <h1 class="text-rose-600 font-bold text-3xl text-center">MyMenu</h1>
           </div>
           <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
-            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+            <NuxtLink v-for="item in navigation" :key="item.name" :to="item.href" :class="['text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
               <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
               {{ item.name }}
               <span v-if="item.name === 'Live Orders'" class="animate-ping ml-3 h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
-            </a>
+            </NuxtLink>
             
           </nav>
         </div>
@@ -109,6 +109,12 @@
   </div>
 </template>
 
+<style>
+.router-link-exact-active{
+    @apply bg-gray-100 text-gray-900
+}
+</style>
+
 
 
 <script setup>
@@ -128,15 +134,15 @@ import {
 } from '@heroicons/vue/outline'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: DesktopComputerIcon, current: true },
-  { name: 'Live Orders', href: '#', icon: ShoppingBagIcon, current: false },
-  { name: 'Orders', href: '#', icon: ShoppingBagIcon, current: false },
-  { name: 'Restaurant', href: '#', icon: HomeIcon, current: false },
-  { name: 'Menu', href: '#', icon: ViewGridIcon, current: false },
-  { name: 'Tables', href: '#', icon: TemplateIcon, current: false },
-  { name: 'QR Builder', href: '#', icon: DeviceMobileIcon, current: false },
-  { name: 'Plan', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Finances', href: '#', icon: CashIcon, current: false },
+  { name: 'Dashboard', href: '/home', icon: DesktopComputerIcon},
+  { name: 'Live Orders', href: '/orders-live', icon: ShoppingBagIcon },
+  { name: 'Orders', href: '/orders', icon: ShoppingBagIcon },
+  { name: 'Restaurant', href: '/restaurant', icon: HomeIcon },
+  { name: 'Menu', href: '/menu', icon: ViewGridIcon },
+  { name: 'Tables', href: '/tables', icon: TemplateIcon },
+  { name: 'QR Builder', href: '/qr-builder', icon: DeviceMobileIcon },
+  { name: 'Plan', href: '/plan', icon: CreditCardIcon },
+  { name: 'Finance', href: '/finance', icon: CashIcon },
 ]
 
 const sidebarOpen = ref(false)
