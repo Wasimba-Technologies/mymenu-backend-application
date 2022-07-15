@@ -41,7 +41,7 @@ import {
  ShoppingCartIcon
 } from '@heroicons/vue/outline'
 const cards = [
-  { name: 'Sales Volume (30 Days)', href: '#', icon: TrendingUpIcon, amount: '$30,659.45' },
+  { name: 'Sales Volume (30 Days)', href: '#', icon: TrendingUpIcon, amount: 'TZS 3,654,000' },
   { name: 'Orders (30 Days)', href: '#', icon: ShoppingCartIcon, amount: '213' },
   { name: 'Number of Items', href: '#', icon: FolderIcon, amount: '26 Items' },
   // More items...
