@@ -131,7 +131,7 @@
 
   <!-- Features section -->
 
-  <div class="py-12 bg-white">
+  <div id="features" class="py-12 bg-white">
     <div class="mx-auto px-4 sm:px-6 lg:px-8">
       <div class="lg:text-center">
         <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">The most
@@ -169,7 +169,7 @@
   </div>
 
   <!-- Pricing section  -->
-  <div class="mx-auto py-24 px-4 bg-white sm:px-6 lg:px-8">
+  <div id="pricing" class="mx-auto py-24 px-4 bg-white sm:px-6 lg:px-8">
     <h2
       class="text-3xl text-center font-extrabold text-gray-900 sm:text-5xl sm:leading-none sm:tracking-tight lg:text-6xl">
       Pricing plans for restaurants, hotels or bars of all sizes</h2>
@@ -177,7 +177,7 @@
       for engaging your audience, creating customer loyalty, and driving sales.</p>
 
     <!-- Tiers -->
-    <div class="mt-24 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8">
+    <div  class="mt-24 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8">
       <div v-for="tier in pricing.tiers" :key="tier.title"
         class="relative p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col">
         <div class="flex-1">
@@ -211,7 +211,7 @@
 
   <!-- Testimonial Section -->
 
-  <div class="mx-auto py-24 px-4 bg-white sm:px-6 lg:px-8">
+  <div id="testimonial" class="mx-auto py-24 px-4 bg-white sm:px-6 lg:px-8">
     <h2
       class="text-3xl text-center font-extrabold text-gray-900 sm:text-5xl sm:leading-none sm:tracking-tight lg:text-6xl">
       Restaurants, Hotels and Bars that love our QRs</h2>
@@ -392,9 +392,9 @@ const features = [
 ]
 
 const navigation = [
-  { name: 'Features', href: '#' },
-  { name: 'Pricing', href: '#' },
-  { name: 'Testimonials', href: '#' },
+  { name: 'Features', href: '#features' },
+  { name: 'Pricing', href: '#pricing' },
+  { name: 'Testimonials', href: '#testimonual' },
   { name: 'Live Demo', href: '#' },
 ]
 
