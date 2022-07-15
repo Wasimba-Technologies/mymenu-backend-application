@@ -394,7 +394,7 @@ const features = [
 const navigation = [
   { name: 'Features', href: '#features' },
   { name: 'Pricing', href: '#pricing' },
-  { name: 'Testimonials', href: '#testimonual' },
+  { name: 'Testimonials', href: '#testimonial' },
   { name: 'Live Demo', href: '#' },
 ]
 
