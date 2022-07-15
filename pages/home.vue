@@ -1,6 +1,7 @@
 
 <template>
     <div>
+        <Title>MyMenu | Home</Title>
          <div class="mx-auto px-4 sm:px-6 md:px-8">
              <div class="flex items-center">
                   <img class="hidden h-16 w-16 rounded-full sm:block" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />

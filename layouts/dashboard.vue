@@ -1,6 +1,6 @@
 
 <template>
-  <div  class="bg-gray-100">
+  <div  class="bg-gray-100 z-10 h-full">
     <Title>MyMenu | Home</Title>
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog as="div" class="relative z-40 md:hidden" @close="sidebarOpen = false">
@@ -53,7 +53,7 @@
     </TransitionRoot>
 
     <!-- Static sidebar for desktop -->
-    <div class="flex h-screen">
+    <div class="flex h-full">
     <div v-if="sidebarStaticOpen" class="hidden md:flex md:w-64 md:flex-col" >
       <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
@@ -86,7 +86,7 @@
       </div>
     </div>
     <div class=" flex flex-col flex w-full">
-         <div class="sticky top-0 z-10 hidden md:inline-block pl-1 pt-1 sm:pl-3 sm:pt-3">
+         <div class="hidden md:inline-block pl-1 pt-1 sm:pl-3 sm:pt-3">
         <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-500" @click="sidebarStaticOpen = !sidebarStaticOpen">
           <MenuIcon class="h-6 w-6" aria-hidden="true" />
         </button>
