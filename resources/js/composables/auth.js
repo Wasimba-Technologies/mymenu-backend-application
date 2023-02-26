@@ -10,7 +10,6 @@ export default function useAuth(){
         {
             'email': '',
             'password': '',
-            'remember_me': ''
         }
     )
 

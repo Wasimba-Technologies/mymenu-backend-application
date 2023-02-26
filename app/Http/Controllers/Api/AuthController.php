@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -38,20 +40,18 @@ class AuthController extends Controller
             }
         }
 
-        /**
-         * Login The User
-         * @param LoginRequest $request
-         * @return JsonResponse
-         */
+    /**
+     * Login The User
+     * @param LoginRequest $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
         public function login(LoginRequest $request): JsonResponse
         {
-            try {
-
                 if(!Auth::attempt($request->only(['email', 'password']))){
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Email & Password does not match with our record.',
-                    ], 401);
+                        throw ValidationException::withMessages([
+                            'email' => trans('auth.failed'),
+                        ]);
                 }
 
                 $user = User::where('email', $request->email)->first();
@@ -63,12 +63,6 @@ class AuthController extends Controller
                     'user' => $user
                 ], 200);
 
-            } catch (\Throwable $th) {
-                return response()->json([
-                    'status' => false,
-                    'message' => $th->getMessage()
-                ], 500);
-            }
         }
 
     /**
