@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -18,14 +18,15 @@ class RegisterUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, Rule|array|string>
+     * @return array >
      */
     public function rules(): array
     {
         return [
             'name' => 'required',
+            'phone_number' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required'
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
 }

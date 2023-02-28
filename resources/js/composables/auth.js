@@ -16,6 +16,8 @@ export default function useAuth(){
     const registerForm = reactive(
         {
             'name': '',
+            'username': '',
+            'phone_number': '',
             'email': '',
             'password': '',
             'password_confirmation': ''
@@ -50,7 +52,8 @@ export default function useAuth(){
 
         isLoading.value = true
         await axios.post('api/auth/register', registerForm).then(async response =>{
-            console.log(response)
+            localStorage.setItem('access_token', response.data.access_token)
+            router.push('restaurant.create')
         }).catch(err =>{
             if(err.response?.data){
                 errors.value=err.response.data.errors

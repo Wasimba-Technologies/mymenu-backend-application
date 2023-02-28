@@ -28,7 +28,7 @@
                                 <div class="mt-1">
                                     <input id="email" name="email" type="email" autocomplete="email" required v-model="loginForm.email"
                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" />
-                                    <p class="mt-2 text-sm text-red-600" id="name-error" v-for="error in errors?.email">{{error}}</p>
+                                    <p class="mt-2 text-sm font-extrabold text-red-600" id="name-error" v-for="error in errors?.email">{{error}}</p>
                                 </div>
                             </div>
 
@@ -52,7 +52,11 @@
                             </div>
 
                             <div>
-                                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">Sign in</button>
+                                <button type="submit"
+                                    class="w-full btn-sm-submit" :class="{ 'opacity-70': isLoading }" :disabled="isLoading">
+                                    <LoadingSpinner />
+                                    Sign in
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -69,9 +73,11 @@
 <script setup>
 
 import useAuth from "../../composables/auth";
-import {useRouter} from "vue-router";
+import LoadingSpinner from "../../components/LoadingSpinner.vue";
+import {provide} from "vue";
 
 const {isLoading, submitLogin, errors, loginForm} = useAuth()
 
+provide('isLoading', isLoading)
 
 </script>

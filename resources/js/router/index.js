@@ -7,6 +7,7 @@ import useAuth from "../composables/auth";
 import DashboardLayout from "../pages/dashboard/DashboardLayout.vue";
 import DashboardIndex from "../pages/dashboard/DashboardIndex.vue";
 import LiveOrders from "../pages/orders/LiveOrders.vue";
+import RestaurantCreate from "../pages/restaurants/RestaurantCreate.vue";
 
 
 
@@ -50,6 +51,12 @@ const routes =[
         path : '/register',
         name : 'register',
         component : Register
+    },
+    {
+        path : '/register-restaurant',
+        name : 'restaurant.create',
+        component : RestaurantCreate,
+        beforeEnter: auth
     },
     {
         component: DashboardLayout,

@@ -22,7 +22,6 @@ class AuthController extends Controller
          */
         public function register(RegisterUserRequest $request): JsonResponse
         {
-            try {
                 $data = $request->validated();
                 $user = User::create($data);
 
@@ -31,13 +30,7 @@ class AuthController extends Controller
                     'message' => 'User Created Successfully',
                     'token' => $user->createToken("API TOKEN")->plainTextToken
                 ], 200);
-
-            } catch (\Throwable $th) {
-                return response()->json([
-                    'status' => false,
-                    'message' => $th->getMessage()
-                ], 500);
-            }
+                
         }
 
     /**
