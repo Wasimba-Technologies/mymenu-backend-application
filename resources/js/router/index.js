@@ -8,12 +8,16 @@ import DashboardLayout from "../pages/dashboard/DashboardLayout.vue";
 import DashboardIndex from "../pages/dashboard/DashboardIndex.vue";
 import LiveOrders from "../pages/orders/LiveOrders.vue";
 import RestaurantCreate from "../pages/restaurants/RestaurantCreate.vue";
+import MenuCreate from "../pages/menus/MenuCreate.vue";
+import MenuIndex from "../pages/menus/MenuIndex.vue";
+import MenuItemCreate from "../pages/menu_items/MenuItemCreate.vue";
+import MenuItemIndex from "../pages/menu_items/MenuItemIndex.vue";
 
 
 
 const {logout} = useAuth()
 const auth = (to, from, next) => {
-    if (!localStorage.getItem('access_token')) {
+    if (localStorage.getItem('access_token')) {
         next()
         return
     }
@@ -72,6 +76,30 @@ const routes =[
                 name : 'orders.live',
                 component : LiveOrders,
                 meta: { title: 'Live Orders' }
+            },
+            {
+                path : '/menu',
+                name : 'menu.index',
+                component : MenuIndex,
+                meta: { title: 'List of Menus' }
+            },
+            {
+                path : '/menu/create',
+                name : 'menu.create',
+                component : MenuCreate,
+                meta: { title: 'Create Menu' }
+            },
+            {
+                path : '/menu-items',
+                name : 'menu_items.index',
+                component : MenuItemIndex,
+                meta: { title: 'List of Menu Items' }
+            },
+            {
+                path : '/menu-items/create',
+                name : 'menu_items.create',
+                component : MenuItemCreate,
+                meta: { title: 'Create Menu Items' }
             },
         ]
     }

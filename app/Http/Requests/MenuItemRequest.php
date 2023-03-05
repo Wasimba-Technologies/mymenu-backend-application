@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RestaurantRequest extends FormRequest
+class MenuItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,10 @@ class RestaurantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255|unique:restaurants,name,' . $this->id . ',id',
-            'email' => ['required', 'string', 'email'],
-            'phone_number' => ['required', 'string'],
-            'address_one' => ['required', 'string'],
-            'address_two' => ['required', 'string'],
-            'country' => ['required', 'string'],
-            'logo' => ['sometimes', 'image']
+            'name' => 'required|max:255|unique:menu_items,name,' . $this->id . ',id',
+            'description' => ['required', 'string', 'email'],
+            'price' => ['required', 'string'],
+            'image' => ['sometimes', 'image']
         ];
     }
 }

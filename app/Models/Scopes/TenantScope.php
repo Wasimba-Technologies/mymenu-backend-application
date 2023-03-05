@@ -14,11 +14,10 @@ class TenantScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where('tenant_id', 1)->get();
-        if(auth('auth:sanctum')->check()){
-            if(auth('auth:sanctum')->user()->tenant_id != null){
-                $builder->where('tenant_id', Request::user()->tenant_id)->get();
-            }
-        }
+//        if(auth()->check()){
+//            if(auth()->user()->tenant_id != null){
+//                $builder->where('tenant_id', Request::user()->tenant_id)->get();
+//            }
+//        }
     }
 }

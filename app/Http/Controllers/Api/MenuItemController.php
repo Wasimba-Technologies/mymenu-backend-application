@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RestaurantRequest;
-use App\Http\Resources\RestaurantResource;
+use App\Http\Requests\MenuItemRequest;
+use App\Http\Resources\MenuItemResource;
+use App\Models\MenuItem;
 use App\Models\Restaurant;
 use App\Traits\HasImage;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class RestaurantController extends Controller
+class MenuItemController extends Controller
 {
     use HasImage;
 
@@ -19,7 +20,7 @@ class RestaurantController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return RestaurantResource::collection(Restaurant::when(request('name'), function($query){
+        return MenuItemResource::collection(Restaurant::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
         })->get());
     }
@@ -27,41 +28,40 @@ class RestaurantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RestaurantRequest $request): RestaurantResource
+    public function store(MenuItemRequest $request): MenuItemResource
     {
         //$data = $request->validated();
         $data = $this->getDataAndSaveImage('logos', $request);
-        $restaurant = Restaurant::create($data);
-        $user = $request->user()->tenant()->associate($restaurant);
-        $user->save();
-        return new RestaurantResource($restaurant);
+        $data['tenant_id'] = $request->header('X-TENANT-ID');
+        $menu_item = MenuItem::create($data);
+        return new MenuItemResource($menu_item);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Restaurant $restaurant): RestaurantResource
+    public function show(MenuItem $menu_item): MenuItemResource
     {
-        return new RestaurantResource($restaurant);
+        return new MenuItemResource($menu_item);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(RestaurantRequest $request, Restaurant $restaurant)
+    public function update(MenuItemRequest $request, MenuItem $menu_item)
     {
         //$data = $request->validated();
         $data = $this->getDataAndSaveImage('logos', $request);
-        $restaurant->update($data);
-        return new RestaurantResource($restaurant);
+        $menu_item->update($data);
+        return new  MenuItemResource($menu_item);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Restaurant $restaurant): Response
+    public function destroy(MenuItem $menu_item): Response
     {
-        $restaurant->delete();
+        $menu_item->delete();
         return response()->noContent();
     }
 }
