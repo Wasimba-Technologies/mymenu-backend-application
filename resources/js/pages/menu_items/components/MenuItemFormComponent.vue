@@ -64,16 +64,16 @@
                                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                     <div class="flex text-sm text-gray-600">
-                                        <label for="logo" class="relative cursor-pointer rounded-md bg-white font-medium text-rose-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-rose-500 focus-within:ring-offset-2 hover:text-rose-500">
+                                        <label for="image" class="relative cursor-pointer rounded-md bg-white font-medium text-rose-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-rose-500 focus-within:ring-offset-2 hover:text-rose-500">
                                             <span>Upload a file</span>
-                                            <input id="logo" name="logo" type="file" class="sr-only" @change="loadFile"/>
+                                            <input id="image" name="image" type="file" class="sr-only" @change="loadFile"/>
                                         </label>
                                         <p class="pl-1">or drag and drop</p>
                                     </div>
                                     <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                 </div>
                             </div>
-                            <p class="mt-2 text-sm text-red-600" id="logo-error" v-for="error in errors?.logo">{{error}}</p>
+                            <p class="mt-2 text-sm text-red-600" id="logo-error" v-for="error in errors?.image">{{error}}</p>
                         </div>
                     </div>
 

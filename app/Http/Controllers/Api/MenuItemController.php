@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuItemRequest;
 use App\Http\Resources\MenuItemResource;
 use App\Models\MenuItem;
-use App\Models\Restaurant;
 use App\Traits\HasImage;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -20,7 +19,7 @@ class MenuItemController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return MenuItemResource::collection(Restaurant::when(request('name'), function($query){
+        return MenuItemResource::collection(MenuItem::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
         })->get());
     }

@@ -22,7 +22,7 @@ Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 
 
-Route::middleware(['api'])->group(
+Route::middleware(['auth:sanctum'])->group(
     function (){
         Route::apiResource(
             'tenants', RestaurantController::class

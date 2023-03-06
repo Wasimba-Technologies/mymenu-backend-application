@@ -24,9 +24,10 @@ class MenuItemRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255|unique:menu_items,name,' . $this->id . ',id',
-            'description' => ['required', 'string', 'email'],
+            'description' => ['required', 'string'],
             'price' => ['required', 'string'],
-            'image' => ['sometimes', 'image']
+            'image' => ['sometimes', 'image'],
+            'menu_id' => ['required', 'string']
         ];
     }
 }

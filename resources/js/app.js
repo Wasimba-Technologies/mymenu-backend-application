@@ -19,5 +19,3 @@ const app = createApp({
 app.use(router)
 app.use(VueSweetalert2)
 app.mount('#app')
-
-//createApp(Welcome).mount('#app')

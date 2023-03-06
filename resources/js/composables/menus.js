@@ -24,12 +24,11 @@ export default function useMenus() {
 
     const getMenus = async (searchName) => {
         isFetching.value = true
-        searchName = searchName === undefined ? '' : searchName
-        await axios.get(menuURL.value+'&name='+searchName).then(response =>{
-            menus.value = response.data
-            paginationMetaData.value = response.data.meta
-            paginationLinks.value = response.data.links
-            console.log(response)
+        //searchName = searchName === undefined ? '' : searchName
+        await axios.get(menuURL.value).then(response =>{
+            menus.value = response.data.data
+            //paginationMetaData.value = response.data.meta
+            //paginationLinks.value = response.data.links
         }).catch(error =>{
             swal({
                 icon: 'error',

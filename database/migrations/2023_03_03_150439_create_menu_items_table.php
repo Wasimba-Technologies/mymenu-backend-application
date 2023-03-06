@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('description');
             $table->string('price');
             $table->string('image');
-            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->foreignId('menu_id')->constrained('id')->on('menus');
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->timestamps();
         });
     }
