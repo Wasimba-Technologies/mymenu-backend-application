@@ -30,7 +30,7 @@ class MenuController extends Controller
     public function store(MenuRequest $request): MenuResource
     {
         $data = $request->validated();
-        $data['tenant_id'] = $request->header('X-TENANT-ID');
+        //$data['tenant_id'] = $request->header('X-TENANT-ID');
         $menu = Menu::create($data);
         return new MenuResource($menu);
     }

@@ -30,8 +30,8 @@ class MenuItemController extends Controller
     public function store(MenuItemRequest $request): MenuItemResource
     {
         //$data = $request->validated();
-        $data = $this->getDataAndSaveImage('logos', $request);
-        $data['tenant_id'] = $request->header('X-TENANT-ID');
+        $data = $this->getDataAndSaveImage('images', $request);
+        //$data['tenant_id'] = $request->header('X-TENANT-ID');
         $menu_item = MenuItem::create($data);
         return new MenuItemResource($menu_item);
     }

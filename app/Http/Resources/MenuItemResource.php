@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class MenuItemResource extends JsonResource
 {
@@ -14,6 +16,13 @@ class MenuItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'image' => env('APP_URL'). Storage::url($this->image),
+            'menu' => new MenuResource($this->menu),
+        ];
     }
 }

@@ -65,6 +65,7 @@ export default function useAuth(){
 
     const loginUser  = async (response) => {
         localStorage.setItem('access_token', response.data.access_token)
+        console.log(response)
         if(response.data.user.tenant_id === null){
             await router.push({path: '/register-restaurant'})
         }else{
