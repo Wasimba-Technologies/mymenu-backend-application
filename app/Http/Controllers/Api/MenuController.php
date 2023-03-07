@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuItemRequest;
 use App\Http\Requests\MenuRequest;
+use App\Http\Resources\MenuCollection;
 use App\Http\Resources\MenuItemResource;
 use App\Http\Resources\MenuResource;
 use App\Models\Menu;
@@ -17,11 +18,11 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): MenuCollection
     {
-        return MenuResource::collection(Menu::when(request('name'), function($query){
+        return new MenuCollection(Menu::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
-        })->get());
+        })->paginate(20));
     }
 
     /**

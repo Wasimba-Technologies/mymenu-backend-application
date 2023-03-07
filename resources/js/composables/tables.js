@@ -117,6 +117,8 @@ export default function useTables() {
         isFetching,
         isLoading,
         tableForm,
+        paginationMetaData,
+        paginationLinks
     }
 
 }

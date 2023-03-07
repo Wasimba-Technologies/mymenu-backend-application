@@ -28,8 +28,9 @@ export default function useMenuItems() {
         //searchName = searchName === undefined ? '' : searchName
         await axios.get(menuURL.value).then(response =>{
             menu_items.value = response.data.data
-            //paginationMetaData.value = response.data.meta
-            //paginationLinks.value = response.data.links
+            paginationMetaData.value = response.data.meta
+            paginationLinks.value = response.data.links
+            console.log(response.data.links)
         }).catch(error =>{
             swal({
                 icon: 'error',
@@ -141,6 +142,8 @@ export default function useMenuItems() {
         isFetching,
         isLoading,
         menuItemForm,
+        paginationMetaData,
+        paginationLinks
     }
 
 }
