@@ -3,11 +3,10 @@ import router from "../router";
 
 
 export default function useQRCodes() {
-    const qr_code = ref('');
+    const qr_code = ref([]);
     const errors = ref({})
     const isLoading = ref(false)
     const isFetching = ref(false)
-    const qrCodeURL = ref('/api/qr_codes')
 
     const swal = inject('$swal')
 
@@ -24,12 +23,12 @@ export default function useQRCodes() {
 
         await axios.post('/api/generate_qr', data)
             .then(response =>{
-                qr_code.value = response.data.url
-                console.log(response.data.url)
+                qr_code.value = response.data
                 swal({
                     icon: 'success',
                     title: response.data.message
                 })
+                console.log(qr_code.value)
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors
@@ -44,6 +43,10 @@ export default function useQRCodes() {
             )
     }
 
+    const getQRCode = async () => {
+
+    }
+
 
     return {
         errors,
@@ -51,6 +54,7 @@ export default function useQRCodes() {
         isLoading,
         qrCodeForm,
         generateQR,
+        qr_code
     }
 
 }

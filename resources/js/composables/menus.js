@@ -29,7 +29,6 @@ export default function useMenus() {
             menus.value = response.data.data
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
-            console.log(response)
         }).catch(error =>{
             swal({
                 icon: 'error',

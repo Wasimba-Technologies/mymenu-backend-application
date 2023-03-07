@@ -13,7 +13,7 @@
                             <select id="menu" name="menu" v-model="qrCodeForm.table_id"
                                     :class="[errors?.table_id === undefined ? 'valid-select' : 'invalid-select']">
                                 <option value="" selected>--Select Table--</option>
-                                <option v-for="table in tables" :value="table.id">{{table.name}}</option>
+                                <option  v-for="table in tables" :value="table.id" v-if="table?.qr_code !== null">{{table.name}}</option>
                             </select>
                             <p class="mt-2 text-sm text-red-600" id="menu-error" v-for="error in errors?.table_id">{{error}}</p>
                         </div>
@@ -33,13 +33,15 @@
                         </div>
 
                         <div class="col-span-3 sm:col-span-3">
-                            <img id="img_qr"  />
+                            <img id="img_qr"  :src="qr_code?.url" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 text-right sm:px-6 mt-6">
-                <button type="submit" class="btn-sm-submit" :class="{'disabled:opacity-25' : isLoading}" :disabled="isLoading">
+                <button type="submit" class="btn-sm-submit"
+                        :class="{'disabled:opacity-50' : qr_code.url !== undefined || isLoading}"
+                        :disabled="isLoading || qr_code.url !== undefined" >
                     <LoadingSpinner :is-loading="isLoading" />
                      Generate
                 </button>
@@ -54,26 +56,25 @@
 import LoadingSpinner from "../../components/LoadingSpinner.vue";
 import useQRCodes from "../../composables/qr_codes";
 import useTables from "../../composables/tables";
-import {onMounted, provide, ref, watch, watchEffect} from "vue";
+import {onMounted, provide, ref} from "vue";
 
 const {errors, isLoading, generateQR, qr_code, qrCodeForm} = useQRCodes()
 
 const {tables, getTables} = useTables();
 
-//const img_qr = ref('')
+const table = ref(null)
 
 
 onMounted(()=>{
     getTables()
 })
 
-const generateQRCode = () =>{
+const generateQRCode  = () =>{
     generateQR({...qrCodeForm})
 }
 
-watch(qr_code , (currentName) =>{
-    document.getElementById('img_qr').src = currentName
-})
+
+
 
 provide('isLoading', isLoading)
 

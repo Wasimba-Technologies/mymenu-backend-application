@@ -24,7 +24,6 @@ export default function useTables() {
         isFetching.value = true
         //searchName = searchName === undefined ? '' : searchName
         await axios.get(tableURL.value).then(response =>{
-            console.log(response.data.data)
             tables.value = response.data.data
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links

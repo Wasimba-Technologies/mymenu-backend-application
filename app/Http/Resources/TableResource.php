@@ -18,7 +18,7 @@ class TableResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'qr_code' => Storage::url($this->qr_code)
+            'qr_code' => env('APP_URL').Storage::url($this->qr_code)
         ];
     }
 }
