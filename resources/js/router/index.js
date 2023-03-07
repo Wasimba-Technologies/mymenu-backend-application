@@ -15,6 +15,10 @@ import MenuItemIndex from "../pages/menu_items/MenuItemIndex.vue";
 import QRBuilder from "../pages/qr_builder/QRBuilder.vue";
 import TableIndex from "../pages/tables/TableIndex.vue";
 import TableCreate from "../pages/tables/TableCreate.vue";
+import OrderIndex from "../pages/orders/OrderIndex.vue";
+import RestaurantIndex from "../pages/restaurants/RestaurantIndex.vue";
+import SettingsIndex from "../pages/settings/SettingsIndex.vue";
+import PlanIndex from "../pages/plans/PlanIndex.vue";
 
 
 
@@ -75,12 +79,6 @@ const routes =[
                 component : DashboardIndex
             },
             {
-                path : '/live-orders',
-                name : 'orders.live',
-                component : LiveOrders,
-                meta: { title: 'Live Orders' }
-            },
-            {
                 path : '/menu',
                 name : 'menu.index',
                 component : MenuIndex,
@@ -121,6 +119,36 @@ const routes =[
                 name : 'qr-builder',
                 component : QRBuilder,
                 meta: { title: 'Create QR Codes By table' }
+            },
+            {
+                path : '/live-orders',
+                name : 'orders.live',
+                component : LiveOrders,
+                meta: { title: 'Live Orders' }
+            },
+            {
+                path : '/orders',
+                name : 'orders.index',
+                component : OrderIndex,
+                meta: { title: 'List of orders' }
+            },
+            {
+                path : '/restaurants',
+                name : 'restaurants.index',
+                component : RestaurantIndex,
+                meta: { title: 'List of orders' }
+            },
+            {
+                path : '/plans',
+                name : 'plans.index',
+                component : PlanIndex,
+                meta: { title: 'Plans' }
+            },
+            {
+                path : '/settings',
+                name : 'settings',
+                component : SettingsIndex,
+                meta: { title: 'Settings' }
             },
         ]
     }

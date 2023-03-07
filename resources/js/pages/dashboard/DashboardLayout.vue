@@ -6,7 +6,6 @@
                 <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
                     <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
                 </TransitionChild>
-
                 <div class="fixed inset-0 flex z-40">
                     <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
                         <DialogPanel class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
@@ -132,21 +131,22 @@ import {
     TableCellsIcon,
     QrCodeIcon,
     CreditCardIcon,
-    BanknotesIcon,
-    Squares2X2Icon
+    Squares2X2Icon,
+    DocumentDuplicateIcon, BoltIcon, CogIcon
 } from '@heroicons/vue/24/outline'
 import {useRoute} from "vue-router";
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon},
-    { name: 'Live Orders', href: '/live-orders', icon: ShoppingBagIcon },
+    { name: 'Live Orders', href: '/live-orders', icon: BoltIcon },
     { name: 'Orders', href: '/orders', icon: ShoppingBagIcon },
-    { name: 'Restaurant', href: '/restaurant', icon: HomeIcon },
-    { name: 'Menu', href: '/menu', icon: Squares2X2Icon },
+    { name: 'restaurants', href: '/restaurants', icon: HomeIcon },
+    { name: 'Menu', href: '/menu', icon: DocumentDuplicateIcon },
+    { name: 'Menu Items', href: '/menu-items', icon: Squares2X2Icon },
     { name: 'Tables', href: '/tables', icon: TableCellsIcon },
     { name: 'QR Builder', href: '/qr-builder', icon: QrCodeIcon },
-    { name: 'Plan', href: '/plan', icon: CreditCardIcon },
-    { name: 'Finance', href: '/finance', icon: BanknotesIcon },
+    { name: 'Plan', href: '/plans', icon: CreditCardIcon },
+    { name: 'Settings', href: '/settings', icon: CogIcon },
 ]
 const sidebarOpen = ref(false)
 const sidebarStaticOpen = ref(true)

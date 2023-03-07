@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuItemController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\QRCodeController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\TableController;
@@ -40,6 +42,9 @@ Route::middleware(['auth:sanctum'])->group(
         );
         Route::apiResource(
             'orders', OrderController::class
+        );
+        Route::apiResource(
+            'plans', PlanController::class
         );
         Route::post('/generate_qr', [QRCodeController::class, 'generateQRCode']);
         Route::post('/auth/logout', [AuthController::class, 'logout']);
