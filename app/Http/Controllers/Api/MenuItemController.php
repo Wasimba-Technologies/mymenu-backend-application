@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuItemRequest;
+use App\Http\Resources\MenuItemCollection;
 use App\Http\Resources\MenuItemResource;
 use App\Models\MenuItem;
 use App\Traits\HasImage;
@@ -17,11 +18,17 @@ class MenuItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): MenuItemCollection
     {
-        return MenuItemResource::collection(MenuItem::when(request('name'), function($query){
+        return new MenuItemCollection(MenuItem::when(
+            request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
-        })->get());
+            }
+        )->when(
+            request('tenant'), function($query){
+            $query->where('tenant_id', 'like', '%'.request('tenant').'%');
+        }
+        )->paginate(20));
     }
 
     /**

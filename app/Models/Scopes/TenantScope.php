@@ -16,7 +16,7 @@ class TenantScope implements Scope
     {
         $tenant_id = request()->header('X-TENANT-ID');
         if( $tenant_id != null){
-            $builder->where('tenant_id', (int)$tenant_id);
+            $builder->where('tenant_id', $tenant_id);
         }
     }
 }

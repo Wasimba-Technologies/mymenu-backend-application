@@ -12,6 +12,9 @@ import MenuCreate from "../pages/menus/MenuCreate.vue";
 import MenuIndex from "../pages/menus/MenuIndex.vue";
 import MenuItemCreate from "../pages/menu_items/MenuItemCreate.vue";
 import MenuItemIndex from "../pages/menu_items/MenuItemIndex.vue";
+import QRBuilder from "../pages/qr_builder/QRBuilder.vue";
+import TableIndex from "../pages/tables/TableIndex.vue";
+import TableCreate from "../pages/tables/TableCreate.vue";
 
 
 
@@ -100,6 +103,24 @@ const routes =[
                 name : 'menu_items.create',
                 component : MenuItemCreate,
                 meta: { title: 'Create Menu Items' }
+            },
+            {
+                path : '/tables',
+                name : 'tables.index',
+                component : TableIndex,
+                meta: { title: 'Create Table' }
+            },
+            {
+                path : '/tables/create',
+                name : 'tables.create',
+                component : TableCreate,
+                meta: { title: 'Create Tables' }
+            },
+            {
+                path : '/qr-builder',
+                name : 'qr-builder',
+                component : QRBuilder,
+                meta: { title: 'Create QR Codes By table' }
             },
         ]
     }

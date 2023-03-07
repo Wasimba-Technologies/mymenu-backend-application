@@ -50,7 +50,7 @@
                                     {{menu.end_time}}
                                 </td>
                                 <td>
-                                    <router-link :to="`/menu/${menu.id}/update`" class="text-indigo-600 hover:text-indigo-900">Edit</router-link>
+                                    <router-link :to="`/menu/${menu.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
                                 </td>
                             </tr>
                             <tr v-if="menus?.length === 0 && ! isFetching">

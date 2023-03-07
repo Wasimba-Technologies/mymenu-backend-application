@@ -16,7 +16,7 @@ trait HasImage
         $data = $request->validated();
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo')->store(
-                $image_type.'/' . $request->header('X-TENANT-ID'), 'public'
+                $image_type.'/', 'public'
             );
             $data['logo'] = $logo;
         }else{

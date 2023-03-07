@@ -18,7 +18,7 @@ trait BelongsToTenant
 
             $tenant_id = request()->header('X-TENANT-ID');
             if( $tenant_id != null){
-                $model->tenant_id = (int)$tenant_id;
+                $model->tenant_id = $tenant_id;
             }
         });
 
