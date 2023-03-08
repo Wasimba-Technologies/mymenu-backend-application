@@ -24,10 +24,6 @@ class MenuItemController extends Controller
             request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
             }
-        )->when(
-            request('tenant'), function($query){
-            $query->where('tenant_id', 'like', '%'.request('tenant').'%');
-        }
         )->paginate(20));
     }
 
@@ -57,7 +53,7 @@ class MenuItemController extends Controller
     public function update(MenuItemRequest $request, MenuItem $menu_item)
     {
         //$data = $request->validated();
-        $data = $this->getDataAndSaveImage('logos', $request);
+        $data = $this->getDataAndSaveImage('images', $request);
         $menu_item->update($data);
         return new  MenuItemResource($menu_item);
     }

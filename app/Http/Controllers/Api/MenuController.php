@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MenuItemRequest;
 use App\Http\Requests\MenuRequest;
 use App\Http\Resources\MenuCollection;
-use App\Http\Resources\MenuItemResource;
 use App\Http\Resources\MenuResource;
 use App\Models\Menu;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class MenuController extends Controller

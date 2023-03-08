@@ -19,6 +19,7 @@ import OrderIndex from "../pages/orders/OrderIndex.vue";
 import RestaurantIndex from "../pages/restaurants/RestaurantIndex.vue";
 import SettingsIndex from "../pages/settings/SettingsIndex.vue";
 import PlanIndex from "../pages/plans/PlanIndex.vue";
+import MenuItemBrowser from "../pages/menu_items/MenuItemBrowser.vue";
 
 
 
@@ -68,6 +69,11 @@ const routes =[
         name : 'restaurant.create',
         component : RestaurantCreate,
         beforeEnter: auth
+    },
+    {
+        path : '/browse/:id',
+        name : 'browse',
+        component : MenuItemBrowser
     },
     {
         component: DashboardLayout,
