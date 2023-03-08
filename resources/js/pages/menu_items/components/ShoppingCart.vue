@@ -22,29 +22,24 @@
                                     <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 
                                     <ul role="list" class="divide-y divide-gray-200 px-4 sm:px-6 lg:px-8">
-                                        <li v-for="(product, productIdx) in products" :key="product.id" class="flex py-8 text-sm sm:items-center">
-                                            <img :src="product.image" :alt="product.name" class="h-24 w-24 flex-none rounded-lg border border-gray-200 sm:h-32 sm:w-32" />
+                                        <li v-for="(product, productIdx) in products" :key="product.item.id" class="flex py-8 text-sm sm:items-center">
+                                            <img :src="product.item.image" :alt="product.item.name" class="h-24 w-24 flex-none rounded-lg border border-gray-200 sm:h-32 sm:w-32" />
                                             <div class="ml-4 grid flex-auto grid-cols-1 grid-rows-1 items-start gap-y-3 gap-x-5 sm:ml-6 sm:flex sm:items-center sm:gap-0">
                                                 <div class="row-end-1 flex-auto sm:pr-6">
                                                     <h3 class="font-medium text-gray-900">
-                                                        {{ product.name }}
+                                                        {{ product.item.name }}
                                                     </h3>
                                                 </div>
-                                                <p class="row-span-2 row-end-2 font-medium text-gray-900 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right">{{ product.price }}</p>
+                                                <p class="row-span-2 row-end-2 text-gray-900 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right font-extrabold">Tsh {{ new Intl.NumberFormat().format(product.qty * product.item.price) }}</p>
                                                 <div class="flex items-center sm:block sm:flex-none sm:text-center">
-                                                    <label :for="`quantity-${productIdx}`" class="sr-only">Quantity, {{ product.name }}</label>
-                                                    <select :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" class="block max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
+                                                    <label :for="`quantity-${productIdx}`" class="sr-only">Quantity, {{ product.item.name }}</label>
+                                                    <select :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" class="block max-w-full rounded-md border
+                                                    border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700
+                                                    shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500
+                                                    sm:text-sm">
+                                                        <option v-for="option in 10" :value="option" :selected="parseInt(product.qty) === parseInt(option)">{{option}}</option>
                                                     </select>
-
-                                                    <button type="button" class="ml-4 font-medium text-rose-600 hover:text-rose-500 sm:ml-0 sm:mt-2">
+                                                    <button type="button" class="ml-4 font-medium text-rose-600 hover:text-rose-500 sm:ml-0 sm:mt-2" @click="removeItem(product)">
                                                         <span>Remove</span>
                                                     </button>
                                                 </div>
@@ -56,20 +51,11 @@
                                 <section aria-labelledby="summary-heading" class="mt-auto sm:px-6 lg:px-8">
                                     <div class="bg-gray-50 p-6 sm:rounded-lg sm:p-8">
                                         <h2 id="summary-heading" class="sr-only">Order summary</h2>
-
                                         <div class="flow-root">
                                             <dl class="-my-4 divide-y divide-gray-200 text-sm">
                                                 <div class="flex items-center justify-between py-4">
                                                     <dt class="text-gray-600">Subtotal</dt>
                                                     <dd class="font-medium text-gray-900">$262.00</dd>
-                                                </div>
-                                                <div class="flex items-center justify-between py-4">
-                                                    <dt class="text-gray-600">Shipping</dt>
-                                                    <dd class="font-medium text-gray-900">$5.00</dd>
-                                                </div>
-                                                <div class="flex items-center justify-between py-4">
-                                                    <dt class="text-gray-600">Tax</dt>
-                                                    <dd class="font-medium text-gray-900">$53.40</dd>
                                                 </div>
                                                 <div class="flex items-center justify-between py-4">
                                                     <dt class="text-base font-medium text-gray-900">Order total</dt>
@@ -81,7 +67,11 @@
                                 </section>
 
                                 <div class="mt-8 flex justify-end px-4 sm:px-6 lg:px-8">
-                                    <button type="submit" class="rounded-md border border-transparent bg-rose-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-gray-50">Place Order</button>
+                                    <button type="submit" class="rounded-md border border-transparent bg-rose-600 py-2
+                                    px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none
+                                    focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                                        Place Order
+                                    </button>
                                 </div>
                             </form>
                         </DialogPanel>
@@ -109,7 +99,11 @@ const props = defineProps(['show'])
 
 const open = inject('open')
 
-const products = inject('menu_items')
+const products = inject('shopping_cart')
+
+const removeItem = (product) =>{
+    //remove product from products
+}
 
 </script>
 
