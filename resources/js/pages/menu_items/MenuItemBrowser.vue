@@ -34,14 +34,18 @@
         </div>
     </div>
 
-    <ShoppingCart />
+    <ShoppingCart
+        @handle-qty-change="handleQtyChange"
+        @remove-cart-item="removeItem"
+        :grand-toal = "grandTotal"
+    />
 </div>
 </template>
 
 <script setup>
 
 
-import {onMounted, provide, ref} from "vue";
+import {onMounted, provide, ref, watch} from "vue";
 import AutoComplete from "../../components/AutoComplete.vue";
 import BrowserNav from "./components/BrowserNav.vue";
 import ShoppingCart from "./components/ShoppingCart.vue";
@@ -57,6 +61,8 @@ const router = useRoute()
 
 const shopping_cart = ref([])
 
+const grandTotal = ref(0.0)
+
 
 onMounted(()=>{
     getMenus('')
@@ -64,18 +70,58 @@ onMounted(()=>{
 })
 
 const addToShoppingCart = (product) => {
-    shopping_cart.value.push({
-        'item': product,
-        'qty': document.getElementById(`quantity-${product.id}`).value
+    let index = shopping_cart.value
+        .map(function (el) {
+            return el.menu_item.id;
+        })
+        .indexOf(product.id);
+
+    if (index === -1) {
+        shopping_cart.value.push({
+            'menu_item': product,
+            'qty': parseInt(document.getElementById(`quantity-${product.id}`).value)
+        })
+    } else {
+        //Increment if Product exists and update state
+        shopping_cart.value = shopping_cart.value.map((item) => {
+            if (item.menu_item.id === product.id) {
+                item.qty++;
+            }
+            return item;
+        })
+    }
+
+}
+
+const removeItem = (product) =>{
+    //remove product from products
+    shopping_cart.value = shopping_cart.value.filter((item) => item.menu_item.id !== product.menu_item.id)
+}
+
+const handleQtyChange = (event, product) =>{
+    shopping_cart.value = shopping_cart.value.map((item) => {
+        if (item.menu_item.id === product.menu_item.id) {
+            console.log('change this product')
+            item.qty = event.target.value
+        }
+        return item;
     })
 }
+
+
+
 
 provide('open', open)
 
 provide('menu_items', menu_items)
 
-provide('shopping_cart', shopping_cart)
+watch(shopping_cart, (new_cart) => {
+    shopping_cart.value = new_cart
+    //grandTotal.value = calculateOrderTotal()
+})
 
+
+provide('shopping_cart', shopping_cart)
 
 
 </script>

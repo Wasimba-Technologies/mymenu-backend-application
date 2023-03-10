@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\MenuBrowser;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuItemController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\OrderItemController;
 use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\QRCodeController;
 use App\Http\Controllers\Api\RestaurantController;
@@ -44,6 +45,9 @@ Route::middleware(['auth:sanctum'])->group(
         );
         Route::apiResource(
             'orders', OrderController::class
+        );
+        Route::apiResource(
+            'order_items', OrderItemController::class
         );
         Route::apiResource(
             'plans', PlanController::class

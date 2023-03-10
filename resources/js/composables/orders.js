@@ -16,9 +16,9 @@ export default function useOrders() {
 
     const orderForm = reactive(
         {
-            name: '',
-            start_time: '',
-            end_time: ''
+            // name: '',
+            // start_time: '',
+            // end_time: ''
         }
     )
 
@@ -54,16 +54,31 @@ export default function useOrders() {
     }
 
     const storeOrder = async (data) => {
+        data['table_id'] = localStorage.getItem('table_id')
         isLoading.value = true;
-
         await axios.post('/api/orders', data)
-            .then(response =>{
-                order.value = response.data.data
-                router.push({name: 'orders.index'})
-                swal({
-                    icon: 'success',
-                    title: 'Order placed successfully'
-                })
+            .then(async response => {
+                data['order_id'] = response.data.order.id
+                await axios.post('/api/order_items', data).then(response =>{
+                    swal({
+                        icon: 'success',
+                        title: 'Order placed successfully'
+                    })
+                    order.value = response.data
+                }
+                ).catch(error => {
+                        if (error.response?.data) {
+                            errors.value = error.response.data.errors
+                        } else {
+                            swal({
+                                icon: 'error',
+                                title: error.message
+                            })
+                        }
+                    }
+                ).finally(
+                    () => isLoading.value = false
+                )
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors

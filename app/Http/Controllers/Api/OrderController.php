@@ -21,7 +21,18 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        //
+        $data = request()->json()->all();
+        $order = Order::create(
+            [
+                'table_id'=> $data['table_id'],
+                'tenant_id' => request()->header('X-TENANT-ID')
+            ]
+        );
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Order created successfully',
+            'order' => $order
+        ]);
     }
 
     /**
