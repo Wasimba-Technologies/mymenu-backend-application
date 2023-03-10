@@ -6,7 +6,7 @@
                     <div class="p-12 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <div class="flex justify-between">
                             <div>
-                                <p class="text-3xl font-bold">Invoice #</p>
+                                <p class="text-3xl font-bold">Invoice # {{order.id}}</p>
                             </div>
                             <div class="text-right">
                                 <div class="font-semibold text-lg">
@@ -49,7 +49,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="" v-for="item in order?.order_items">
+                                <tr class="" v-for="item in order?.order_items" :key="item.id">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="h-10 w-10 flex-shrink-0">
@@ -62,16 +62,16 @@
                                         </div>
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{item.menu_item.price}}
+                                        {{numFormat(item.menu_item.price)}}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{item.qty}}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{item.price * item.qty}}
+                                        {{numFormat(item.menu_item.price * item.qty)}}
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <a href="#" class="font-medium text-rose-600 dark:text-blue-500 hover:underline">Edit</a>
+                                        <a href="#" class="font-medium text-rose-600 hover:underline">Edit</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -81,7 +81,7 @@
                                             Total Paid:
                                         </th>
                                         <td class="text-left px-3 py-3.5 border-b border-gray-200 sm:px-6 font-bold">
-                                            10,000
+                                            {{grandTotal}}
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -102,16 +102,22 @@
 <script setup>
 
 import useOrders from "../../composables/orders";
-import {onMounted} from "vue";
+import {computed, onMounted, ref, toRaw} from "vue";
 import {useRoute} from "vue-router";
 
-const {order, getOrder} = useOrders()
+const {order, numFormat, getOrder} = useOrders()
 
 const router = useRoute()
+
+//const grandTotal = ref(0.0)
 
 onMounted(()=>{
     getOrder(router.params.id)
 })
+
+const grandTotal = computed(() => {
+    return numFormat(order.value.order_items?.reduce((total, item) => (item.qty*item.menu_item.price) + total, 0))
+});
 
 </script>
 

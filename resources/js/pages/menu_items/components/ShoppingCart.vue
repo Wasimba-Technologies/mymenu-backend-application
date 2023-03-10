@@ -91,15 +91,14 @@ import {
 import {
     XMarkIcon
 } from '@heroicons/vue/24/outline';
-import {inject, onMounted, ref, watch, watchEffect} from "vue";
+import {computed, inject, onMounted, ref, watch, watchEffect} from "vue";
 import useOrders from "../../../composables/orders";
 
-const props = defineProps(['show'])
+const props = defineProps(['show','grandTotal'])
 const emit = defineEmits(['handleQtyChange', 'removeCartItem', 'placeOrder'])
 const open = inject('open')
 const products = inject('shopping_cart')
 
-const grandTotal = ref(0.0)
 
 const handleQtyChange = (ev, product) => {
     emit('handleQtyChange', ev, product)
@@ -113,19 +112,7 @@ const placeOrder =  () =>{
     emit('placeOrder')
 }
 
-// const calculateOrderTotal = () => {
-//     let total = 0.0;
-//     if(products.length !== 0){
-//         for (const item of products) {
-//             total += parseInt(item.qty) * item.menu_item.price;
-//         }
-//     }
-//     return parseFloat(total.toFixed(2));
-// };
-//
-// watch(products, (new_cart) => {
-//     grandTotal.value = calculateOrderTotal()
-// })
+
 
 
 

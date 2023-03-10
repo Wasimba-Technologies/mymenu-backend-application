@@ -124,7 +124,12 @@ export default function useOrders() {
             )
     }
 
+    const numFormat= (num) =>{
+        return new Intl.NumberFormat().format(num)
+    }
+
     return {
+        order,
         orders,
         errors,
         getOrders,
@@ -135,7 +140,8 @@ export default function useOrders() {
         isLoading,
         orderForm,
         paginationMetaData,
-        paginationLinks
+        paginationLinks,
+        numFormat
     }
 
 }

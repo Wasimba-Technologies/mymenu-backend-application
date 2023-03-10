@@ -38,7 +38,7 @@
         @handle-qty-change="handleQtyChange"
         @remove-cart-item="removeItem"
         @place-order="placeOrder"
-        :grand-toal = "grandTotal"
+        :grand-total="grandTotal"
     />
 </div>
 </template>
@@ -46,7 +46,7 @@
 <script setup>
 
 
-import {onMounted, provide, ref, watch} from "vue";
+import {computed, onMounted, provide, ref, watch} from "vue";
 import AutoComplete from "../../components/AutoComplete.vue";
 import BrowserNav from "./components/BrowserNav.vue";
 import ShoppingCart from "./components/ShoppingCart.vue";
@@ -57,11 +57,10 @@ import useOrders from "../../composables/orders";
 
 const {menu_items, browseMenuByTable} = useMenuItems()
 const {menus, getMenus} = useMenus()
-const {storeOrder} = useOrders()
+const {storeOrder, numFormat} = useOrders()
 const open = ref(false)
 const router = useRoute()
 const shopping_cart = ref([])
-const grandTotal = ref(0.0)
 
 
 onMounted(()=>{
@@ -101,7 +100,6 @@ const removeItem = (product) =>{
 const handleQtyChange = (event, product) =>{
     shopping_cart.value = shopping_cart.value.map((item) => {
         if (item.menu_item.id === product.menu_item.id) {
-            console.log('change this product')
             item.qty = event.target.value
         }
         return item;
@@ -125,8 +123,14 @@ provide('menu_items', menu_items)
 
 watch(shopping_cart, (new_cart) => {
     shopping_cart.value = new_cart
-    //grandTotal.value = calculateOrderTotal()
 })
+
+const grandTotal = computed(() => {
+    return numFormat(shopping_cart.value.reduce(
+        (total, item) => (item.qty * item.menu_item.price) + total, 0)
+    )
+});
+
 
 
 provide('shopping_cart', shopping_cart)
