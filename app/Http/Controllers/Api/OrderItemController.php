@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderItemRequest;
+
+use App\Http\Resources\MenuItemResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 
 class OrderItemController extends Controller
@@ -25,15 +27,29 @@ class OrderItemController extends Controller
     public function store(Request $request)
     {
         $data = request()->json()->all();
+        $menu_items= [];
+        $now = Carbon::now('utc')->toDateTimeString();
 
-        $order_item = new OrderItem;
+        $order = Order::findOrFail($data['order_id']);
 
         foreach ($data['menu_items'] as $item){
-            $order_item->order_id = $data['order_id'];
-            $order_item->menu_item_id = $item->menu_item->id;
-            $order_item->qty = $item->qty;
-            $order_item->save();
+            $menu_items[] = [
+                'order_id' => $data['order_id'],
+                'menu_item_id' => $item['menu_item']['id'],
+                'qty' => $item['qty'],
+                'tenant_id' => request()->header('X-TENANT_ID'),
+                'created_at' => $now,
+                'updated_at' => $now
+            ];
         }
+
+        OrderItem::insert($menu_items);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Order Created successfully',
+            'order' => new OrderResource($order)
+        ], 200);
     }
 
     /**

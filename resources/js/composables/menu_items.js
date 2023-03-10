@@ -30,7 +30,6 @@ export default function useMenuItems() {
             menu_items.value = response.data.data
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
-            console.log(response.data.links)
         }).catch(error =>{
             swal({
                 icon: 'error',
@@ -136,7 +135,7 @@ export default function useMenuItems() {
         isFetching.value = true
         await axios.get('/api/browse/'+id).then(response =>{
             menu_items.value = response.data.menu_items
-            localStorage.setItem('X-TENANT-ID',response.data.tenant_id)
+            localStorage.setItem('X-Tenant-ID',response.data.tenant_id)
             localStorage.setItem('table_id', id)
         }).catch(error =>{
             swal({

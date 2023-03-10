@@ -20,6 +20,7 @@ import RestaurantIndex from "../pages/restaurants/RestaurantIndex.vue";
 import SettingsIndex from "../pages/settings/SettingsIndex.vue";
 import PlanIndex from "../pages/plans/PlanIndex.vue";
 import MenuItemBrowser from "../pages/menu_items/MenuItemBrowser.vue";
+import OrderDetails from "../pages/orders/OrderDetails.vue";
 
 
 
@@ -137,6 +138,18 @@ const routes =[
                 name : 'orders.index',
                 component : OrderIndex,
                 meta: { title: 'List of orders' }
+            },
+            {
+                path : '/live-orders',
+                name : 'orders.live',
+                component : LiveOrders,
+                meta: { title: 'Live Orders' }
+            },
+            {
+                path : '/orders/:id/details',
+                name : 'orders.details',
+                component : OrderDetails,
+                meta: { title: 'Order Details' }
             },
             {
                 path : '/restaurants',

@@ -14,7 +14,6 @@
                             <tr>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Order</th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Table</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Total</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Action
@@ -27,25 +26,20 @@
                                     <SkeletonPlaceHolder />
                                 </td>
                             </tr>
-                            <tr v-for="menu in orders" :key="menu.id">
+                            <tr v-for="order in orders" :key="order.id">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0">
-                                            <img class="h-10 w-10 rounded-full" :src="menu?.image" alt="" />
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="font-medium text-gray-900">{{ menu.name }}</div>
-                                        </div>
-                                    </div>
+                                    <div class="font-medium text-gray-900">Order # {{ order.id }}</div>
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{menu.start_time}}
+                                    {{order.table.name}}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{menu.end_time}}
+                                    <span :class="[statusStyles[order.status], 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize']">
+                                        {{ order.status }}
+                                    </span>
                                 </td>
                                 <td>
-                                    <router-link :to="`/menu/${menu.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
+                                    <router-link :to="`/orders/${order.id}/details`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
                                 </td>
                             </tr>
                             <tr v-if="orders?.length === 0 && ! isFetching">
@@ -88,7 +82,6 @@ const searchName = ref('')
 const {
     order,
     orders,
-    getOrder,
     getOrders,
     paginationLinks,
     paginationMetaData,
@@ -119,5 +112,11 @@ watch(searchName, (currentName) => {
 
 const searchMenuByName = (ev) => {
     searchName.value = ev.target.value
+}
+
+const statusStyles = {
+    success: 'bg-green-100 text-green-800',
+    Pending: 'bg-yellow-100 text-yellow-800',
+    rejected: 'bg-gray-100 text-gray-800',
 }
 </script>

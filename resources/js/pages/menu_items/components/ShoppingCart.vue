@@ -95,10 +95,9 @@ import {inject, onMounted, ref, watch, watchEffect} from "vue";
 import useOrders from "../../../composables/orders";
 
 const props = defineProps(['show'])
-const emit = defineEmits(['handleQtyChange', 'removeCartItem'])
+const emit = defineEmits(['handleQtyChange', 'removeCartItem', 'placeOrder'])
 const open = inject('open')
 const products = inject('shopping_cart')
-const {storeOrder} = useOrders()
 
 const grandTotal = ref(0.0)
 
@@ -110,12 +109,8 @@ const removeCartItem = product =>{
     emit('removeCartItem', product)
 }
 
-const placeOrder =  (products) =>{
-    storeOrder(
-        {
-            'menu_items': products,
-        }
-    )
+const placeOrder =  () =>{
+    emit('placeOrder')
 }
 
 // const calculateOrderTotal = () => {

@@ -37,6 +37,7 @@
     <ShoppingCart
         @handle-qty-change="handleQtyChange"
         @remove-cart-item="removeItem"
+        @place-order="placeOrder"
         :grand-toal = "grandTotal"
     />
 </div>
@@ -52,15 +53,14 @@ import ShoppingCart from "./components/ShoppingCart.vue";
 import {useRoute} from "vue-router";
 import useMenuItems from "../../composables/menu_items";
 import useMenus from "../../composables/menus";
+import useOrders from "../../composables/orders";
 
 const {menu_items, browseMenuByTable} = useMenuItems()
 const {menus, getMenus} = useMenus()
-
+const {storeOrder} = useOrders()
 const open = ref(false)
 const router = useRoute()
-
 const shopping_cart = ref([])
-
 const grandTotal = ref(0.0)
 
 
@@ -106,6 +106,14 @@ const handleQtyChange = (event, product) =>{
         }
         return item;
     })
+}
+
+const placeOrder =  () => {
+    storeOrder(
+        {
+            'menu_items': shopping_cart.value,
+        }
+    )
 }
 
 

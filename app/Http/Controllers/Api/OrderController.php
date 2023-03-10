@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
+use App\Models\Menu;
 use App\Models\Order;
+use Illuminate\Http\Response;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): OrderCollection
     {
-        //
+        return new OrderCollection(
+            Order::when(request('status'), function($query){
+                $query->where('status', 'like', '%'.request('status').'%');
+            })->paginate(20)
+        );
     }
 
     /**
@@ -25,7 +33,7 @@ class OrderController extends Controller
         $order = Order::create(
             [
                 'table_id'=> $data['table_id'],
-                'tenant_id' => request()->header('X-TENANT-ID')
+                'status' => 'Pending'
             ]
         );
         return response()->json([
@@ -38,9 +46,9 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(Order $order): OrderResource
     {
-        //
+        return new OrderResource($order);
     }
 
     /**
@@ -54,8 +62,9 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Order $order): Response
     {
-        //
+        $order->delete();
+        return response()->noContent();
     }
 }

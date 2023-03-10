@@ -24,7 +24,7 @@ export default function useOrders() {
 
     const getOrders = async () => {
         isFetching.value = true
-        await axios.get(ordersURL)
+        await axios.get('/api/orders')
         .then(response =>{
             orders.value = response.data.data
             paginationMetaData.value = response.data.meta

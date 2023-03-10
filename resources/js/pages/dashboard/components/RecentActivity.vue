@@ -62,9 +62,9 @@
                                 {{ order.currency }}
                             </td>
                             <td class="hidden px-6 py-4 whitespace-nowrap text-sm text-gray-500 md:block">
-                          <span :class="[statusStyles[order.status], 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize']">
-                            {{ order.status }}
-                          </span>
+                              <span :class="[statusStyles[order.status], 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize']">
+                                {{ order.status }}
+                              </span>
                             </td>
                             <td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                                 <time :datetime="order.datetime">{{ order.date }}</time>

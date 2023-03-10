@@ -53,6 +53,7 @@ export default function useAuth(){
         isLoading.value = true
         await axios.post('api/auth/register', registerForm).then(async response =>{
             localStorage.setItem('access_token', response.data.access_token)
+            await router.push({path: '/register-restaurant'})
         }).catch(err =>{
             if(err.response?.data){
                 errors.value=err.response.data.errors
@@ -64,7 +65,6 @@ export default function useAuth(){
     }
 
     const loginUser  = async (response) => {
-        console.log(response)
         localStorage.setItem('access_token', response.data.access_token)
         if(response.data.user.tenant_id === undefined || response.data.user.tenant_id === null){
             await router.push({path: '/register-restaurant'})

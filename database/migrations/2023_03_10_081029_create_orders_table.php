@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('table_id')->constrained('id')->on('tables');
             $table->string('tenant_id', 32)->nullable();
-            $table->string('status');
+            $table->string('status')->default('Pending');
             $table->timestamps();
         });
     }

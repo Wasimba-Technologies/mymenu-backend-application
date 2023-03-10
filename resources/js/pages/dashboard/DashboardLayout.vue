@@ -138,7 +138,7 @@ import {useRoute} from "vue-router";
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon},
-    { name: 'Live Orders', href: '/live-orders', icon: BoltIcon },
+    // { name: 'Live Orders', href: '/live-orders', icon: BoltIcon },
     { name: 'Orders', href: '/orders', icon: ShoppingBagIcon },
     { name: 'restaurants', href: '/restaurants', icon: HomeIcon },
     { name: 'Menu', href: '/menu', icon: DocumentDuplicateIcon },
