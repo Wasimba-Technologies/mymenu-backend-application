@@ -31,7 +31,7 @@
                                     <div class="font-medium text-gray-900">Order # {{ order.id }}</div>
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{order.table.name}}
+                                    {{order.table?.name}}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     <span :class="[statusStyles[order.status], 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize']">
@@ -115,8 +115,9 @@ const searchMenuByName = (ev) => {
 }
 
 const statusStyles = {
-    success: 'bg-green-100 text-green-800',
+    Confirmed: 'bg-green-100 text-green-800',
+    Paid: 'bg-green-100 text-green-800',
     Pending: 'bg-yellow-100 text-yellow-800',
-    rejected: 'bg-gray-100 text-gray-800',
+    Rejected: 'bg-gray-100 text-gray-800',
 }
 </script>

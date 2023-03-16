@@ -48,6 +48,7 @@ class OrderController extends Controller
      */
     public function show(Order $order): OrderResource
     {
+        $order->load(['table','menu_items','tenant']);
         return new OrderResource($order);
     }
 
@@ -56,7 +57,15 @@ class OrderController extends Controller
      */
     public function update(OrderRequest $request, Order $order)
     {
-        //
+        $data = request()->json()->all();
+        $order->status = $data['status'];
+        $order->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Order Updated successfully',
+            'order' => $order
+        ]);
     }
 
     /**

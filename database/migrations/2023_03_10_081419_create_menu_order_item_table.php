@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('order_menu_item', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('id')->on('orders');
             $table->foreignId('menu_item_id')->constrained('id')->on('menu_items');
             $table->unsignedInteger('qty');
-            $table->string('tenant_id', 32)->nullable();
-            $table->timestamps();
+            //$table->string('tenant_id', 32)->nullable();
+            //$table->timestamps();
         });
     }
 

@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MenuItemResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
-use App\Models\OrderItem;
+use App\Models\OrderMenuItem;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 
-class OrderItemController extends Controller
+class OrderMenuItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,23 +27,15 @@ class OrderItemController extends Controller
     public function store(Request $request)
     {
         $data = request()->json()->all();
-        $menu_items= [];
-        $now = Carbon::now('utc')->toDateTimeString();
-
         $order = Order::findOrFail($data['order_id']);
-
         foreach ($data['menu_items'] as $item){
-            $menu_items[] = [
-                'order_id' => $data['order_id'],
-                'menu_item_id' => $item['menu_item']['id'],
-                'qty' => $item['qty'],
-                'tenant_id' => request()->header('X-TENANT_ID'),
-                'created_at' => $now,
-                'updated_at' => $now
-            ];
+            $order->menu_items()->attach(
+                $item['menu_item']['id'],
+                ['qty' => $item['qty']]
+            );
         }
 
-        OrderItem::insert($menu_items);
+        //OrderMenuItem::insert($menu_items);
 
         return response()->json([
             'status' => 'success',
@@ -55,7 +47,7 @@ class OrderItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OrderItem $orderItem)
+    public function show(OrderMenuItem $orderItem)
     {
         //
     }
@@ -63,7 +55,7 @@ class OrderItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OrderItem $orderItem)
+    public function update(Request $request, OrderMenuItem $orderItem)
     {
         //
     }
@@ -71,7 +63,7 @@ class OrderItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrderItem $orderItem)
+    public function destroy(OrderMenuItem $orderItem)
     {
         //
     }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class OrderItemResource extends JsonResource
+class OrderMenuItemResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,7 @@ class OrderItemResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'qty' => $this->qty,
+            'qty' => $this->pivot->qty,
             'menu_item' => new MenuItemResource($this->menu_item)
         ];
     }

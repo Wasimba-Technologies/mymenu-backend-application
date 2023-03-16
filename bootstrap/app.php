@@ -11,6 +11,9 @@
 |
 */
 
+
+use Barryvdh\DomPDF\ServiceProvider;
+
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
@@ -40,6 +43,13 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+
+//Registering DOM PDF
+//https://github.com/barryvdh/laravel-dompdf
+//$app->register(
+//    Barryvdh\DomPDF\ServiceProvider::class
+//);
+
 
 /*
 |--------------------------------------------------------------------------

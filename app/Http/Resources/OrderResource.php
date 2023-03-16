@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class OrderResource extends JsonResource
 {
@@ -17,8 +19,11 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => $this->status,
-            'table' => new TableResource($this->table),
-            'order_items' => OrderItemResource::collection($this->order_items)
+            'created_at' => Carbon::parse($this->created_at)->isoFormat('D MMM YYYY HH:mm'),
+            'updated_at' => Carbon::parse($this->updated_at)->isoFormat('D MMM YYYY HH:mm'),
+            'table' => new TableResource($this->whenLoaded('table')),
+            'order_items' => $this->whenLoaded('menu_items'),
+            'restaurant' => new RestaurantResource($this->whenLoaded('tenant'))
         ];
     }
 }

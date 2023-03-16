@@ -8,6 +8,7 @@ export default function useOrders() {
     const errors = ref({})
     const isLoading = ref(false)
     const isFetching = ref(false)
+    const isRejecting = ref(false)
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
     const ordersURL = ref('/api/orders')
@@ -94,22 +95,20 @@ export default function useOrders() {
     }
 
 
-    const updateOrder = async (id) =>{
+    const updateOrderStatus = async (id, data) =>{
 
+        if(data.status !=='Confirmed'){
+            isRejecting.value = true
+        }
         isLoading.value = true
 
-        //check if user is updating file
-        let data = {...order.value}
-
-
-
-        await axios.post('/api/orders/'+id, data)
+        await axios.put('/api/orders/'+id, data)
             .then(response =>{
-                router.push({name: 'orders.index'})
                 swal({
                     icon: 'success',
-                    title: 'Order Updated successfully'
+                    title: response.data.message
                 })
+                window.location.reload()
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors
@@ -120,7 +119,36 @@ export default function useOrders() {
                     })
                 }
             }).finally(
-                () => isLoading.value = false
+                () => {
+                    isLoading.value = false
+                    isRejecting.value = false
+                }
+            )
+    }
+
+    const printReceipt = async (order_id) => {
+        await axios.get('/api/print/' + order_id, {responseType: 'blob'})
+            .then(response => {
+                console.log(response)
+                let url = window.URL.createObjectURL(new Blob([response.data],{type: 'application/pdf'}));
+                //Open the URL on new Window
+                const pdfWindow = window.open();
+                pdfWindow.location.href = url;
+                window.URL.revokeObjectURL(response.data)
+            }).catch(error => {
+                if (error.response?.data) {
+                    errors.value = error.response.data.errors
+                } else {
+                    swal({
+                        icon: 'error',
+                        title: error.message
+                    })
+                }
+            }).finally(
+                () => {
+                    isLoading.value = false
+                    isRejecting.value = false
+                }
             )
     }
 
@@ -135,13 +163,15 @@ export default function useOrders() {
         getOrders,
         getOrder,
         storeOrder,
-        updateOrder,
+        updateOrderStatus,
         isFetching,
         isLoading,
+        isRejecting,
         orderForm,
         paginationMetaData,
         paginationLinks,
-        numFormat
+        numFormat,
+        printReceipt
     }
 
 }

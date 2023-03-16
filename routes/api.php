@@ -5,8 +5,10 @@ use App\Http\Controllers\Api\MenuBrowser;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuItemController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\OrderItemController;
+use App\Http\Controllers\Api\OrderMenuItemController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PlanController;
+use App\Http\Controllers\Api\PrinterController;
 use App\Http\Controllers\Api\QRCodeController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\TableController;
@@ -47,12 +49,21 @@ Route::middleware(['auth:sanctum'])->group(
             'orders', OrderController::class
         );
         Route::apiResource(
-            'order_items', OrderItemController::class
+            'order_items', OrderMenuItemController::class
+        );
+        Route::apiResource(
+            'payments', PaymentController::class
         );
         Route::apiResource(
             'plans', PlanController::class
         );
+//        Route::apiResource(
+//            'print_receipt',
+//            PrinterController::class,
+//        )->only(['show']);
+
         Route::post('/generate_qr', [QRCodeController::class, 'generateQRCode']);
+        Route::get('/print/{order}', [PrinterController::class, 'print']);
         Route::post('/auth/logout', [AuthController::class, 'logout']);
 
     }
