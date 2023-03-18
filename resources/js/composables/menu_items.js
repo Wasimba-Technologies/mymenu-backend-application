@@ -66,6 +66,7 @@ export default function useMenuItems() {
             }
         }
 
+
         await axios.post('/api/menu_items', formData)
             .then(response => {
                 menu_item.value = response.data.data
@@ -87,14 +88,10 @@ export default function useMenuItems() {
                 () => isLoading.value = false
             )
     }
-    const updateMenuItem = async (id, modified_menu_item) => {
+    const updateMenuItem = async (id, data) => {
 
         isLoading.value = true
-
-        let data = {...modified_menu_item.value}
-
-        console.log(data.image instanceof File)
-
+        console.log(data)
         let formData = new FormData();
 
         for (let item in data) {
@@ -102,6 +99,8 @@ export default function useMenuItems() {
                 formData.append(item, data[item])
             }
         }
+
+       // formData = Object.assign(formData, data)
         //Method Spoofing, for laravel put/patch handling
         formData.append("_method", "put");
 
@@ -110,12 +109,10 @@ export default function useMenuItems() {
             formData.delete('image')
         }
 
-        console.log(formData)
 
-
-        await axios.put('/api/menu_items/' + id, formData)
+        await axios.post('/api/menu_items/' + id, formData)
             .then(response => {
-                router.push({name: 'menus.index'})
+                router.push({name: 'menu_items.index'})
                 swal({
                     icon: 'success',
                     title: 'Menu item Updated successfully'

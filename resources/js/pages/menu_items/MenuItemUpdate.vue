@@ -33,7 +33,7 @@ const route = useRoute()
 const modified_menu_item = ref({})
 
 const changeMenuItem = async () => {
-    await updateMenuItem(route.params.id, modified_menu_item.value);
+    await updateMenuItem(route.params.id, {...modified_menu_item.value});
 }
 
 const tempImgUrl = ref(null)
