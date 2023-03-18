@@ -37,7 +37,6 @@
             -webkit-align-content: center;
             align-content: center;
             padding: 5px;
-            margin: 2px;
             display: block;
             margin: 0 auto;
         }
@@ -145,10 +144,15 @@
 
 <body>
 <header>
-    <div id="logo" class="media" data-src="logo.png" src="./logo.png"></div>
+    <p class="restaurant">{{$tenant->name}}</p>
+    <div >
+        <img id="logo" src="data:image/png;base64,
+        {{ base64_encode(file_get_contents(public_path('storage/'.$tenant->logo))) }}"
+             alt="logo" style="width: 80px; height: 80px;"
+        />
+    </div>
 </header>
-<p class="restaurant">{{$tenant->name}}</p>
-<p class="address">{{$tenant->email}}</p>
+<p class="address">{{$tenant->address_one}} | {{$tenant->address_two}} | {{$tenant->country}}</p>
 <table class="bill-details">
     <tbody>
     <tr>

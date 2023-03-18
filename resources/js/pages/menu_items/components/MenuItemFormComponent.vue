@@ -13,7 +13,10 @@
                             <select id="menu" name="menu" v-model="menuItemForm.menu_id"
                                     :class="[errors?.menu_id === undefined ? 'valid-select' : 'invalid-select']">
                                 <option value="" selected>--Select Menu--</option>
-                                <option v-for="menu in menus" :value="menu.id">{{menu.name}}</option>
+                                <option v-for="menu in menus" :value="menu.id"
+                                        :selected="parseInt(menu.id) === parseInt(menuItemForm.menu_id)" :key="menu.id">
+                                    {{menu.name}}
+                                </option>
                             </select>
                             <p class="mt-2 text-sm text-red-600" id="menu-error" v-for="error in errors?.menu_id">{{error}}</p>
                         </div>
@@ -76,8 +79,6 @@
                             <p class="mt-2 text-sm text-red-600" id="logo-error" v-for="error in errors?.image">{{error}}</p>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 text-right sm:px-6 mt-6">

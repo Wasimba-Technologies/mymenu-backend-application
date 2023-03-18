@@ -2,12 +2,12 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center flex-row-reverse">
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <router-link to="/menu/create"
-                             class="inline-flex items-center justify-center rounded-md border border-transparent
-                                         bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700
-                                         focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:w-auto">
-                    Add Menu
-                </router-link>
+<!--                <router-link to="/register-restaurant"-->
+<!--                             class="inline-flex items-center justify-center rounded-md border border-transparent-->
+<!--                                         bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700-->
+<!--                                         focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:w-auto">-->
+<!--                    Add Restaurant-->
+<!--                </router-link>-->
             </div>
         </div>
         <div class="mt-4 flex flex-col">
@@ -18,9 +18,9 @@
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Menu</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Start Time</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">End Time</th>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Address</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Phone Number</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Action
                                 </th>
@@ -32,32 +32,32 @@
                                     <SkeletonPlaceHolder />
                                 </td>
                             </tr>
-                            <tr v-for="menu in menus" :key="menu.id">
+                            <tr v-for="restaurant in tenants" :key="restaurant.id">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                     <div class="flex items-center">
                                         <div class="h-10 w-10 flex-shrink-0">
-                                            <img class="h-10 w-10 rounded-full" :src="menu?.image" alt="" />
+                                            <img class="h-10 w-10 rounded-full" :src="restaurant?.logo" alt="" />
                                         </div>
                                         <div class="ml-4">
-                                            <div class="font-medium text-gray-900">{{ menu.name }}</div>
+                                            <div class="font-medium text-gray-900">{{ restaurant.name }}</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{menu.start_time}}
+                                    {{restaurant.address_one}},{{restaurant.address_two}}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{menu.end_time}}
+                                    {{restaurant.phone_number}}
                                 </td>
                                 <td>
-                                    <router-link :to="`/menu/${menu.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
+                                    <router-link :to="`/restaurants/${restaurant.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
                                 </td>
                             </tr>
-                            <tr v-if="menus?.length === 0 && ! isFetching">
+                            <tr v-if="tenants?.length === 0 && ! isFetching">
                                 <td colSpan="5">
                                     <NoDataSVG
                                         class="flex flex-col justify-center items-center mt-10"
-                                        message="Oops! There are no buses Yet."
+                                        message="Oops! There are no restaurants Yet."
                                     />
                                 </td>
                             </tr>
@@ -65,7 +65,7 @@
                         </table>
                     </div>
                     <div class="flex justify-end mt-2">
-                        <Pagination v-if="menus?.length !== 0"
+                        <Pagination v-if="tenants?.length !== 0"
                                     @on-prev-clicked="onPrevClicked"
                                     @on-next-clicked="onNextClicked"
                                     :is-next="paginationLinks?.next"
@@ -87,16 +87,17 @@ import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
+import useTenants from "../../composables/restaurant";
 
 const searchName = ref('')
 const {
-    menus,
-    getMenus,
+    tenants,
+    getTenants,
     paginationLinks,
     paginationMetaData,
     changeTenantsUrl,
     isFetching
-} = useMenus()
+} = useTenants()
 
 
 
@@ -110,13 +111,13 @@ const onPrevClicked =() =>{
 
 onMounted(()=>{
     //if URL changes perform side effects
-    watchEffect(()=>getMenus(searchName.value))
+    watchEffect(()=>getTenants(searchName.value))
 })
 
 
 
 watch(searchName, (currentName) => {
-    getMenus(currentName)
+    getTenants(currentName)
 })
 
 const searchMenuByName = (ev) => {

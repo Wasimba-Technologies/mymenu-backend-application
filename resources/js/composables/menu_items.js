@@ -87,12 +87,13 @@ export default function useMenuItems() {
                 () => isLoading.value = false
             )
     }
-    const updateMenuItem = async (id) => {
+    const updateMenuItem = async (id, modified_menu_item) => {
 
         isLoading.value = true
 
-        //check if user is updating file
-        let data = {...menu_item.value}
+        let data = {...modified_menu_item.value}
+
+        console.log(data.image instanceof File)
 
         let formData = new FormData();
 
@@ -104,13 +105,15 @@ export default function useMenuItems() {
         //Method Spoofing, for laravel put/patch handling
         formData.append("_method", "put");
 
-        //Delete Logo key if form has no image
-        if (!(data.logo instanceof File)) {
+        //Delete image key if form has no image
+        if (!(data.image instanceof File)) {
             formData.delete('image')
         }
 
+        console.log(formData)
 
-        await axios.post('/api/menu_items/' + id, formData)
+
+        await axios.put('/api/menu_items/' + id, formData)
             .then(response => {
                 router.push({name: 'menus.index'})
                 swal({
@@ -148,6 +151,7 @@ export default function useMenuItems() {
     }
 
     return {
+        menu_item,
         menu_items,
         errors,
         getMenuItems,

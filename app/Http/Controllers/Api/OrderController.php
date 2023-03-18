@@ -20,7 +20,7 @@ class OrderController extends Controller
         return new OrderCollection(
             Order::when(request('status'), function($query){
                 $query->where('status', 'like', '%'.request('status').'%');
-            })->paginate(20)
+            })->with('table')->paginate(20)
         );
     }
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('table_id')->constrained('id')->on('tables');
             $table->string('tenant_id', 32)->nullable();
             $table->string('status')->default('Pending');
+            $table->unsignedInteger('preparation_time')->nullable();
             $table->timestamps();
         });
     }

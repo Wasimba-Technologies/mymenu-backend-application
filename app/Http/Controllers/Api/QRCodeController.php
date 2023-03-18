@@ -30,7 +30,7 @@ class QRCodeController extends Controller
         $result = Builder::create()
             ->writer(new PngWriter())
             ->writerOptions([])
-            ->data(env('APP_URL').'/menu_items?tenant='.$tenant_id)
+            ->data(env('APP_URL').'/browse/'.$data['table_id'])
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
             ->size(200)
@@ -55,7 +55,7 @@ class QRCodeController extends Controller
         $dataUri = $result->getDataUri();
 
         $table = Table::where('id', $data['table_id'])->first();
-        $table->qr_code = $qr_code_path;
+        $table->qr_code = 'qrcodes/'.$tenant_id.'/qrcode_table'.$data['table_id'].'.png';
         $table->save();
 
 

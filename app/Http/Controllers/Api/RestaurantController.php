@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RestaurantRequest;
+use App\Http\Resources\RestaurantCollection;
 use App\Http\Resources\RestaurantResource;
 use App\Models\Restaurant;
 use App\Traits\HasImage;
@@ -17,11 +18,11 @@ class RestaurantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): RestaurantCollection
     {
-        return RestaurantResource::collection(Restaurant::when(request('name'), function($query){
+        return new RestaurantCollection(Restaurant::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
-        })->get());
+        })->paginate(20));
     }
 
     /**

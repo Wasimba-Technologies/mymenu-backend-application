@@ -2,31 +2,34 @@ import {inject, reactive, ref} from "vue";
 import router from "../router";
 
 
-export default function useMenus() {
-    const menus = ref([]);
-    const menu = ref({});
+export default function usePlans() {
+    const plans = ref([]);
+    const plan = ref({});
     const errors = ref({})
     const isLoading = ref(false)
     const isFetching = ref(false)
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
-    const menuURL = ref('/api/menus')
+    const planURL = ref('/api/plans')
 
     const swal = inject('$swal')
 
-    const menuForm = reactive(
+    const planForm = reactive(
         {
-            name: '',
-            start_time: '',
-            end_time: ''
+            menu_items: '',
+            views: '',
+            orders: '',
+            users: '',
+            dedicated_support: '',
+            price: ''
         }
     )
 
-    const getMenus = async (searchName) => {
+    const getPlans = async () => {
         isFetching.value = true
         //searchName = searchName === undefined ? '' : searchName
-        await axios.get(menuURL.value).then(response =>{
-            menus.value = response.data.data
+        await axios.get(planURL.value).then(response =>{
+            plans.value = response.data.data
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
@@ -39,10 +42,10 @@ export default function useMenus() {
         )
     }
 
-    const getMenu = async (id) => {
+    const getPlan = async (id) => {
         isFetching.value = true
-        await axios.get('/api/menus/'+id).then(response =>{
-            menu.value = response.data.data
+        await axios.get('/api/plans/'+id).then(response =>{
+            plan.value = response.data.data
         }).catch(error =>{
             swal({
                 icon: 'error',
@@ -53,13 +56,13 @@ export default function useMenus() {
         )
     }
 
-    const storeMenu = async (data) => {
+    const storePlan = async (data) => {
         isLoading.value = true;
 
-        await axios.post('/api/menus', data)
+        await axios.post('/api/plans', data)
             .then(response =>{
-                menu.value = response.data.data
-                router.push({name: 'menu.index'})
+                plan.value = response.data.data
+                router.push({name: 'plans.index'})
                 swal({
                     icon: 'success',
                     title: 'Information Stored successfully'
@@ -79,35 +82,20 @@ export default function useMenus() {
     }
 
 
-    const updateMenu = async (id) =>{
+    const updatePlan = async (id) =>{
 
         isLoading.value = true
 
         //check if user is updating file
-        let data = {...menu.value}
-
-        let formData = new FormData();
-
-        for(let item in data){
-            if(data.hasOwnProperty(item)){
-                formData.append(item, data[item])
-            }
-        }
-        //Method Spoofing, for laravel put/patch handling
-        formData.append("_method", "put");
-
-        //Delete Logo key if form has no image
-        if (!(data.logo instanceof File)){
-            formData.delete('image')
-        }
+        let data = {...plan.value}
 
 
-        await axios.post('/api/menus/'+id, formData)
+        await axios.post('/api/plans/'+id, formData)
             .then(response =>{
-                router.push({name: 'menu.index'})
+                router.push({name: 'plans.index'})
                 swal({
                     icon: 'success',
-                    title: 'Menu Updated successfully'
+                    title: 'Plan Updated successfully'
                 })
             }).catch(error =>{
                 if(error.response?.data){
@@ -124,16 +112,16 @@ export default function useMenus() {
     }
 
     return {
-        menu,
-        menus,
+        plan,
+        plans,
         errors,
-        getMenus,
-        getMenu,
-        storeMenu,
-        updateMenu,
+        getPlans,
+        getPlan,
+        storePlan,
+        updatePlan,
         isFetching,
         isLoading,
-        menuForm,
+        planForm,
         paginationMetaData,
         paginationLinks
     }

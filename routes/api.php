@@ -64,6 +64,7 @@ Route::middleware(['auth:sanctum'])->group(
 
         Route::post('/generate_qr', [QRCodeController::class, 'generateQRCode']);
         Route::get('/print/{order}', [PrinterController::class, 'print']);
+        Route::get('/print_qr/{table}', [PrinterController::class, 'print_qr']);
         Route::post('/auth/logout', [AuthController::class, 'logout']);
 
     }

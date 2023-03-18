@@ -13,13 +13,12 @@
         <div class="mt-4 flex flex-col">
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                    <TableSearch @searchData="searchMenuByName" />
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Plan</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Cost</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Price</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Action
                                 </th>
@@ -31,29 +30,22 @@
                                     <SkeletonPlaceHolder />
                                 </td>
                             </tr>
-                            <tr v-for="plan in menus" :key="plan.id">
+                            <tr v-for="plan in plans" :key="plan.id">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0">
-                                            <img class="h-10 w-10 rounded-full" :src="plan?.image" alt="" />
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="font-medium text-gray-900">{{ plan.name }}</div>
-                                        </div>
-                                    </div>
+                                    {{ plan.name }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{plan.start_time}}
+                                    {{plan.price}}
                                 </td>
                                 <td>
                                     <router-link :to="`/plans/${plan.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
                                 </td>
                             </tr>
-                            <tr v-if="menus?.length === 0 && ! isFetching">
+                            <tr v-if="plans?.length === 0 && ! isFetching">
                                 <td colSpan="5">
                                     <NoDataSVG
                                         class="flex flex-col justify-center items-center mt-10"
-                                        message="Oops! There are no buses Yet."
+                                        message="Oops! There are no Plans Yet."
                                     />
                                 </td>
                             </tr>
@@ -61,7 +53,7 @@
                         </table>
                     </div>
                     <div class="flex justify-end mt-2">
-                        <Pagination v-if="menus?.length !== 0"
+                        <Pagination v-if="plans?.length !== 0"
                                     @on-prev-clicked="onPrevClicked"
                                     @on-next-clicked="onNextClicked"
                                     :is-next="paginationLinks?.next"
@@ -83,39 +75,31 @@ import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
+import usePlans from "../../composables/plans";
 
 const searchName = ref('')
 const {
-    menus,
-    getMenus,
+    plans,
+    getPlans,
     paginationLinks,
     paginationMetaData,
-    changeTenantsUrl,
+    changePlansUrl,
     isFetching
-} = useMenus()
+} = usePlans()
 
 
 
 const onNextClicked = () => {
-    changeTenantsUrl(paginationLinks.value.next)
+    changePlansUrl(paginationLinks.value.next)
 }
 
 const onPrevClicked =() =>{
-    changeTenantsUrl(paginationLinks.value.prev)
+    changePlansUrl(paginationLinks.value.prev)
 }
 
 onMounted(()=>{
-    //if URL changes perform side effects
-    watchEffect(()=>getMenus(searchName.value))
+    getPlans()
 })
 
 
-
-watch(searchName, (currentName) => {
-    getMenus(currentName)
-})
-
-const searchMenuByName = (ev) => {
-    searchName.value = ev.target.value
-}
 </script>

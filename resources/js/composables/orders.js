@@ -104,11 +104,12 @@ export default function useOrders() {
 
         await axios.put('/api/orders/'+id, data)
             .then(response =>{
+                //window.location.reload()
                 swal({
                     icon: 'success',
                     title: response.data.message
                 })
-                window.location.reload()
+                order.value = response.data.data
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors

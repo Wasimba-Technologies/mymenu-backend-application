@@ -9,7 +9,7 @@ export default function useTenants(){
     const isFetching = ref(false)
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
-    const tenantsURL = ref('/api/tenants')
+    const tenantsURL = ref('/api/tenants?page=1')
 
     const swal = inject('$swal')
 
@@ -28,10 +28,12 @@ export default function useTenants(){
 
     const getTenants = async (searchName) => {
         isFetching.value = true
+        searchName = searchName === undefined ? '' : searchName
         await axios.get(tenantsURL.value+'&name='+searchName).then(response =>{
             tenants.value = response.data.data
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
+            console.log(response.data)
         }).catch(error =>{
             swal({
                 icon: 'error',
@@ -46,7 +48,7 @@ export default function useTenants(){
         isFetching.value = true
         await axios.get('/api/tenants/'+id).then(response =>{
             //Object.assign(tenant,response.data.data)
-
+            console.log(response)
             tenant.value = response.data.data
         }).catch(error =>{
             swal({

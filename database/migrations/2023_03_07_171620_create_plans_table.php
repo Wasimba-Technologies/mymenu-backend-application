@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('orders');
             $table->integer('users');
             $table->boolean('dedicated_support');
+            $table->unsignedFloat('price');
             $table->timestamps();
         });
     }

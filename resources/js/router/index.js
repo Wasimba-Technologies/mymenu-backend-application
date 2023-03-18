@@ -21,6 +21,12 @@ import SettingsIndex from "../pages/settings/SettingsIndex.vue";
 import PlanIndex from "../pages/plans/PlanIndex.vue";
 import MenuItemBrowser from "../pages/menu_items/MenuItemBrowser.vue";
 import OrderDetails from "../pages/orders/OrderDetails.vue";
+import TableUpdate from "../pages/tables/TableUpdate.vue";
+import MenuItemUpdate from "../pages/menu_items/MenuItemUpdate.vue";
+import MenuUpdate from "../pages/menus/MenuUpdate.vue";
+import RestaurantUpdate from "../pages/restaurants/RestaurantUpdate.vue";
+import PlanUpdate from "../pages/plans/PlanUpdate.vue";
+import PlanCreate from "../pages/plans/PlanCreate.vue";
 
 
 
@@ -98,6 +104,12 @@ const routes =[
                 meta: { title: 'Create Menu' }
             },
             {
+                path : '/menu/:id/update',
+                name : 'menu.update',
+                component : MenuUpdate,
+                meta: { title: 'Update Menu' }
+            },
+            {
                 path : '/menu-items',
                 name : 'menu_items.index',
                 component : MenuItemIndex,
@@ -110,6 +122,12 @@ const routes =[
                 meta: { title: 'Create Menu Items' }
             },
             {
+                path : '/menu-items/:id/update',
+                name : 'menu_items.update',
+                component : MenuItemUpdate,
+                meta: { title: 'Update Menu Items' }
+            },
+            {
                 path : '/tables',
                 name : 'tables.index',
                 component : TableIndex,
@@ -120,6 +138,12 @@ const routes =[
                 name : 'tables.create',
                 component : TableCreate,
                 meta: { title: 'Create Tables' }
+            },
+            {
+                path : '/tables/:id/update',
+                name : 'tables.update',
+                component : TableUpdate,
+                meta: { title: 'Update Table' }
             },
             {
                 path : '/qr-builder',
@@ -155,12 +179,30 @@ const routes =[
                 path : '/restaurants',
                 name : 'restaurants.index',
                 component : RestaurantIndex,
-                meta: { title: 'List of orders' }
+                meta: { title: 'List of Restaurants' }
+            },
+            {
+                path : '/restaurants/:id/update',
+                name : 'restaurants.update',
+                component : RestaurantUpdate,
+                meta: { title: 'Update Restaurants' }
             },
             {
                 path : '/plans',
                 name : 'plans.index',
                 component : PlanIndex,
+                meta: { title: 'Plans' }
+            },
+            {
+                path : '/plans/create',
+                name : 'plans.create',
+                component : PlanCreate,
+                meta: { title: 'Plans' }
+            },
+            {
+                path : '/plans/:id/update',
+                name : 'plans.update',
+                component : PlanUpdate,
                 meta: { title: 'Plans' }
             },
             {
