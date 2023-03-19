@@ -47,8 +47,6 @@ export default function useTenants(){
     const getTenant = async (id) => {
         isFetching.value = true
         await axios.get('/api/tenants/'+id).then(response =>{
-            //Object.assign(tenant,response.data.data)
-            console.log(response)
             tenant.value = response.data.data
         }).catch(error =>{
             swal({

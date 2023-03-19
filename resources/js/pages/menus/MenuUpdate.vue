@@ -1,4 +1,5 @@
 <template>
+    <BlurredSpinner v-if="isFetching" />
     <MenuFormComponent
         :menu-form="menu"
         :is-loading="isLoading"
@@ -14,8 +15,9 @@ import {onMounted, provide} from "vue";
 import useMenus from "../../composables/menus";
 import MenuFormComponent from "./components/MenuFormComponent.vue";
 import {useRoute} from "vue-router";
+import BlurredSpinner from "../../components/BlurredSpinner.vue";
 
-const {errors, menu, isLoading, updateMenu, getMenu} = useMenus()
+const {errors, menu, isLoading, isFetching, updateMenu, getMenu} = useMenus()
 const route = useRoute()
 
 const changeMenu = async () => {

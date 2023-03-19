@@ -1,4 +1,5 @@
 <template>
+    <BlurredSpinner v-if="isFetching" />
     <TableFormComponent
         :table-form="table"
         :is-loading="isLoading"
@@ -14,8 +15,9 @@ import {onMounted, provide} from "vue";
 import useTables from "../../composables/tables";
 import TableFormComponent from "./components/TableFormComponent.vue";
 import {useRoute} from "vue-router";
+import BlurredSpinner from "../../components/BlurredSpinner.vue";
 
-const {errors, getTable, updateTable, isLoading, table} = useTables()
+const {errors, getTable, updateTable, isLoading, isFetching, table} = useTables()
 
 const router = useRoute()
 

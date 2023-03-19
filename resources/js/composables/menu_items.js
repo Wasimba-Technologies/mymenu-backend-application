@@ -91,7 +91,6 @@ export default function useMenuItems() {
     const updateMenuItem = async (id, data) => {
 
         isLoading.value = true
-        console.log(data)
         let formData = new FormData();
 
         for (let item in data) {

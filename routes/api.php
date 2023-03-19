@@ -57,10 +57,17 @@ Route::middleware(['auth:sanctum'])->group(
         Route::apiResource(
             'plans', PlanController::class
         );
-//        Route::apiResource(
-//            'print_receipt',
-//            PrinterController::class,
-//        )->only(['show']);
+
+        Route::get('abilities', function(Request $request) {
+            return $request->user()->roles()->with('permissions')
+                ->get()
+                ->pluck('permissions')
+                ->flatten()
+                ->pluck('name')
+                ->unique()
+                ->values()
+                ->toArray();
+        });
 
         Route::post('/generate_qr', [QRCodeController::class, 'generateQRCode']);
         Route::get('/print/{order}', [PrinterController::class, 'print']);

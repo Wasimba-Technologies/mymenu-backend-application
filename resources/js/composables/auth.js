@@ -1,10 +1,14 @@
-import {reactive, ref} from "vue";
+import {inject, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
+import { AbilityBuilder, Ability } from '@casl/ability';
+import { ABILITY_TOKEN } from '@casl/vue';
 
 export default function useAuth(){
     const isLoading = ref(false)
     const errors = ref({})
     const router = useRouter()
+    const ability = inject(ABILITY_TOKEN)
+
 
     const loginForm = reactive(
         {
@@ -70,6 +74,7 @@ export default function useAuth(){
             await router.push({path: '/register-restaurant'})
         }else{
             localStorage.setItem('X-Tenant-ID', response.data.user.tenant_id)
+            await getAbilities()
             await router.push({path: '/dashboard'})
         }
     }
@@ -96,6 +101,18 @@ export default function useAuth(){
             })
     }
 
+    const getAbilities = () =>{
+        axios.get('/api/abilities')
+            .then(response => {
+                const permissions = response.data
+                const { can, rules } = new AbilityBuilder(Ability)
+
+                can(permissions)
+
+                ability.update(rules)
+            })
+    }
+
 
     return {
         submitLogin,
@@ -104,6 +121,7 @@ export default function useAuth(){
         isLoading,
         loginForm,
         registerForm,
-        errors
+        errors,
+        getAbilities
     }
 }

@@ -1,4 +1,5 @@
 <template>
+    <BlurredSpinner v-if="isFetching" />
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="mt-8 ">
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -130,11 +131,15 @@ import {computed, inject, onMounted, provide, ref, toRaw} from "vue";
 import {useRoute} from "vue-router";
 import LoadingSpinner from "../../components/LoadingSpinner.vue";
 import usePayments from "../../composables/payments";
+import { useAbility } from '@casl/vue'
+const { can } = useAbility()
+
 
 const {
     order,
     isLoading,
     isRejecting,
+    isFetching,
     numFormat,
     getOrder,
     updateOrderStatus,

@@ -1,4 +1,5 @@
 <template>
+    <BlurredSpinner v-if="isFetching" />
     <PlanFormComponent
         :menu-form="plan"
         :is-loading="isLoading"
@@ -15,7 +16,7 @@ import {useRoute} from "vue-router";
 import usePlans from "../../composables/plans";
 import PlanFormComponent from "./components/PlanFormComponent.vue";
 
-const {errors, plan, isLoading, updatePlan, getPlan} = usePlans()
+const {errors, plan, isLoading, isFetching, updatePlan, getPlan} = usePlans()
 const route = useRoute()
 
 const changePlan = async () => {

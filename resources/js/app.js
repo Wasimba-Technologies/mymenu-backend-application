@@ -6,7 +6,8 @@ import Register from "./pages/auth/Register.vue";
 import DashboardIndex from "./pages/dashboard/DashboardIndex.vue";
 import router from "./router";
 import VueSweetalert2 from "vue-sweetalert2";
-
+import { abilitiesPlugin } from '@casl/vue';
+import ability from './services/ability';
 
 const app = createApp({
     components:{
@@ -18,4 +19,7 @@ const app = createApp({
 })
 app.use(router)
 app.use(VueSweetalert2)
+app.use(abilitiesPlugin, ability, {
+    useGlobalProperties: true
+})
 app.mount('#app')

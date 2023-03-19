@@ -1,4 +1,5 @@
 <template>
+    <BlurredSpinner v-if="isFetching" />
     <MenuItemFormComponent
         :menu-item-form="modified_menu_item"
         :menus="menus"
@@ -23,6 +24,7 @@ const {
     errors,
     menu_item,
     isLoading,
+    isFetching,
     updateMenuItem,
     getMenuItem
 } = useMenuItems()

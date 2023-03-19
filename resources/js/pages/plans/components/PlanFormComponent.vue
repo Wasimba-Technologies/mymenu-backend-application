@@ -55,7 +55,7 @@
                             <label for="dedicated-support" class="block text-sm font-medium text-gray-700">
                                 Dedicated support
                                 <input type="checkbox" name="dedicated_support" id="dedicated_support" v-model="planForm.dedicated_support"
-                                       :class="[errors?.dedicated_support === undefined ? 'valid-input' : 'invalid-input']" required/>
+                                       :class="[errors?.dedicated_support === undefined ? 'valid-input' : 'invalid-input']" />
                             </label>
                             <p class="mt-2 text-sm text-red-600" id="dedicated-support-error" v-for="error in errors?.dedicated_support">{{error}}</p>
                         </div>

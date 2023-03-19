@@ -8,6 +8,7 @@ use App\Http\Resources\RestaurantCollection;
 use App\Http\Resources\RestaurantResource;
 use App\Models\Restaurant;
 use App\Traits\HasImage;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -17,9 +18,11 @@ class RestaurantController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @throws AuthorizationException
      */
     public function index(): RestaurantCollection
     {
+        $this->authorize('view', Restaurant::class);
         return new RestaurantCollection(Restaurant::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
         })->paginate(20));
@@ -59,9 +62,11 @@ class RestaurantController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @throws AuthorizationException
      */
     public function destroy(Restaurant $restaurant): Response
     {
+        $this->authorize('delete', $restaurant);
         $restaurant->delete();
         return response()->noContent();
     }
