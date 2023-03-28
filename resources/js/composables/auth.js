@@ -2,12 +2,23 @@ import {inject, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import { AbilityBuilder, Ability } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
+import router from "../router";
 
 export default function useAuth(){
     const isLoading = ref(false)
+    const isFetching = ref(false)
     const errors = ref({})
+    const roles = ref({})
+    const users = ref([])
+    const user = ref({})
     const router = useRouter()
     const ability = inject(ABILITY_TOKEN)
+    const paginationMetaData = ref({})
+    const paginationLinks = ref({})
+    const userURL = ref('/api/users?page=1')
+
+    const swal = inject('$swal')
+
 
 
     const loginForm = reactive(
@@ -17,7 +28,7 @@ export default function useAuth(){
         }
     )
 
-    const registerForm = reactive(
+    const ownerForm = reactive(
         {
             'name': '',
             'username': '',
@@ -28,10 +39,19 @@ export default function useAuth(){
         }
     )
 
-    const user = reactive({
-        'name' : '',
-        'email': ''
-    })
+    const userForm = reactive(
+        {
+            'role_id': '',
+            'name': '',
+            'username': '',
+            'phone_number': '',
+            'email': '',
+            'password': '',
+            'password_confirmation': '',
+            'logo': '',
+        }
+    )
+
 
 
     const submitLogin = async () => {
@@ -39,7 +59,7 @@ export default function useAuth(){
 
         isLoading.value = true
         await axios.post('/api/auth/login', loginForm).then(async response =>{
-            loginUser(response)
+            await loginUser(response)
         }).catch(err =>{
             if(err.response?.data){
                 errors.value=err.response.data.errors
@@ -51,7 +71,7 @@ export default function useAuth(){
     }
 
 
-    const submitRegister = async () => {
+    const registerOwner = async () => {
         if (isLoading.value) return
 
         isLoading.value = true
@@ -113,15 +133,146 @@ export default function useAuth(){
             })
     }
 
+    const getRoles = async () =>{
+        isFetching.value = true
+        await axios.get('/api/auth/roles').then(response =>{
+            roles.value = response.data.data
+        }).catch(error =>{
+            swal({
+                icon: 'error',
+                title: error.message
+            })
+        }).finally(
+            () => isFetching.value = false
+        )
+    }
+
+    const getUsers = async () => {
+        isFetching.value = true
+        //searchName = searchName === undefined ? '' : searchName
+        await axios.get(userURL.value).then(response => {
+            users.value = response.data.data
+            paginationMetaData.value = response.data.meta
+            paginationLinks.value = response.data.links
+        }).catch(error => {
+            swal({
+                icon: 'error',
+                title: error.message
+            })
+        }).finally(
+            () => isFetching.value = false
+        )
+    }
+
+    const getUser = async (id) => {
+        isFetching.value = true
+        await axios.get('/api/users/' + id).then(response => {
+            user.value = response.data.data
+        }).catch(error => {
+            swal({
+                icon: 'error',
+                title: error.message
+            })
+        }).finally(
+            () => isFetching.value = false
+        )
+    }
+
+    const storeUser = async (data) => {
+        isLoading.value = true;
+
+        //Serialization of formData to include file uploads
+        let formData = new FormData();
+        for (let item in data) {
+            if (data.hasOwnProperty(item)) {
+                formData.append(item, data[item])
+            }
+        }
+
+
+        await axios.post('/api/users', formData)
+            .then(response => {
+                user.value = response.data.data
+                router.push({name: 'users.index'})
+                swal({
+                    icon: 'success',
+                    title: 'Information Stored successfully'
+                })
+            }).catch(error => {
+                if (error.response?.data) {
+                    errors.value = error.response.data.errors
+                } else {
+                    swal({
+                        icon: 'error',
+                        title: error.message
+                    })
+                }
+            }).finally(
+                () => isLoading.value = false
+            )
+    }
+
+    const updateUser = async (id, data) => {
+        isLoading.value = true
+
+        let formData = new FormData();
+
+        for (let item in data) {
+            if (data.hasOwnProperty(item)) {
+                formData.append(item, data[item])
+            }
+        }
+
+        // formData = Object.assign(formData, data)
+        //Method Spoofing, for laravel put/patch handling
+        formData.append("_method", "put");
+
+        //Delete image key if form has no image
+        if (!(data.image instanceof File)) {
+            formData.delete('image')
+        }
+
+
+        await axios.post('/api/users/' + id, formData)
+            .then(response => {
+                router.push({name: 'user.index'})
+                swal({
+                    icon: 'success',
+                    title: 'User Updated successfully'
+                })
+            }).catch(error => {
+                if (error.response?.data) {
+                    errors.value = error.response.data.errors
+                } else {
+                    swal({
+                        icon: 'error',
+                        title: error.message
+                    })
+                }
+            }).finally(
+                () => isLoading.value = false
+            )
+    }
+
 
     return {
         submitLogin,
-        submitRegister,
+        registerOwner,
         logout,
         isLoading,
+        isFetching,
         loginForm,
-        registerForm,
+        ownerForm,
+        userForm,
         errors,
-        getAbilities
+        roles,
+        getAbilities,
+        getRoles,
+        getUsers,
+        getUser,
+        storeUser,
+        updateUser,
+        user,
+        users,
     }
 }

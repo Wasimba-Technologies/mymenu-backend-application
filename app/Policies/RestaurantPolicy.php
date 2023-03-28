@@ -14,7 +14,7 @@ class RestaurantPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role() == Role::ADMIN;
+        return $user->role_id == Role::ADMIN;
     }
 
     /**
@@ -30,7 +30,7 @@ class RestaurantPolicy
      */
     public function create(User $user): bool
     {
-        return auth()->check() && $user->role() == Role::ADMIN;
+        return auth()->check() && $user->role_id == Role::ADMIN;
     }
 
     /**

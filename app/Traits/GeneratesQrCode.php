@@ -54,11 +54,6 @@ trait GeneratesQrCode
         $table = Table::findOrFail($table->id);
         $table->qr_code = $storage_path;
         $table->save();
-
-
-        //return 'qrcodes/'.$data->tenant_id.'/qrcode_table'.$data->table_id.'.png';
-        // return $storage_path;
-
     }
 
 }

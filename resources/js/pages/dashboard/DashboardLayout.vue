@@ -132,7 +132,7 @@ import {
     QrCodeIcon,
     CreditCardIcon,
     Squares2X2Icon,
-    DocumentDuplicateIcon, BoltIcon, CogIcon
+    DocumentDuplicateIcon, BoltIcon, CogIcon, UsersIcon
 } from '@heroicons/vue/24/outline'
 import {useRoute} from "vue-router";
 
@@ -146,6 +146,7 @@ const navigation = [
     { name: 'Tables', href: '/tables', icon: TableCellsIcon },
     { name: 'QR Builder', href: '/qr-builder', icon: QrCodeIcon },
     { name: 'Plan', href: '/plans', icon: CreditCardIcon },
+    { name: 'Users', href: '/users', icon: UsersIcon },
     { name: 'Settings', href: '/settings', icon: CogIcon },
 ]
 const sidebarOpen = ref(false)
@@ -156,9 +157,5 @@ const route = useRoute()
 const currentPageTitle = computed(() =>{
     return route.meta.title;
 })
-// useHead({
-//     style: [
-//         { children: 'html,body,#__nuxt {height: 100%;}', type: 'text/css' }
-//     ]
-// })
+
 </script>

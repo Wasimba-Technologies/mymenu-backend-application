@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PrinterController;
 use App\Http\Controllers\Api\QRCodeController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\TableController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,10 @@ Route::middleware(['auth:sanctum'])->group(
             'plans', PlanController::class
         );
 
+        Route::apiResource(
+            'users', UserController::class
+        );
+
         Route::get('abilities', function(Request $request) {
             return $request->user()->roles()->with('permissions')
                 ->get()
@@ -69,6 +74,7 @@ Route::middleware(['auth:sanctum'])->group(
                 ->toArray();
         });
 
+        Route::get('/auth/roles', [AuthController::class, 'getRoles']);
         Route::post('/qr_appearance', [QRCodeController::class, 'store']);
         Route::get('/print/{order}', [PrinterController::class, 'print']);
         Route::get('/print_qr/{table}', [PrinterController::class, 'print_qr']);

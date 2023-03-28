@@ -27,17 +27,21 @@ import MenuUpdate from "../pages/menus/MenuUpdate.vue";
 import RestaurantUpdate from "../pages/restaurants/RestaurantUpdate.vue";
 import PlanUpdate from "../pages/plans/PlanUpdate.vue";
 import PlanCreate from "../pages/plans/PlanCreate.vue";
+import UserUpdate from "../pages/users/UserUpdate.vue";
+import UserCreate from "../pages/users/UserCreate.vue";
+import UserIndex from "../pages/users/UserIndex.vue";
 
 
 
 const {logout} = useAuth()
+
 const auth = (to, from, next) => {
     if (localStorage.getItem('access_token')) {
         next()
         return
     }
     next('/login')
-    return
+    //return
 }
 
 const logoutAndRedirect = async (to, from, next) => {
@@ -59,7 +63,7 @@ const routes =[
     {
         path : '/login',
         name : 'login',
-        component : Login
+        //component : Login
     },
     {
         path : '/logout',
@@ -204,6 +208,24 @@ const routes =[
                 name : 'plans.update',
                 component : PlanUpdate,
                 meta: { title: 'Plans' }
+            },
+            {
+                path : '/users',
+                name : 'users.index',
+                component : UserIndex,
+                meta: { title: 'List of System Users' }
+            },
+            {
+                path : '/users/create',
+                name : 'users.create',
+                component : UserCreate,
+                meta: { title: 'Create System Users' }
+            },
+            {
+                path : '/users/:id/update',
+                name : 'users.update',
+                component : UserUpdate,
+                meta: { title: 'Update System Users' }
             },
             {
                 path : '/settings',

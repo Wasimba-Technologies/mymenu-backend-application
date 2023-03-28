@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Models\Role;
+use App\Models\Scopes\TenantScope;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
@@ -23,13 +24,15 @@ class AuthController extends Controller
          * @param RegisterUserRequest $request
          * @return JsonResponse
          */
+
         public function register(RegisterUserRequest $request): JsonResponse
         {
                 $data = $request->validated();
                 $data['password'] = Hash::make($data['password']);
                 $user = User::create($data);
-                $role = Role::where('name', Role::ADMIN)->first();
-                $user->role()->associate($role);
+                $role = Role::withoutGlobalScope(TenantScope::class)
+                        ->where('name', Role::ADMIN)->first();
+                $user->role_id = $role->id;
                 $user->save();
 
                 //event(new Registered($user));
@@ -84,5 +87,15 @@ class AuthController extends Controller
             return response()->noContent();
         }
 
+    }
+
+    public function getRoles(): JsonResponse
+    {
+        $roles = Role::withoutGlobalScope(TenantScope::class)->get();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User Created Successfully',
+            'data' => $roles
+        ], 200);
     }
 }
