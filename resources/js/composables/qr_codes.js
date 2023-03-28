@@ -2,7 +2,7 @@ import {inject, reactive, ref} from "vue";
 import router from "../router";
 
 
-export default function useQRCodes() {
+export default function useQRBuilder() {
     const qr_code = ref([]);
     const errors = ref({})
     const isLoading = ref(false)
@@ -12,16 +12,24 @@ export default function useQRCodes() {
 
     const qrCodeForm = reactive(
         {
-            table_id: '',
             color: '#000000',
-            label: 'Point your Camera here to access our menu'
+            width: 200,
+            caption_line_one: 'Point your Camera here: ',
+            caption_line_two: 'to access our menu',
+            sub_caption: 'Cant Scan? Visit the below link for the menu:',
+            logo: ''
         }
     )
 
-    const generateQR = async (data) =>{
+    const storeQRFeatures = async (data) =>{
         isLoading.value = true;
 
-        await axios.post('/api/generate_qr', data)
+        //Delete image key if form has no image
+        if (!(data.logo instanceof File)) {
+            delete data.logo
+        }
+
+        await axios.post('/api/qr_appearance', data)
             .then(response =>{
                 qr_code.value = response.data
                 swal({
@@ -53,7 +61,7 @@ export default function useQRCodes() {
         isFetching,
         isLoading,
         qrCodeForm,
-        generateQR,
+        storeQRFeatures,
         qr_code
     }
 

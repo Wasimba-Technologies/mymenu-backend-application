@@ -18,9 +18,9 @@ class EnsureTenantIdIsValid
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->header('X-TenantID')){
-            if($request->user()->tenant_id !== $request->header('X-TenantID')){
-                $request->headers->set('X-TenantID', $request->user()->tenant_id);
+        if($request->user() && $request->header('X-TENANT-ID')){
+            if($request->user()->tenant_id !== $request->header('X-TENANT-ID')){
+                $request->headers->set('X-TENANT-ID', $request->user()->tenant_id);
             }
         }
         return $next($request);

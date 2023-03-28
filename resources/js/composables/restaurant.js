@@ -33,11 +33,11 @@ export default function useTenants(){
             tenants.value = response.data.data
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
-            console.log(response.data)
         }).catch(error =>{
+            //console.log(error)
             swal({
                 icon: 'error',
-                title: error.message
+                title: error.response.data.message
             })
         }).finally(
             () => isFetching.value = false

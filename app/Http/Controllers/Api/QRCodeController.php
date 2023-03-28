@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\QrCodeRequest;
+use App\Models\QrCode;
 use App\Models\Table;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Color\Color;
@@ -19,50 +20,17 @@ use Illuminate\Support\Facades\Storage;
 
 class QRCodeController extends Controller
 {
-    public function generateQRCode(QrCodeRequest $request): JsonResponse
+    public function store(QrCodeRequest $request): JsonResponse
     {
         $data = $request->validated();
-
-        $tenant_id = $request->header('X-TENANT-ID');
-
-        list($r, $g, $b) = sscanf($data['color'], "#%02x%02x%02x");
-
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data(env('APP_URL').'/browse/'.$data['table_id'])
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(200)
-            ->margin(10)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->labelText('Table '.$data['table_id'])
-            ->foregroundColor(new Color($r,$g,$b))
-            ->labelFont(new NotoSans(20))
-            ->labelAlignment(new LabelAlignmentCenter())
-            ->validateResult(false)
-            ->build();
-
-
-        // Save it to a file
-        $result->saveToFile(__DIR__.'/qrcode.png');
-        $destination_path = 'public/qrcodes/'.$tenant_id;
-        $qr_code_path = Storage::putFileAs($destination_path, new File(__DIR__.'/qrcode.png'), 'qrcode_table'.$data['table_id'].'.png');
-        Storage::delete(__DIR__.'/qrcode.png');
-
-
-        // Generate a data URI to include image data inline (i.e. inside an <img> tag)
-        $dataUri = $result->getDataUri();
-
-        $table = Table::where('id', $data['table_id'])->first();
-        $table->qr_code = 'qrcodes/'.$tenant_id.'/qrcode_table'.$data['table_id'].'.png';
-        $table->save();
-
-
+        $qr_code_data = QrCode::updateOrCreate(
+            ['tenant_id' =>  request()->header('X-TENANT-ID')],
+            $data
+        );
         return response()->json([
             'status' => 'success',
-            'message' => 'QR Code successfully generated',
-            'url' => $dataUri
+            'message' => 'QR Code features successfully saved',
+            'data' => $qr_code_data,
         ], 200);
     }
 }

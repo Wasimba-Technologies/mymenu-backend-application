@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static paginate(int $int)
  * @method static create(mixed $data)
+ * @method static where(string $string, mixed $table_id)
  */
 class Table extends Model
 {

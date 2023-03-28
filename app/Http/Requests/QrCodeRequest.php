@@ -23,9 +23,12 @@ class QrCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'table_id' => ['required', 'integer'],
             'color' => ['required', 'string'],
-            'label' => ['required', 'string'],
+            'width' => ['required', 'integer'],
+            'caption_line_one' => ['required', 'string'],
+            'caption_line_two' => ['required', 'string'],
+            'sub_caption' => ['required', 'string'],
+            'logo' => ['sometimes', 'image']
         ];
     }
 }

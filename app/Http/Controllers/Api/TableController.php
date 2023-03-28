@@ -7,10 +7,12 @@ use App\Http\Requests\TableRequest;
 use App\Http\Resources\TableCollection;
 use App\Http\Resources\TableResource;
 use App\Models\Table;
+use App\Traits\GeneratesQrCode;
 use Illuminate\Http\Response;
 
 class TableController extends Controller
 {
+    use GeneratesQrCode;
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +27,9 @@ class TableController extends Controller
     public function store(TableRequest $request): TableResource
     {
         $data = $request->validated();
+        $data['qr_code']= null;
         $table = Table::create($data);
+        $this->generateQrCode($table);
         return new TableResource($table);
     }
 

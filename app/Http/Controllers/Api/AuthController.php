@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
@@ -27,6 +28,9 @@ class AuthController extends Controller
                 $data = $request->validated();
                 $data['password'] = Hash::make($data['password']);
                 $user = User::create($data);
+                $role = Role::where('name', Role::ADMIN)->first();
+                $user->role()->associate($role);
+                $user->save();
 
                 //event(new Registered($user));
 

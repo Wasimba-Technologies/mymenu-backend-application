@@ -149,7 +149,7 @@ const routes =[
                 path : '/qr-builder',
                 name : 'qr-builder',
                 component : QRBuilder,
-                meta: { title: 'Create QR Codes By table' }
+                meta: { title: 'Create QR Codes Appearance' }
             },
             {
                 path : '/live-orders',

@@ -22,7 +22,7 @@ class RestaurantController extends Controller
      */
     public function index(): RestaurantCollection
     {
-        $this->authorize('view', Restaurant::class);
+        $this->authorize('viewAny', Restaurant::class);
         return new RestaurantCollection(Restaurant::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
         })->paginate(20));
@@ -34,6 +34,7 @@ class RestaurantController extends Controller
     public function store(RestaurantRequest $request): RestaurantResource
     {
         //$data = $request->validated();
+        $this->authorize('create', Restaurant::class);
         $data = $this->getDataAndSaveImage('logos', $request);
         $restaurant = Restaurant::create($data);
         $user = $request->user()->tenant()->associate($restaurant);
@@ -46,6 +47,7 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant): RestaurantResource
     {
+        $this->authorize('show', $restaurant);
         return new RestaurantResource($restaurant);
     }
 
