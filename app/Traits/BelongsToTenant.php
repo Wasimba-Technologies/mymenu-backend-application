@@ -4,7 +4,6 @@ namespace App\Traits;
 use App\Models\Restaurant;
 use App\Models\Scopes\TenantScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Query\Builder;
 
 trait BelongsToTenant
 {

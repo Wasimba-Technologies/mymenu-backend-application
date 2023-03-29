@@ -60,11 +60,10 @@
                         </div>
                         <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
                             <router-link v-for="item in navigation" :key="item.name" :to="item.href" :class="['text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
-                                <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
+                                <component v-if="can(item.perm)" :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
                                 {{ item.name }}
                                 <span v-if="item.name === 'Live Orders'" class="animate-ping ml-3 h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
                             </router-link>
-
                         </nav>
                     </div>
                     <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
@@ -135,12 +134,13 @@ import {
     DocumentDuplicateIcon, BoltIcon, CogIcon, UsersIcon
 } from '@heroicons/vue/24/outline'
 import {useRoute} from "vue-router";
+import {useAbility} from "@casl/vue";
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon},
     // { name: 'Live Orders', href: '/live-orders', icon: BoltIcon },
     { name: 'Orders', href: '/orders', icon: ShoppingBagIcon },
-    { name: 'restaurants', href: '/restaurants', icon: HomeIcon },
+    { name: 'restaurants', href: '/restaurants', icon: HomeIcon , perm: 'restaurants.view'},
     { name: 'Menu', href: '/menu', icon: DocumentDuplicateIcon },
     { name: 'Menu Items', href: '/menu-items', icon: Squares2X2Icon },
     { name: 'Tables', href: '/tables', icon: TableCellsIcon },
@@ -152,6 +152,7 @@ const navigation = [
 const sidebarOpen = ref(false)
 const sidebarStaticOpen = ref(true)
 const route = useRoute()
+const { can } = useAbility()
 
 
 const currentPageTitle = computed(() =>{

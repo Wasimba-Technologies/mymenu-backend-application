@@ -14,7 +14,7 @@ class RestaurantPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role_id == Role::ADMIN;
+        return $user->hasPermission('restaurants.view');
     }
 
     /**

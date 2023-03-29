@@ -9,14 +9,7 @@ import VueSweetalert2 from "vue-sweetalert2";
 import { abilitiesPlugin } from '@casl/vue';
 import ability from './services/ability';
 
-const app = createApp({
-    components:{
-        Welcome,
-        Login,
-        Register,
-        DashboardIndex,
-    }
-})
+const app = createApp({})
 app.use(router)
 app.use(VueSweetalert2)
 app.use(abilitiesPlugin, ability, {
