@@ -1,4 +1,4 @@
-import {inject, reactive, ref, watch} from "vue";
+import {inject, reactive, ref} from "vue";
 import router from "../router";
 
 export default function useTenants(){
@@ -71,6 +71,7 @@ export default function useTenants(){
         await axios.post('/api/tenants', formData)
             .then(response =>{
                 tenants.value = response.data.data
+                localStorage.setItem('X-Tenant-ID', response.data.id)
                 router.push({name: 'dashboard'})
                 swal({
                     icon: 'success',

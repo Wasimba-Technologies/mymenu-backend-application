@@ -29,9 +29,10 @@ class AuthController extends Controller
         {
                 $data = $request->validated();
                 $data['password'] = Hash::make($data['password']);
+                $data['role_id'] = null;
                 $user = User::create($data);
                 $role = Role::withoutGlobalScope(TenantScope::class)
-                        ->where('name', Role::ADMIN)->first();
+                        ->where('name', 'Admin')->first();
                 $user->role_id = $role->id;
                 $user->save();
 
@@ -80,12 +81,10 @@ class AuthController extends Controller
      */
     public function logout(Request $request): Response|RedirectResponse
     {
-        if ($request->wantsJson()) {
-            // Revoke the token that was used to authenticate the current request...
-            Log::info(json_encode($request->user()));
-            $request->user()->currentAccessToken()->delete();
-            return response()->noContent();
-        }
+        // Revoke the token that was used to authenticate the current request...
+        Log::info(json_encode($request->user()));
+        $request->user()->currentAccessToken()->delete();
+        return response()->noContent();
 
     }
 

@@ -1,8 +1,7 @@
 import {inject, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
-import { AbilityBuilder, Ability } from '@casl/ability';
-import { ABILITY_TOKEN } from '@casl/vue';
-import router from "../router";
+import { AbilityBuilder, createMongoAbility } from '@casl/ability';
+import {ABILITY_TOKEN} from "@casl/vue";
 
 export default function useAuth(){
     const isLoading = ref(false)
@@ -12,12 +11,12 @@ export default function useAuth(){
     const users = ref([])
     const user = ref({})
     const router = useRouter()
-    const ability = inject(ABILITY_TOKEN)
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
     const userURL = ref('/api/users?page=1')
-
     const swal = inject('$swal')
+    const ability = inject(ABILITY_TOKEN)
+
 
 
 
@@ -75,7 +74,7 @@ export default function useAuth(){
         if (isLoading.value) return
 
         isLoading.value = true
-        await axios.post('api/auth/register', registerForm).then(async response =>{
+        await axios.post('api/auth/register', ownerForm).then(async response =>{
             localStorage.setItem('access_token', response.data.access_token)
             await router.push({path: '/register-restaurant'})
         }).catch(err =>{
@@ -92,6 +91,7 @@ export default function useAuth(){
         localStorage.setItem('access_token', response.data.access_token)
         if(response.data.user.tenant_id === undefined || response.data.user.tenant_id === null){
             await router.push({path: '/register-restaurant'})
+            await getAbilities()
         }else{
             localStorage.setItem('X-Tenant-ID', response.data.user.tenant_id)
             await getAbilities()
@@ -125,11 +125,15 @@ export default function useAuth(){
         axios.get('/api/abilities')
             .then(response => {
                 const permissions = response.data
-                const { can, rules } = new AbilityBuilder(Ability)
+                const { can, rules } = new AbilityBuilder(createMongoAbility)
 
                 can(permissions)
 
                 ability.update(rules)
+
+                console.log(ability.rules)
+                console.log(ability.can('restaurants.create'));
+
             })
     }
 

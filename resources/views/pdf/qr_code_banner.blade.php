@@ -50,7 +50,7 @@
     <div>
         <img id="logo" src="data:image/png;base64,
             {{ base64_encode(file_get_contents(public_path('storage/'.$table->qr_code))) }}"
-             alt="logo" style=" align-content:center; width: 300px; height: 300px;"
+             alt="logo" style="align-content:center; width: 200px; height: 200px;"
         />
     </div>
 

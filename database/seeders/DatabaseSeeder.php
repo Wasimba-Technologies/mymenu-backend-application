@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
+            QrCodeSeeder::class,
             PermissionSeeder::class
         ]);
     }

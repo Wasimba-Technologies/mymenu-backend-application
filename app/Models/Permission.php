@@ -13,11 +13,11 @@ class Permission extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_permission');
     }
 
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'role_permission')->withoutGlobalScope(TenantScope::class);
     }
 }

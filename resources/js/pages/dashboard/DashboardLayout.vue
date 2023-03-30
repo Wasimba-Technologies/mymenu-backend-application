@@ -23,7 +23,7 @@
                                 </div>
                                 <nav class="mt-5 px-2 space-y-1">
                                     <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
-                                        <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-4 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
+                                        <component v-if="can(item.perm)" :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-4 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
                                         {{ item.name }}
                                     </a>
                                 </nav>
@@ -131,10 +131,11 @@ import {
     QrCodeIcon,
     CreditCardIcon,
     Squares2X2Icon,
-    DocumentDuplicateIcon, BoltIcon, CogIcon, UsersIcon
+    DocumentDuplicateIcon, CogIcon, UsersIcon
 } from '@heroicons/vue/24/outline'
+
 import {useRoute} from "vue-router";
-import {useAbility} from "@casl/vue";
+import { useAbility} from "@casl/vue";
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon},
@@ -153,6 +154,7 @@ const sidebarOpen = ref(false)
 const sidebarStaticOpen = ref(true)
 const route = useRoute()
 const { can } = useAbility()
+
 
 
 const currentPageTitle = computed(() =>{

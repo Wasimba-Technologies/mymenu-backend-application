@@ -88,12 +88,12 @@
 
 <script setup>
 
-import useAuth from "../../composables/auth";
-import LoadingSpinner from "../../components/LoadingSpinner.vue";
-import {provide} from "vue";
+    import useAuth from "../../composables/auth";
+    import LoadingSpinner from "../../components/LoadingSpinner.vue";
+    import {provide} from "vue";
 
-const {isLoading, registerOwner, errors, ownerForm} = useAuth()
+    const {isLoading, registerOwner, errors, ownerForm} = useAuth()
 
-provide('isLoading', isLoading)
+    provide('isLoading', isLoading)
 
 </script>

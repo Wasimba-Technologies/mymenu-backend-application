@@ -3,12 +3,13 @@
 namespace App\Traits;
 
 use App\Models\Role;
+use App\Models\Scopes\TenantScope;
 
 trait HasRole
 {
 
     public function role() {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class)->withoutGlobalScope(TenantScope::class);
     }
 
     /**

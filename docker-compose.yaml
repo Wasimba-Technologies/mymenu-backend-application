@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /var/www/html/
+    depends_on:
+      - db
+    networks:
+      - web_network
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - web
+    networks:
+      - web_network
+  db:
+    image: mysql
+    volumes:
+      - mymenu:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mymenu_db
+      MYSQL_USER: mymenu
+      MYSQL_PASSWORD: mymenu@2023
+      MYSQL_ROOT_PASSWORD: mymenu_root@2023
+    networks:
+      - web_network
+
+volumes:
+  mymenu:
+
+networks:
+  web_network:
+    driver: bridge

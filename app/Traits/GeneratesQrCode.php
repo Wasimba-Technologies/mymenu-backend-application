@@ -42,17 +42,11 @@ trait GeneratesQrCode
 
 
         // Save it to a file
-        $result->saveToFile(__DIR__.'/qrcode.png');
-        $destination_path = 'public/qrcodes/'.$table->tenant_id;
-        $storage_path = Storage::putFileAs(
-            $destination_path,
-            new File(__DIR__.'/qrcode.png'),
-            'qrcode_table'.$table->id.'.png'
+        $result->saveToFile(
+            storage_path().'/app/public/'. 'qrcodes/'.$table->tenant_id.'/'.'qrcode_table'.$table->id.'.png'
         );
-        Storage::delete(__DIR__.'/qrcode.png');
-
         $table = Table::findOrFail($table->id);
-        $table->qr_code = $storage_path;
+        $table->qr_code = 'qrcodes/'.$table->tenant_id.'/'.'qrcode_table'.$table->id.'.png';
         $table->save();
     }
 

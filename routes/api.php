@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\QRCodeController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\UserController;
+use App\Models\Scopes\TenantScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,7 +65,7 @@ Route::middleware(['auth:sanctum'])->group(
         );
 
         Route::get('abilities', function(Request $request) {
-            return $request->user()->roles()->with('permissions')
+            return $request->user()->role()->with('permissions')
                 ->get()
                 ->pluck('permissions')
                 ->flatten()

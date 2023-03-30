@@ -44,7 +44,7 @@ class PrinterController extends Controller
     public function print_qr($id): Response
     {
         $table = Table::findOrFail($id);
-        $tenant = Restaurant::where('id',request()->header('X-TENANT-ID'));
+        $tenant = Restaurant::where('id',request()->header('X-TENANT-ID'))->first();
 
 
         $data = [

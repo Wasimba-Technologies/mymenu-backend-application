@@ -1,6 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Welcome from "../pages/welcome/Welcome.vue";
-import Login from "../pages/auth/Login.vue";
 import Register from "../pages/auth/Register.vue";
 import NotFound from "../components/NotFound.vue";
 import useAuth from "../composables/auth";
@@ -30,6 +29,7 @@ import PlanCreate from "../pages/plans/PlanCreate.vue";
 import UserUpdate from "../pages/users/UserUpdate.vue";
 import UserCreate from "../pages/users/UserCreate.vue";
 import UserIndex from "../pages/users/UserIndex.vue";
+import Login from "../pages/auth/Login.vue";
 
 
 
