@@ -21,6 +21,8 @@ export default function useTenants(){
             address_one: '',
             address_two: '',
             country: '',
+            currency: '',
+            plan_id: '',
             logo: ''
         }
     )
@@ -117,7 +119,7 @@ export default function useTenants(){
 
         await axios.post('/api/tenants/'+id, formData)
             .then(response =>{
-                router.push({name: 'tenants.index'})
+                router.push({name: 'settings'})
                 swal({
                     icon: 'success',
                     title: 'Information Updated successfully'

@@ -52,11 +52,15 @@
                         </div>
 
                         <div class="col-span-6 sm:col-span-6">
-                            <label for="dedicated-support" class="block text-sm font-medium text-gray-700">
-                                Dedicated support
-                                <input type="checkbox" name="dedicated_support" id="dedicated_support" v-model="planForm.dedicated_support"
-                                       :class="[errors?.dedicated_support === undefined ? 'valid-input' : 'invalid-input']" />
-                            </label>
+                            <div class="relative flex items-start">
+                                <div class="flex h-6 items-center">
+                                    <input id="dedicated_support" aria-describedby="dedicated-support-description" name="dedicated_support" type="checkbox"
+                                           class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-600" v-model="planForm.dedicated_support" />
+                                </div>
+                                <div class="ml-3 text-sm leading-6">
+                                    <label for="dedicated-support" class="font-medium text-gray-900">Dedicated support</label>
+                                </div>
+                            </div>
                             <p class="mt-2 text-sm text-red-600" id="dedicated-support-error" v-for="error in errors?.dedicated_support">{{error}}</p>
                         </div>
 

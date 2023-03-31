@@ -57,12 +57,35 @@
                             <p class="mt-2 text-sm text-red-600" id="owner-name-error" v-for="error in errors?.address_two">{{error}}</p>
                         </div>
 
-                        <div class="col-span-6 sm:col-span-6">
+                        <div class="col-span-3 sm:col-span-3">
                             <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
                             <div class="mt-1">
                                 <input id="country" name="country" type="text" autocomplete="country" required placeholder="Country" class="valid-input" v-model="tenantForm.country"/>
                             </div>
                             <p class="mt-2 text-sm text-red-600" id="owner-name-error" v-for="error in errors?.country">{{error}}</p>
+                        </div>
+
+                        <div class="col-span-3 sm:col-span-3">
+                            <label for="address_one" class="block text-sm font-medium text-gray-700">Currency Symbol</label>
+                            <div class="mt-1">
+                                <input id="currency" name="currency" type="text" autocomplete="currency" required placeholder="Currency symbol e.g Tsh, $" class="valid-input" v-model="tenantForm.currency"/>
+                            </div>
+                            <p class="mt-2 text-sm text-red-600" id="address-one-error" v-for="error in errors?.currency">{{error}}</p>
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-6">
+                            <div class="mt-1">
+                                <label for="plan" class="block text-sm font-medium text-gray-700">Subscription Plan</label>
+                                <select id="plan" name="plan" v-model="tenantForm.plan_id"
+                                        :class="[errors?.plan_id === undefined ? 'valid-select' : 'invalid-select']">
+                                    <option value="" selected>--Select Plan--</option>
+                                    <option v-for="plan in plans" :value="plan.id"
+                                            :selected="parseInt(plan.id) === parseInt(tenantForm.plan_id)" :key="plan.id">
+                                        {{plan.name}} - {{Intl.NumberFormat().format(plan.price)}}
+                                    </option>
+                                </select>
+                            </div>
+                            <p class="mt-2 text-sm text-red-600" id="plan-error" v-for="error in errors?.plan_id">{{error}}</p>
                         </div>
 
                         <div class="col-span-2 sm:col-span-2">
@@ -115,8 +138,10 @@
 
 <script setup>
     import useTenants from "../../composables/restaurant";
-    import {ref} from "vue";
+    import {computed, onMounted, ref} from "vue";
+    import usePlans from "../../composables/plans";
     const {tenantForm, storeTenant, errors} = useTenants();
+    const {plans, getPlans} = usePlans();
 
     const tempImgUrl = ref(null)
 
@@ -130,6 +155,14 @@
         tempImgUrl.value = window.URL.createObjectURL(event.target.files[0])
         URL.revokeObjectURL(event.target.files[0])
     }
+
+    const plan = computed(()=>{
+
+    })
+
+    onMounted(()=>{
+        getPlans()
+    })
 
 </script>
 

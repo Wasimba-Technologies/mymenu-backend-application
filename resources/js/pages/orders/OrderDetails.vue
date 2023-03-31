@@ -5,6 +5,9 @@
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="p-12 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <RibbonConfirmed v-if='order.status=="Confirmed" || order.status=="Paid"' :status="order.status"/>
+                        <RibbonPending v-if='order.status=="Pending"' :status="order.status"/>
+                        <RibbonRejected v-if='order.status=="Rejected"' :status="order.status"/>
                         <div class="flex justify-between">
                             <div>
                                 <p class="text-3xl font-bold">Invoice # {{order.id}}</p>
@@ -132,6 +135,9 @@ import {useRoute} from "vue-router";
 import LoadingSpinner from "../../components/LoadingSpinner.vue";
 import usePayments from "../../composables/payments";
 import { useAbility } from '@casl/vue'
+import RibbonConfirmed from "../../components/RibbonConfirmed.vue";
+import RibbonPending from "../../components/RibbonPending.vue";
+import RibbonRejected from "../../components/RibbonRejected.vue";
 const { can } = useAbility()
 
 

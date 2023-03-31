@@ -146,7 +146,7 @@ const navigation = [
     { name: 'Menu Items', href: '/menu-items', icon: Squares2X2Icon },
     { name: 'Tables', href: '/tables', icon: TableCellsIcon },
     { name: 'QR Builder', href: '/qr-builder', icon: QrCodeIcon },
-    { name: 'Plan', href: '/plans', icon: CreditCardIcon },
+    // { name: 'Plan', href: '/plans', icon: CreditCardIcon },
     { name: 'Users', href: '/users', icon: UsersIcon },
     { name: 'Settings', href: '/settings', icon: CogIcon },
 ]

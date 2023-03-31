@@ -29,6 +29,8 @@ class RestaurantRequest extends FormRequest
             'address_one' => ['required', 'string'],
             'address_two' => ['required', 'string'],
             'country' => ['required', 'string'],
+            'currency' => ['required', 'string'],
+            'plan_id' => ['required', 'integer'],
             'logo' => ['sometimes', 'image']
         ];
     }

@@ -65,8 +65,14 @@ export default function useOrders() {
                         icon: 'success',
                         title: 'Order placed successfully'
                     })
+                    console.log(response.data)
                     order.value = response.data
-                }
+                    router.push(
+                        {
+                            name: 'order_details.guest',
+                        }
+                    )
+                    }
                 ).catch(error => {
                         if (error.response?.data) {
                             errors.value = error.response.data.errors

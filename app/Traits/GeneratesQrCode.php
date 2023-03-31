@@ -35,7 +35,8 @@ trait GeneratesQrCode
             ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
             ->labelText($table->name)
             ->foregroundColor(new Color($r,$g,$b))
-            ->labelFont(new NotoSans(20))
+            ->labelFont(new NotoSans(10))
+            ->labelTextColor(new Color(107,114,128))
             ->labelAlignment(new LabelAlignmentCenter())
             ->validateResult(false)
             ->build();

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('address_one');
             $table->string('address_two');
             $table->string('country');
+            $table->string('currency',3);
+            $table->foreignId('plan_id')->constrained('plans');
             $table->string('logo');
             $table->timestamps();
         });

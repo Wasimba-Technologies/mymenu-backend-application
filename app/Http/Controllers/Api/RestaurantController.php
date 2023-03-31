@@ -11,6 +11,7 @@ use App\Traits\HasImage;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class RestaurantController extends Controller
 {
@@ -45,18 +46,21 @@ class RestaurantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Restaurant $restaurant): RestaurantResource
+    public function show($id): RestaurantResource
     {
-        $this->authorize('show', $restaurant);
+        $restaurant = Restaurant::where('id', $id)->first();
+        Log::info(json_encode($restaurant));
+        //$this->authorize('show', $restaurant);
         return new RestaurantResource($restaurant);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(RestaurantRequest $request, Restaurant $restaurant)
+    public function update(RestaurantRequest $request, $id)
     {
         //$data = $request->validated();
+        $restaurant = Restaurant::where('id', $id)->first();
         $data = $this->getDataAndSaveImage('logos', $request);
         $restaurant->update($data);
         return new RestaurantResource($restaurant);

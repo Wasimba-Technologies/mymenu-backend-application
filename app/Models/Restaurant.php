@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\TenantScope;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,17 +25,9 @@ class Restaurant extends Model
     public $incrementing = false;
 
 
-    public function plan(): HasOne
+    public function plan(): BelongsTo
     {
-        return $this->hasOne(Plan::class);
+        return $this->belongsTo(Plan::class)->withoutGlobalScope(TenantScope::class);
     }
-
-//    protected function logo(): Attribute
-//    {
-//        //Transform logo to be a URL
-//        return Attribute::make(
-//            get: fn (string $value) => env('APP_URL'). Storage::url($value),
-//        );
-//    }
 
 }

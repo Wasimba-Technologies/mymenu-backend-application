@@ -45,7 +45,7 @@
                                     </div>
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{menu_item.price}}
+                                    {{Intl.NumberFormat().format(menu_item.price)}}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     {{menu_item.menu?.name}}

@@ -11,8 +11,6 @@ WORKDIR /var/www/html/
 RUN apk update && apk add --no-cache \
     zip \
     unzip \
-    dos2unix \
-    supervisor \
     libpng-dev \
     libzip-dev \
     freetype-dev \

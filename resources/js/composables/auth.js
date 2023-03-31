@@ -278,5 +278,7 @@ export default function useAuth(){
         updateUser,
         user,
         users,
+        paginationMetaData,
+        paginationLinks
     }
 }

@@ -23,13 +23,13 @@ import OrderDetails from "../pages/orders/OrderDetails.vue";
 import TableUpdate from "../pages/tables/TableUpdate.vue";
 import MenuItemUpdate from "../pages/menu_items/MenuItemUpdate.vue";
 import MenuUpdate from "../pages/menus/MenuUpdate.vue";
-import RestaurantUpdate from "../pages/restaurants/RestaurantUpdate.vue";
 import PlanUpdate from "../pages/plans/PlanUpdate.vue";
 import PlanCreate from "../pages/plans/PlanCreate.vue";
 import UserUpdate from "../pages/users/UserUpdate.vue";
 import UserCreate from "../pages/users/UserCreate.vue";
 import UserIndex from "../pages/users/UserIndex.vue";
 import Login from "../pages/auth/Login.vue";
+import OrderDetailsGuest from "../pages/orders/OrderDetailsGuest.vue";
 
 
 
@@ -85,6 +85,12 @@ const routes =[
         path : '/browse/:id',
         name : 'browse',
         component : MenuItemBrowser
+    },
+    {
+        path : '/order_details/:id/guest',
+        name : 'order_details.guest',
+        component : OrderDetailsGuest,
+        meta: { title: 'Guest Order Details' }
     },
     {
         component: DashboardLayout,
@@ -184,12 +190,6 @@ const routes =[
                 name : 'restaurants.index',
                 component : RestaurantIndex,
                 meta: { title: 'List of Restaurants' }
-            },
-            {
-                path : '/restaurants/:id/update',
-                name : 'restaurants.update',
-                component : RestaurantUpdate,
-                meta: { title: 'Update Restaurants' }
             },
             {
                 path : '/plans',
