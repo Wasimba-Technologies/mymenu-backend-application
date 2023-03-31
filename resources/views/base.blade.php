@@ -13,7 +13,6 @@
     </head>
     <body class="antialiased h-full">
         <div id="app" class="h-full">
-            <router-view></router-view>
         </div>
     </body>
 </html>
