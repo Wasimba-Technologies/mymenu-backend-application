@@ -30,6 +30,7 @@ import UserCreate from "../pages/users/UserCreate.vue";
 import UserIndex from "../pages/users/UserIndex.vue";
 import Login from "../pages/auth/Login.vue";
 import OrderDetailsGuest from "../pages/orders/OrderDetailsGuest.vue";
+import SubscriptionIndex from "../pages/subscriptions/SubscriptionIndex.vue";
 
 
 
@@ -46,7 +47,6 @@ const auth = (to, from, next) => {
 
 const logoutAndRedirect = async (to, from, next) => {
     await logout()
-    next('/login')
 }
 
 const routes =[
@@ -232,6 +232,12 @@ const routes =[
                 name : 'settings',
                 component : SettingsIndex,
                 meta: { title: 'Settings' }
+            },
+            {
+                path : '/subscriptions',
+                name : 'subscriptions',
+                component : SubscriptionIndex,
+                meta: { title: 'Subscriptions' }
             },
         ]
     }

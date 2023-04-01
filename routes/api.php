@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\PrinterController;
 use App\Http\Controllers\Api\QRCodeController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\Scopes\TenantScope;
@@ -62,6 +63,10 @@ Route::middleware(['auth:sanctum'])->group(
 
         Route::apiResource(
             'users', UserController::class
+        );
+
+        Route::apiResource(
+            'subscriptions', SubscriptionController::class
         );
 
         Route::get('abilities', function(Request $request) {

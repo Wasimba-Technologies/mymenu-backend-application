@@ -21,4 +21,9 @@ class Plan extends Model
     {
         return $this->hasMany(Restaurant::class);
     }
+
+    public function subscription(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
 }

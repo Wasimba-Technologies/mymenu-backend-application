@@ -2,6 +2,7 @@ import {inject, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import { AbilityBuilder, createMongoAbility } from '@casl/ability';
 import {ABILITY_TOKEN} from "@casl/vue";
+import router from "../router";
 
 export default function useAuth(){
     const isLoading = ref(false)
@@ -10,7 +11,7 @@ export default function useAuth(){
     const roles = ref({})
     const users = ref([])
     const user = ref({})
-    const router = useRouter()
+    //const router = useRouter()
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
     const userURL = ref('/api/users?page=1')
@@ -108,6 +109,7 @@ export default function useAuth(){
             .then(response => {
                     if (localStorage.getItem('access_token')) {
                         localStorage.removeItem('access_token')
+                        localStorage.removeItem('X-Tenant-ID')
                     }
                     router.push({ name: 'login' })
                 }

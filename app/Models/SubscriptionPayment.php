@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class SubscriptionPayment extends Model
 {
     use HasFactory, BelongsToTenant;
+
+    public function subscription()
+    {
+        $this->belongsTo(Subscription::class);
+    }
 }

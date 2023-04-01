@@ -15,6 +15,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -82,8 +83,10 @@ class AuthController extends Controller
     public function logout(Request $request): Response|RedirectResponse
     {
         // Revoke the token that was used to authenticate the current request...
-        Log::info(json_encode($request->user()));
-        $request->user()->currentAccessToken()->delete();
+        //Log::info(json_encode($request->user()));
+        //$request->user()->currentAccessToken()->delete();
+        $tokenId = Str::before(request()->bearerToken(), '|');
+        auth()->user()->tokens()->where('id', $tokenId )->delete();
         return response()->noContent();
 
     }

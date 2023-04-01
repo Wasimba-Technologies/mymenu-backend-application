@@ -1,5 +1,6 @@
 import {inject, reactive, ref} from "vue";
 import router from "../router";
+import useSubscriptions from "./subscription";
 
 export default function useTenants(){
     const tenants = ref({});
@@ -10,7 +11,7 @@ export default function useTenants(){
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
     const tenantsURL = ref('/api/tenants?page=1')
-
+    const {storeSubscription} = useSubscriptions()
     const swal = inject('$swal')
 
     const tenantForm = reactive(
@@ -71,13 +72,17 @@ export default function useTenants(){
         }
 
         await axios.post('/api/tenants', formData)
-            .then(response =>{
+            .then(async response => {
                 tenants.value = response.data.data
                 localStorage.setItem('X-Tenant-ID', response.data.id)
-                router.push({name: 'dashboard'})
+                const subscription = {
+                    'plan': response.data.data.plan
+                }
+                //After creating a Tenant, Start a 7 days Subscription immediately
+                await storeSubscription(subscription)
                 swal({
                     icon: 'success',
-                    title: 'Information Stored successfully'
+                    title: ' Information saved successfully'
                 })
             }).catch(error =>{
                 if(error.response?.data){
