@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address_two');
             $table->string('country');
             $table->string('currency',3);
-            $table->foreignId('plan_id')->constrained('plans');
+            $table->foreignId('plan_id')->constrained();
             $table->string('logo');
             $table->timestamps();
         });

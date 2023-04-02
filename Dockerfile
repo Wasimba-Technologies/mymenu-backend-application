@@ -1,14 +1,36 @@
-FROM composer as builder
+FROM composer as composer-stage
 COPY . /app/
 WORKDIR /app/
 COPY composer.* ./
 RUN composer install --no-scripts
 
+#
+# Frontend
+#
+FROM node:18.15.0-alpine as node-stage
+
+COPY . /app/
+
+WORKDIR /app/
+
+RUN npm install && npm run build
+
 
 FROM php:8.1.3-fpm-alpine
 
 
-COPY --from=builder /app/vendor /var/www/html/vendor
+COPY --from=composer-stage /app/vendor /var/www/html/vendor
+COPY --from=node-stage /app/public/build /var/www/html/public/build
+
+# install necessary alpine packages
+RUN apk update && apk add --no-cache \
+    libpng-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libwebp-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql mysqli gd
+
 
 
 # Set working directory

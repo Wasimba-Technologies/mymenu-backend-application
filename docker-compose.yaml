@@ -30,7 +30,7 @@ services:
     volumes:
       - mymenu:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3307"
     environment:
       MYSQL_DATABASE: mymenu_db
       MYSQL_USER: mymenu
