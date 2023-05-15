@@ -3,6 +3,9 @@
     <div class="relative pt-6 px-4 sm:px-6 lg:px-8">
         <BrowserNav />
     </div>
+    <div>
+        <img src="http://localhost:8000/storage/logos/banner-sm.png"  alt="banner"/>
+    </div>
     <div class="mt-4">
         <AutoComplete label="Filter Menu" :items="menus" />
     </div>
