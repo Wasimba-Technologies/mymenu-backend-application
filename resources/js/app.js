@@ -9,7 +9,5 @@ import Layout from "./layouts/Layout.vue";
 const app = createApp(Layout)
 app.use(router)
 app.use(VueSweetalert2)
-app.use(abilitiesPlugin, ability,{
-    useGlobalProperties: true
-})
+app.use(abilitiesPlugin, ability)
 app.mount('#app')

@@ -15,6 +15,7 @@ import {onMounted, provide} from "vue";
 import {useRoute} from "vue-router";
 import usePlans from "../../composables/plans";
 import PlanFormComponent from "./components/PlanFormComponent.vue";
+import utils from "../../utils/utils";
 
 const {errors, plan, isLoading, isFetching, updatePlan, getPlan} = usePlans()
 const route = useRoute()
@@ -29,6 +30,6 @@ onMounted(()=>{
 
 
 provide('isLoading', isLoading)
-
+utils.has_perm('plans.update')
 </script>
 

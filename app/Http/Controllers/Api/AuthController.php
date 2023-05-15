@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\Scopes\TenantScope;
 use App\Models\User;
@@ -69,7 +70,7 @@ class AuthController extends Controller
                     'status' => 'success',
                     'message' => 'User Logged In Successfully',
                     'access_token' => $user->createToken("API TOKEN")->plainTextToken,
-                    'user' => $user
+                    'user' => new UserResource($user)
                 ], 200);
 
         }

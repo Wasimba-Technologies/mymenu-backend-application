@@ -88,6 +88,9 @@ import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useTenants from "../../composables/restaurant";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
+import utils from "../../utils/utils";
 
 const searchName = ref('')
 const {
@@ -123,4 +126,6 @@ watch(searchName, (currentName) => {
 const searchMenuByName = (ev) => {
     searchName.value = ev.target.value
 }
+
+utils.has_perm('restaurants.view')
 </script>

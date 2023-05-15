@@ -16,6 +16,7 @@
 import {onMounted, provide, ref} from "vue";
 import useAuth from "../../composables/auth";
 import UserFormComponent from "./components/UserFormComponent.vue";
+import utils from "../../utils/utils";
 
 const {errors, userForm, isLoading, roles, getRoles, storeUser} = useAuth()
 
@@ -41,5 +42,8 @@ provide('isLoading', isLoading)
 onMounted(()=>{
     getRoles()
 })
+
+
+utils.has_perm('users.create')
 
 </script>

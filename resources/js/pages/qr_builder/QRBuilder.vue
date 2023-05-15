@@ -64,6 +64,7 @@ import LoadingSpinner from "../../components/LoadingSpinner.vue";
 import useQRBuilder from "../../composables/qr_codes";
 import useTables from "../../composables/tables";
 import {onMounted, provide, ref} from "vue";
+import utils from "../../utils/utils";
 
 const {errors, isLoading, storeQRFeatures, qr_code, qrCodeForm} = useQRBuilder()
 
@@ -85,6 +86,7 @@ const submitQRCodeFeatures  = () =>{
 
 provide('isLoading', isLoading)
 
+utils.has_perm('qr_codes.create')
 </script>
 
 

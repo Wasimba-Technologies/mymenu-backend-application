@@ -82,7 +82,6 @@ export default function useAuth(){
             if(err.response?.data){
                 errors.value=err.response.data.errors
             }
-            console.log(err)
         }).finally(
             () => isLoading.value = false
         )
@@ -95,6 +94,8 @@ export default function useAuth(){
             await getAbilities()
         }else{
             localStorage.setItem('X-Tenant-ID', response.data.user.tenant_id)
+            localStorage.setItem('tenant', JSON.stringify(response.data.user.tenant))
+            localStorage.setItem('user', JSON.stringify(response.data.user))
             await getAbilities()
             await router.push({path: '/dashboard'})
         }
@@ -110,6 +111,8 @@ export default function useAuth(){
                     if (localStorage.getItem('access_token')) {
                         localStorage.removeItem('access_token')
                         localStorage.removeItem('X-Tenant-ID')
+                        localStorage.removeItem('user')
+                        localStorage.removeItem('tenant')
                     }
                     router.push({ name: 'login' })
                 }
@@ -135,7 +138,6 @@ export default function useAuth(){
 
                 console.log(ability.rules)
                 console.log(ability.can('restaurants.create'));
-
             })
     }
 

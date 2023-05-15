@@ -11,7 +11,7 @@ export default function useOrders() {
     const isRejecting = ref(false)
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
-    const ordersURL = ref('/api/orders')
+    const ordersURL = ref('/api/orders?page=1')
 
     const swal = inject('$swal')
 
@@ -23,9 +23,17 @@ export default function useOrders() {
         }
     )
 
-    const getOrders = async () => {
+    const getOrders = async (
+        order_status='',
+        start_date='',
+        end_date=''
+    ) => {
         isFetching.value = true
-        await axios.get('/api/orders')
+        await axios.get(ordersURL.value+
+            "&status="+order_status+
+            "&start_date="+start_date+
+            "&end_date="+ end_date
+        )
         .then(response =>{
             orders.value = response.data.data
             paginationMetaData.value = response.data.meta
@@ -163,22 +171,27 @@ export default function useOrders() {
         return new Intl.NumberFormat().format(num)
     }
 
+    const changeOrdersUrl = (pageUrl) =>{
+        ordersURL.value = pageUrl
+    }
+
     return {
         order,
         orders,
         errors,
+        orderForm,
         getOrders,
         getOrder,
         storeOrder,
-        updateOrderStatus,
+        numFormat,
         isFetching,
         isLoading,
         isRejecting,
-        orderForm,
-        paginationMetaData,
+        printReceipt,
         paginationLinks,
-        numFormat,
-        printReceipt
+        changeOrdersUrl,
+        updateOrderStatus,
+        paginationMetaData,
     }
 
 }

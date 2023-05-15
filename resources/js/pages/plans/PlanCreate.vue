@@ -13,6 +13,7 @@
 import {provide} from "vue";
 import PlanFormComponent from "./components/PlanFormComponent.vue";
 import usePlans from "../../composables/plans";
+import utils from "../../utils/utils";
 
 const {errors, planForm, isLoading, storePlan} = usePlans()
 
@@ -23,5 +24,5 @@ const savePlan = async () => {
 
 
 provide('isLoading', isLoading)
-
+utils.has_perm('plans.create')
 </script>

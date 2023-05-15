@@ -45,9 +45,12 @@ const auth = (to, from, next) => {
     //return
 }
 
-const logoutAndRedirect = async (to, from, next) => {
+const logoutAndRedirect = async (to, from) => {
     await logout()
 }
+
+
+
 
 const routes =[
     {
@@ -99,7 +102,7 @@ const routes =[
             {
                 path : '/dashboard',
                 name : 'dashboard',
-                component : DashboardIndex
+                component : DashboardIndex,
             },
             {
                 path : '/menu',

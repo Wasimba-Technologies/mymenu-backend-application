@@ -87,6 +87,7 @@ import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
+import utils from "../../utils/utils";
 
 const searchName = ref('')
 const {
@@ -122,4 +123,6 @@ watch(searchName, (currentName) => {
 const searchMenuByName = (ev) => {
     searchName.value = ev.target.value
 }
+
+utils.has_perm('menus.view')
 </script>

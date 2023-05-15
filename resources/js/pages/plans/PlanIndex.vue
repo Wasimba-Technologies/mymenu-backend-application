@@ -76,6 +76,7 @@ import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import usePlans from "../../composables/plans";
+import utils from "../../utils/utils";
 
 const searchName = ref('')
 const {
@@ -101,5 +102,5 @@ onMounted(()=>{
     getPlans()
 })
 
-
+utils.has_perm('plans.view')
 </script>

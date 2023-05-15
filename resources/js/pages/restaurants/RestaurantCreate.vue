@@ -140,6 +140,7 @@
     import useTenants from "../../composables/restaurant";
     import {computed, onMounted, ref} from "vue";
     import usePlans from "../../composables/plans";
+    import utils from "../../utils/utils";
     const {tenantForm, storeTenant, errors} = useTenants();
     const {plans, getPlans} = usePlans();
 
@@ -163,6 +164,6 @@
     onMounted(()=>{
         getPlans()
     })
-
+    utils.has_perm('restaurants.create')
 </script>
 

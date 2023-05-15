@@ -12,9 +12,7 @@ use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
 use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
-use Illuminate\Http\File;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 trait GeneratesQrCode
 {
@@ -41,10 +39,14 @@ trait GeneratesQrCode
             ->validateResult(false)
             ->build();
 
+        $qr_image_path = storage_path().'/app/public/'. 'qrcodes/'.$table->tenant_id;
+        if (! File::exists($qr_image_path)) {
+            File::makeDirectory($qr_image_path);
+        }
 
         // Save it to a file
         $result->saveToFile(
-            storage_path().'/app/public/'. 'qrcodes/'.$table->tenant_id.'/'.'qrcode_table'.$table->id.'.png'
+            $qr_image_path.'/'.'qrcode_table'.$table->id.'.png'
         );
         $table = Table::findOrFail($table->id);
         $table->qr_code = 'qrcodes/'.$table->tenant_id.'/'.'qrcode_table'.$table->id.'.png';

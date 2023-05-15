@@ -5,31 +5,31 @@
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="p-12 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                        <RibbonConfirmed v-if='order.status=="Confirmed" || order.status=="Paid"' :status="order.status"/>
-                        <RibbonPending v-if='order.status=="Pending"' :status="order.status"/>
-                        <RibbonRejected v-if='order.status=="Rejected"' :status="order.status"/>
+                        <RibbonConfirmed v-if='order?.status=="Confirmed" || order?.status=="Paid"' :status="order?.status"/>
+                        <RibbonPending v-if='order?.status=="Pending"' :status="order?.status"/>
+                        <RibbonRejected v-if='order?.status=="Rejected"' :status="order?.status"/>
                         <div class="flex justify-between">
                             <div>
                                 <p class="text-3xl font-bold">Invoice # {{order.id}}</p>
                             </div>
                             <div class="text-right">
                                 <div class="font-semibold text-lg">
-                                    {{order.restaurant?.name}}
+                                    {{order?.restaurant?.name}}
                                 </div>
                                 <div class="m-2 font-normal text-sm">
-                                    {{order.restaurant?.address_one}},
-                                    {{order.restaurant?.address_two}},
-                                    {{order.restaurant?.country}}
+                                    {{order?.restaurant?.address_one}},
+                                    {{order?.restaurant?.address_two}},
+                                    {{order?.restaurant?.country}}
                                 </div>
                                 <div class="m-2 font-normal text-sm text-gray-500">
-                                    {{order.created_at}}
+                                    {{order?.created_at}}
                                 </div>
                             </div>
                         </div>
                         <div class="w-72">
                             <p class="mb-4 text-2xl font-bold">Bill To</p>
                             <p class="text-gray-500 text-base italic">
-                                {{order.table?.name}}
+                                {{order?.table?.name}}
                             </p>
                         </div>
                         <div class="mt-6 relative overflow-x-auto sm:rounded-lg">
@@ -138,6 +138,7 @@ import { useAbility } from '@casl/vue'
 import RibbonConfirmed from "../../components/RibbonConfirmed.vue";
 import RibbonPending from "../../components/RibbonPending.vue";
 import RibbonRejected from "../../components/RibbonRejected.vue";
+import utils from "../../utils/utils";
 const { can } = useAbility()
 
 
@@ -227,6 +228,6 @@ const printOrder= (order) =>{
 
 provide('isLoading', isLoading)
 
-
+utils.has_perm('orders.update')
 </script>
 

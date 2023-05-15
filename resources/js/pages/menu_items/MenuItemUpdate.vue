@@ -20,6 +20,7 @@ import MenuItemFormComponent from "./components/MenuItemFormComponent.vue";
 import useMenus from "../../composables/menus";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
+import utils from "../../utils/utils";
 
 const {
     errors,
@@ -64,6 +65,8 @@ watch(menu_item, ()=>{
     modified_menu_item.value.image =  menu_item.value.image
     modified_menu_item.value.menu_id = menu_item.value.menu.id
 })
+
+utils.has_perm('menu_items.update')
 
 </script>
 

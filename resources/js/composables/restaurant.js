@@ -85,6 +85,7 @@ export default function useTenants(){
                     title: ' Information saved successfully'
                 })
             }).catch(error =>{
+                console.log(error)
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{

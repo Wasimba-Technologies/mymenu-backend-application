@@ -19,6 +19,7 @@ import {useRoute} from "vue-router";
 import useAuth from "../../composables/auth";
 import UserFormComponent from "./components/UserFormComponent.vue";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
+import utils from "../../utils/utils";
 
 const {
     errors,
@@ -66,5 +67,7 @@ watch(user, ()=>{
     modified_user.value.image =  user.value.image
     modified_user.value.role_id = user.value.role_id
 })
+
+utils.has_perm('users.update')
 
 </script>

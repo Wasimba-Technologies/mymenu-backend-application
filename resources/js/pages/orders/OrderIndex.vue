@@ -77,16 +77,18 @@ import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useOrders from "../../composables/orders";
+import utils from "../../utils/utils";
 
 const searchName = ref('')
 const {
     order,
     orders,
     getOrders,
+    isFetching,
     paginationLinks,
-    paginationMetaData,
     changeTenantsUrl,
-    isFetching
+    paginationMetaData,
+
 } = useOrders()
 
 
@@ -120,4 +122,6 @@ const statusStyles = {
     Pending: 'bg-yellow-100 text-yellow-800',
     Rejected: 'bg-gray-100 text-gray-800',
 }
+
+utils.has_perm('orders.view')
 </script>

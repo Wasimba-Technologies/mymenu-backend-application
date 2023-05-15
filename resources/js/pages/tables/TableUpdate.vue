@@ -16,6 +16,7 @@ import useTables from "../../composables/tables";
 import TableFormComponent from "./components/TableFormComponent.vue";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
+import utils from "../../utils/utils";
 
 const {errors, getTable, updateTable, isLoading, isFetching, table} = useTables()
 
@@ -36,6 +37,6 @@ onMounted(() => {
 
 
 provide('isLoading', isLoading)
-
+utils.has_perm('tables.update')
 </script>
 

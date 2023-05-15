@@ -13,6 +13,7 @@
 import {provide} from "vue";
 import useTables from "../../composables/tables";
 import TableFormComponent from "./components/TableFormComponent.vue";
+import utils from "../../utils/utils";
 
 const {errors, tableForm, isLoading, storeTable} = useTables()
 
@@ -23,5 +24,7 @@ const saveTable = async () => {
 
 
 provide('isLoading', isLoading)
+
+utils.has_perm('tables.create')
 
 </script>

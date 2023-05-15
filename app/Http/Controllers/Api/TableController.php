@@ -35,7 +35,7 @@ class TableController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Table $table)
+    public function show(Table $table): TableResource
     {
         return new TableResource($table);
     }

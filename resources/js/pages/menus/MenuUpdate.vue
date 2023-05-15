@@ -16,6 +16,7 @@ import useMenus from "../../composables/menus";
 import MenuFormComponent from "./components/MenuFormComponent.vue";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
+import utils from "../../utils/utils";
 
 const {errors, menu, isLoading, isFetching, updateMenu, getMenu} = useMenus()
 const route = useRoute()
@@ -31,4 +32,5 @@ onMounted(()=>{
 
 provide('isLoading', isLoading)
 
+utils.has_perm('menus.update')
 </script>

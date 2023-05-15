@@ -39,7 +39,7 @@
                                 <td colSpan="5">
                                     <NoDataSVG
                                         class="flex flex-col justify-center items-center mt-10"
-                                        message="Oops! There are no restaurants Yet."
+                                        message="Oops! There are no subscription Yet."
                                     />
                                 </td>
                             </tr>
@@ -68,6 +68,7 @@ import Pagination from "../../components/Pagination.vue";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useSubscriptions from "../../composables/subscription";
+import utils from "../../utils/utils";
 
 const searchName = ref('')
 const {
@@ -98,5 +99,6 @@ const showPayments = () =>{
 
 }
 
+utils.has_perm('subscription.view')
 
 </script>

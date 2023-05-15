@@ -18,9 +18,15 @@ class OrderController extends Controller
     public function index(): OrderCollection
     {
         return new OrderCollection(
-            Order::when(request('status'), function($query){
+            Order::with(['menu_items','table'])
+            ->when(request('status'), function($query){
                 $query->where('status', 'like', '%'.request('status').'%');
-            })->with('table')->paginate(20)
+            })
+            ->when(request('start_date'), function ($query) {
+                $query->whereBetween('created_at', [request('start_date'), request('end_date')]);
+            })
+            ->with('table')
+            ->paginate(10)
         );
     }
 

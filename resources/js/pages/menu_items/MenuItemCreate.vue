@@ -17,6 +17,7 @@
     import useMenuItems from "../../composables/menu_items";
     import MenuItemFormComponent from "./components/MenuItemFormComponent.vue";
     import useMenus from "../../composables/menus";
+    import utils from "../../utils/utils";
 
     const {errors, menuItemForm, isLoading, storeMenuItem} = useMenuItems()
 
@@ -43,6 +44,6 @@
     onMounted(()=>{
         watchEffect(()=>getMenus(""))
     })
-
+    utils.has_perm('menu_items.create')
 </script>
 

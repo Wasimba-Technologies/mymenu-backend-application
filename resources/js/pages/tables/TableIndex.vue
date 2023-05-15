@@ -78,6 +78,7 @@ import Pagination from "../../components/Pagination.vue";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useTables from "../../composables/tables";
+import utils from "../../utils/utils";
 
 const {
     tables,
@@ -108,6 +109,7 @@ const printQRByTable = (table) =>{
     printQR(table)
 }
 
+utils.has_perm('tables.view')
 
 
 </script>

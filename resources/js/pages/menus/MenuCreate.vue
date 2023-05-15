@@ -13,6 +13,7 @@
 import {provide} from "vue";
 import useMenus from "../../composables/menus";
 import MenuFormComponent from "./components/MenuFormComponent.vue";
+import utils from "../../utils/utils";
 
 const {errors, menuForm, isLoading, storeMenu} = useMenus()
 
@@ -21,7 +22,7 @@ const saveMenu = async () => {
     await storeMenu({...menuForm});
 }
 
-
+utils.has_perm('menus.create')
 provide('isLoading', isLoading)
 
 </script>

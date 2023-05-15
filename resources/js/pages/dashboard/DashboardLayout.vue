@@ -35,7 +35,7 @@
                                             <img class="inline-block h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                                         </div>
                                         <div class="ml-3">
-                                            <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">Jovenali Bantu</p>
+                                            <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">{{user?.name}}</p>
                                             <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
                                         </div>
                                     </div>
@@ -60,11 +60,13 @@
                             <h1 class="text-rose-600 font-bold text-3xl text-center">MyMenu</h1>
                         </div>
                         <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
-                            <router-link v-for="item in navigation" :key="item.name" :to="item.href" :class="['text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
-                                <component v-if="can(item.perm)" :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
+                            <div v-for="item in navigation">
+                            <router-link v-if="can(item.perm)"  :key="item.name" :to="item.href"   :class="['text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                                <component  :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
                                 {{ item.name }}
                                 <span v-if="item.name === 'Live Orders'" class="animate-ping ml-3 h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
                             </router-link>
+                            </div>
                         </nav>
                     </div>
                     <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
@@ -74,7 +76,7 @@
                                     <img class="inline-block h-9 w-9 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Jovenali Bantu</p>
+                                    <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{user?.name}}</p>
                                     <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
                                 </div>
                             </div>
@@ -82,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" flex flex-col flex w-full">
+            <div class=" flex flex-col w-full">
                 <div class="hidden md:inline-block pl-1 pt-1 sm:pl-3 sm:pt-3">
                     <div class="flex-1 flex justify-between px-4 md:px-0">
                         <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-500" @click="sidebarStaticOpen = !sidebarStaticOpen">
@@ -147,7 +149,7 @@
 
 
 <script setup>
-import {computed, ref} from 'vue'
+import {computed, inject, ref} from 'vue'
 import {Dialog, DialogPanel, MenuButton, Menu, MenuItem, MenuItems, TransitionChild, TransitionRoot} from '@headlessui/vue'
 import {
     HomeIcon,
@@ -163,20 +165,21 @@ import {
 } from '@heroicons/vue/24/outline'
 
 import {useRoute} from "vue-router";
-import { useAbility} from "@casl/vue";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon},
+    { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon, perm: ''},
     // { name: 'Live Orders', href: '/live-orders', icon: BoltIcon },
-    { name: 'Orders', href: '/orders', icon: ShoppingBagIcon },
+    { name: 'Orders', href: '/orders', icon: ShoppingBagIcon,perm: 'orders.view'},
     { name: 'restaurants', href: '/restaurants', icon: HomeIcon , perm: 'restaurants.view'},
-    { name: 'Menu', href: '/menu', icon: DocumentDuplicateIcon },
-    { name: 'Menu Items', href: '/menu-items', icon: Squares2X2Icon },
-    { name: 'Tables', href: '/tables', icon: TableCellsIcon },
-    { name: 'QR Builder', href: '/qr-builder', icon: QrCodeIcon },
+    { name: 'Menu', href: '/menu', icon: DocumentDuplicateIcon, perm: 'menus.view'},
+    { name: 'Menu Items', href: '/menu-items', icon: Squares2X2Icon, perm: 'menu_items.view'},
+    { name: 'Tables', href: '/tables', icon: TableCellsIcon, perm: 'tables.view'},
+    { name: 'QR Builder', href: '/qr-builder', icon: QrCodeIcon, perm: 'qr_codes.view' },
     // { name: 'Plan', href: '/plans', icon: CreditCardIcon },
-    { name: 'Users', href: '/users', icon: UsersIcon },
-    { name: 'Settings', href: '/settings', icon: CogIcon },
+    { name: 'Users', href: '/users', icon: UsersIcon, perm: 'users.create' },
+    { name: 'Settings', href: '/settings', icon: CogIcon, perm: 'restaurants.update'},
 ]
 
 const userNavigation = [
@@ -190,10 +193,16 @@ const sidebarStaticOpen = ref(true)
 const route = useRoute()
 const { can } = useAbility()
 
+const {getAbilities} = useAuth()
+
+getAbilities()
+
 
 
 const currentPageTitle = computed(() =>{
     return route.meta.title;
 })
+
+const user = JSON.parse(localStorage.getItem('user'))
 
 </script>

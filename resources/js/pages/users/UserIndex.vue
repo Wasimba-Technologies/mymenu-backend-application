@@ -88,6 +88,7 @@ import TableSearch from "../../components/TableSearch.vue";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useAuth from "../../composables/auth";
+import utils from "../../utils/utils";
 
 const searchName = ref('')
 const {
@@ -123,6 +124,8 @@ watch(searchName, (currentName) => {
 const searchUsersByName = (ev) => {
     searchName.value = ev.target.value
 }
+
+utils.has_perm('users.view')
 </script>
 
 

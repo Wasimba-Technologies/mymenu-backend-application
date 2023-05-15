@@ -160,7 +160,7 @@
 
                                                     </div>
                                                     <div>
-                                                        <button type="submit" class="w-full btn-sm-submit">Register</button>
+                                                        <button type="submit" class="w-full btn-sm-submit">Update</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -188,6 +188,7 @@
 
     import {computed, onMounted, ref, watch} from "vue";
     import usePlans from "../../composables/plans";
+    import utils from "../../utils/utils";
 
     const {tenant, getTenant, updateTenant, errors} = useTenants();
     const {plans, getPlans} = usePlans();
@@ -216,5 +217,5 @@
         tenant.value.plan_id = tenant.value.plan.id
     })
 
-
+    utils.has_perm('restaurants.update')
 </script>
