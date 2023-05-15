@@ -20,6 +20,7 @@ import useAuth from "../../composables/auth";
 import UserFormComponent from "./components/UserFormComponent.vue";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
 
 const {
     errors,
@@ -68,6 +69,11 @@ watch(user, ()=>{
     modified_user.value.role_id = user.value.role_id
 })
 
-utils.has_perm('users.update')
+//utils.has_perm('users.update')
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('users.update')){
+    logout()
+}
 </script>

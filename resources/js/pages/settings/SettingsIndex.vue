@@ -189,6 +189,8 @@
     import {computed, onMounted, ref, watch} from "vue";
     import usePlans from "../../composables/plans";
     import utils from "../../utils/utils";
+    import {useAbility} from "@casl/vue";
+    import useAuth from "../../composables/auth";
 
     const {tenant, getTenant, updateTenant, errors} = useTenants();
     const {plans, getPlans} = usePlans();
@@ -217,5 +219,11 @@
         tenant.value.plan_id = tenant.value.plan.id
     })
 
-    utils.has_perm('restaurants.update')
+    //utils.has_perm('restaurants.update')
+    const {can} = useAbility()
+    const {logout} = useAuth()
+
+    if(!can('restaurants.update')){
+        logout()
+    }
 </script>

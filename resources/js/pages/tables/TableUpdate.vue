@@ -17,6 +17,8 @@ import TableFormComponent from "./components/TableFormComponent.vue";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const {errors, getTable, updateTable, isLoading, isFetching, table} = useTables()
 
@@ -35,8 +37,14 @@ onMounted(() => {
     }
 )
 
+const {can} = useAbility()
+const {logout} = useAuth()
+
+if(!can('tables.update')){
+    logout()
+}
 
 provide('isLoading', isLoading)
-utils.has_perm('tables.update')
+
 </script>
 

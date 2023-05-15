@@ -18,6 +18,8 @@
     import MenuItemFormComponent from "./components/MenuItemFormComponent.vue";
     import useMenus from "../../composables/menus";
     import utils from "../../utils/utils";
+    import {useAbility} from "@casl/vue";
+    import useAuth from "../../composables/auth";
 
     const {errors, menuItemForm, isLoading, storeMenuItem} = useMenuItems()
 
@@ -44,6 +46,12 @@
     onMounted(()=>{
         watchEffect(()=>getMenus(""))
     })
-    utils.has_perm('menu_items.create')
+    const {can} = useAbility()
+    const {logout} = useAuth()
+
+    if(!can('menu_items.create')){
+        logout()
+    }
+    //utils.has_perm('menu_items.create')
 </script>
 

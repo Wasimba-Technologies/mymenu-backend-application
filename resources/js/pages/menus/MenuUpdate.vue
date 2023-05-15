@@ -17,6 +17,8 @@ import MenuFormComponent from "./components/MenuFormComponent.vue";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const {errors, menu, isLoading, isFetching, updateMenu, getMenu} = useMenus()
 const route = useRoute()
@@ -29,8 +31,14 @@ onMounted(()=>{
     getMenu(route.params.id)
 })
 
+const {can} = useAbility()
+const {logout} = useAuth()
+
+if(!can('menus.update')){
+    logout()
+}
 
 provide('isLoading', isLoading)
 
-utils.has_perm('menus.update')
+// utils.has_perm('menus.update')
 </script>

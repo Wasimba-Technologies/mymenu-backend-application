@@ -16,6 +16,8 @@ import {useRoute} from "vue-router";
 import usePlans from "../../composables/plans";
 import PlanFormComponent from "./components/PlanFormComponent.vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const {errors, plan, isLoading, isFetching, updatePlan, getPlan} = usePlans()
 const route = useRoute()
@@ -28,8 +30,13 @@ onMounted(()=>{
     getPlan(route.params.id)
 })
 
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('plans.update')){
+    logout()
+}
 provide('isLoading', isLoading)
-utils.has_perm('plans.update')
+// utils.has_perm('plans.update')
 </script>
 

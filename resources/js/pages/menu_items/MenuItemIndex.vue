@@ -89,6 +89,8 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useMenuItems from "../../composables/menu_items";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const searchName = ref('')
 const {
@@ -125,7 +127,12 @@ const searchMenuItemsByName = (ev) => {
     searchName.value = ev.target.value
 }
 
-utils.has_perm('menu_items.view')
+//utils.has_perm('menu_items.view')
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('menu_items.view')){
+    logout()
+}
 </script>
 

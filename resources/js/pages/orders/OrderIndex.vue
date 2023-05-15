@@ -78,6 +78,8 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useOrders from "../../composables/orders";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const searchName = ref('')
 const {
@@ -123,5 +125,11 @@ const statusStyles = {
     Rejected: 'bg-gray-100 text-gray-800',
 }
 
-utils.has_perm('orders.view')
+//utils.has_perm('orders.view')
+const {can} = useAbility()
+const {logout} = useAuth()
+
+if(!can('orders.view')){
+    logout()
+}
 </script>

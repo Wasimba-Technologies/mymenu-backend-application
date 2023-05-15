@@ -65,6 +65,8 @@ import useQRBuilder from "../../composables/qr_codes";
 import useTables from "../../composables/tables";
 import {onMounted, provide, ref} from "vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const {errors, isLoading, storeQRFeatures, qr_code, qrCodeForm} = useQRBuilder()
 
@@ -87,6 +89,12 @@ const submitQRCodeFeatures  = () =>{
 provide('isLoading', isLoading)
 
 utils.has_perm('qr_codes.create')
+const {can} = useAbility()
+const {logout} = useAuth()
+
+if(!can('qr_codes.create')){
+    logout()
+}
 </script>
 
 

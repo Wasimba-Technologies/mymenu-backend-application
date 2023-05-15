@@ -139,6 +139,7 @@ import RibbonConfirmed from "../../components/RibbonConfirmed.vue";
 import RibbonPending from "../../components/RibbonPending.vue";
 import RibbonRejected from "../../components/RibbonRejected.vue";
 import utils from "../../utils/utils";
+import useAuth from "../../composables/auth";
 const { can } = useAbility()
 
 
@@ -225,9 +226,13 @@ const printOrder= (order) =>{
 }
 
 
+const {logout} = useAuth()
 
+if(!can('orders.update')){
+    logout()
+}
 provide('isLoading', isLoading)
 
-utils.has_perm('orders.update')
+//utils.has_perm('orders.update')
 </script>
 

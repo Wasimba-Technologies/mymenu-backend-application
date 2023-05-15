@@ -21,6 +21,8 @@ import useMenus from "../../composables/menus";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const {
     errors,
@@ -66,7 +68,12 @@ watch(menu_item, ()=>{
     modified_menu_item.value.menu_id = menu_item.value.menu.id
 })
 
-utils.has_perm('menu_items.update')
+//utils.has_perm('menu_items.update')
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('menu_items.update')){
+    logout()
+}
 </script>
 

@@ -1,5 +1,6 @@
 import {useAbility} from "@casl/vue";
 import useAuth from "../composables/auth";
+import {inject} from "vue";
 
 function greeting(){
     const myDate = new Date();
@@ -37,20 +38,21 @@ function getStrTomorrowDate(dateObj){
     let date = new Date(yesterday).getDate()
     return date >= 10 ? date : "0"+date
 }
-const {can} = useAbility()
-const {logout} = useAuth()
-const has_perm = (perm) =>{
-    if(!can(perm)){
-        logout()
-    }
-}
+//
+// const {can} = useAbility()
+// const {logout} = useAuth()
+// const has_perm = (perm) =>{
+//     if(!can(perm)){
+//         logout()
+//     }
+// }
 
 function numFormat(num){
     return new Intl.NumberFormat().format(num)
 }
 
 const utils = {
-    has_perm,
+    // has_perm,
     greeting,
     numFormat,
     getStrDate,

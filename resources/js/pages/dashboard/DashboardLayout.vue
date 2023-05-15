@@ -169,7 +169,7 @@ import {useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon, perm: ''},
+    { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon, perm: 'restaurants.update'},
     // { name: 'Live Orders', href: '/live-orders', icon: BoltIcon },
     { name: 'Orders', href: '/orders', icon: ShoppingBagIcon,perm: 'orders.view'},
     { name: 'restaurants', href: '/restaurants', icon: HomeIcon , perm: 'restaurants.view'},

@@ -141,6 +141,8 @@
     import {computed, onMounted, ref} from "vue";
     import usePlans from "../../composables/plans";
     import utils from "../../utils/utils";
+    import {useAbility} from "@casl/vue";
+    import useAuth from "../../composables/auth";
     const {tenantForm, storeTenant, errors} = useTenants();
     const {plans, getPlans} = usePlans();
 
@@ -164,6 +166,6 @@
     onMounted(()=>{
         getPlans()
     })
-    utils.has_perm('restaurants.create')
+
 </script>
 

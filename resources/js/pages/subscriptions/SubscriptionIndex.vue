@@ -69,6 +69,8 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useSubscriptions from "../../composables/subscription";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const searchName = ref('')
 const {
@@ -99,6 +101,11 @@ const showPayments = () =>{
 
 }
 
-utils.has_perm('subscription.view')
+//utils.has_perm('subscription.view')
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('subscription.view')){
+    logout()
+}
 </script>

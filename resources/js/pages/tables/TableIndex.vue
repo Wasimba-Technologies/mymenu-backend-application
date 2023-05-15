@@ -79,6 +79,8 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useTables from "../../composables/tables";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const {
     tables,
@@ -109,8 +111,13 @@ const printQRByTable = (table) =>{
     printQR(table)
 }
 
-utils.has_perm('tables.view')
+//utils.has_perm('tables.view')
 
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('tables.view')){
+    logout()
+}
 </script>
 

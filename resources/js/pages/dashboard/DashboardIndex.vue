@@ -42,6 +42,8 @@ import {ArrowTrendingUpIcon, BuildingOfficeIcon, FolderIcon, ShoppingCartIcon} f
     import utils from "../../utils/utils";
 import {computed, onMounted, provide, watch, watchEffect} from "vue";
     import useOrders from "../../composables/orders";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
     const {
         orders,
@@ -102,6 +104,11 @@ import {computed, onMounted, provide, watch, watchEffect} from "vue";
 const user = JSON.parse(localStorage.getItem('user'))
 const tenant = JSON.parse(localStorage.getItem('tenant'))
 
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('restaurants.update')){
+    logout()
+}
 
 </script>

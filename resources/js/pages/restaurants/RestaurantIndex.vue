@@ -128,4 +128,10 @@ const searchMenuByName = (ev) => {
 }
 
 utils.has_perm('restaurants.view')
+const {can} = useAbility()
+const {logout} = useAuth()
+
+if(!can('restaurants.view')){
+    logout()
+}
 </script>

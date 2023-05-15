@@ -17,6 +17,7 @@ import {onMounted, provide, ref} from "vue";
 import useAuth from "../../composables/auth";
 import UserFormComponent from "./components/UserFormComponent.vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
 
 const {errors, userForm, isLoading, roles, getRoles, storeUser} = useAuth()
 
@@ -43,7 +44,12 @@ onMounted(()=>{
     getRoles()
 })
 
+const {can} = useAbility()
+const {logout} = useAuth()
 
-utils.has_perm('users.create')
+if(!can('users.create')){
+    logout()
+}
+
 
 </script>

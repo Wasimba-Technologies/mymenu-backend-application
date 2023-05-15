@@ -89,6 +89,7 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useAuth from "../../composables/auth";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
 
 const searchName = ref('')
 const {
@@ -125,7 +126,13 @@ const searchUsersByName = (ev) => {
     searchName.value = ev.target.value
 }
 
-utils.has_perm('users.view')
+//utils.has_perm('users.view')
+const {can} = useAbility()
+const {logout} = useAuth()
+
+if(!can('users.view')){
+    logout()
+}
 </script>
 
 

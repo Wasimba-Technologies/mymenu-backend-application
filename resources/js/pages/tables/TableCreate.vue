@@ -14,6 +14,8 @@ import {provide} from "vue";
 import useTables from "../../composables/tables";
 import TableFormComponent from "./components/TableFormComponent.vue";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const {errors, tableForm, isLoading, storeTable} = useTables()
 
@@ -25,6 +27,11 @@ const saveTable = async () => {
 
 provide('isLoading', isLoading)
 
-utils.has_perm('tables.create')
+//utils.has_perm('tables.create')
+const {can} = useAbility()
+const {logout} = useAuth()
 
+if(!can('tables.create')){
+    logout()
+}
 </script>

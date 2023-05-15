@@ -77,6 +77,8 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import usePlans from "../../composables/plans";
 import utils from "../../utils/utils";
+import {useAbility} from "@casl/vue";
+import useAuth from "../../composables/auth";
 
 const searchName = ref('')
 const {
@@ -102,5 +104,12 @@ onMounted(()=>{
     getPlans()
 })
 
-utils.has_perm('plans.view')
+//utils.has_perm('plans.view')
+
+const {can} = useAbility()
+const {logout} = useAuth()
+
+if(!can('plans.view')){
+    logout()
+}
 </script>
