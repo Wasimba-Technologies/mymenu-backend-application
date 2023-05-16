@@ -127,7 +127,7 @@ const searchMenuByName = (ev) => {
     searchName.value = ev.target.value
 }
 
-utils.has_perm('restaurants.view')
+//utils.has_perm('restaurants.view')
 const {can} = useAbility()
 const {logout} = useAuth()
 

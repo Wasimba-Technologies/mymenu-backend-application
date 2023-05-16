@@ -14,6 +14,8 @@ class Subscription extends Model
 {
     use HasFactory, BelongsToTenant;
 
+    protected $guarded = [];
+
     public function payments(): HasMany
     {
         return $this->hasMany(SubscriptionPayment::class);

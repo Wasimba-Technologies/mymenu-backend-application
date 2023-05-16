@@ -74,7 +74,8 @@ export default function useTenants(){
         await axios.post('/api/tenants', formData)
             .then(async response => {
                 tenants.value = response.data.data
-                localStorage.setItem('X-Tenant-ID', response.data.id)
+                console.log(response.data)
+                localStorage.setItem('X-Tenant-ID', response.data.data.id)
                 const subscription = {
                     'plan': response.data.data.plan
                 }
@@ -84,6 +85,7 @@ export default function useTenants(){
                     icon: 'success',
                     title: ' Information saved successfully'
                 })
+                //await router.push({name: 'dashboard'})
             }).catch(error =>{
                 console.log(error)
                 if(error.response?.data){
@@ -151,7 +153,6 @@ export default function useTenants(){
     const changeFilteringUrl = (name) =>{
         tenantsURL.value = 'api/tenants?page=1'
         tenantsURL.value = tenantsURL.value+'&name='+name
-        console.log(tenantsURL.value)
     }
 
 

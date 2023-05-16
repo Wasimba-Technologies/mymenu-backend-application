@@ -34,7 +34,7 @@ export default function useSubscriptions() {
     const getSubscription = async (id) => {
         isFetching.value = true
         await axios.get('/api/subscriptions/'+id).then(response =>{
-            table.value = response.data.data
+            subscription.value = response.data.data
         }).catch(error =>{
             swal({
                 icon: 'error',
@@ -46,7 +46,7 @@ export default function useSubscriptions() {
     }
 
     const storeSubscription = async (subscription) =>{
-        await axios.post('/api/subscription', subscription)
+        await axios.post('/api/subscriptions', subscription)
             .then(response => {
                 router.push({name: 'dashboard'})
             }).catch(error => {
@@ -66,14 +66,10 @@ export default function useSubscriptions() {
 
 
     const updateSubscription = async (id) =>{
-
         isLoading.value = true
-
         //check if user is updating file
         let data = {...subscription.value}
-
-
-        await axios.put('/api/subscription/'+id, data)
+        await axios.put('/api/subscriptions/'+id, data)
             .then(response =>{
                 router.push({name: 'tables.index'})
                 swal({
@@ -97,16 +93,17 @@ export default function useSubscriptions() {
 
 
     return {
-        subscriptions,
-        subscription,
         errors,
-        getSubscriptions,
-        getSubscription,
-        updateSubscription,
-        isFetching,
         isLoading,
+        isFetching,
+        subscription,
+        subscriptions,
+        paginationLinks,
+        getSubscription,
+        getSubscriptions,
+        storeSubscription,
+        updateSubscription,
         paginationMetaData,
-        paginationLinks
     }
 
 }

@@ -8,7 +8,9 @@ use App\Http\Requests\UpdateSubscriptionRequest;
 use App\Http\Resources\SubscriptionResource;
 use App\Models\Subscription;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Log;
 
 class SubscriptionController extends Controller
 {
@@ -25,20 +27,23 @@ class SubscriptionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSubscriptionRequest $request)
+    public function store(StoreSubscriptionRequest $request): JsonResponse
     {
         $subscription = [];
-        $data = json_decode((string)$request->json()->all());
-        $subscription['plan_id'] = $data->plan->id;
+        $data = (object)$request->json()->all();
+        $subscription['plan_id'] = $data->plan['id']; //plan is an array
         $subscription['start_date'] = Carbon::today();
-        if ($data->plan->price == 0){
-            $subscription['end_date'] = null;
+        if ($data->plan['price'] == 0){
+            $subscription['end_date'] = Carbon::today()->addYears();
         }else{
             $subscription['end_date'] = Carbon::today()->addDays(7);
         }
         $subscription['tenant_id'] = request()->header('X-TENANT-ID');
 
+        Log::info(json_encode($subscription));
+
         $sub = Subscription::create($subscription);
+
 
         return response()->json(
             [

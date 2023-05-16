@@ -48,9 +48,8 @@ class RestaurantController extends Controller
      */
     public function show($id): RestaurantResource
     {
+        $this->authorize('show', Restaurant::class);
         $restaurant = Restaurant::where('id', $id)->first();
-        Log::info(json_encode($restaurant));
-        //$this->authorize('show', $restaurant);
         return new RestaurantResource($restaurant);
     }
 
@@ -59,7 +58,7 @@ class RestaurantController extends Controller
      */
     public function update(RestaurantRequest $request, $id)
     {
-        //$data = $request->validated();
+        $this->authorize('update', Restaurant::class);
         $restaurant = Restaurant::where('id', $id)->first();
         $data = $this->getDataAndSaveImage('logos', $request);
         $restaurant->update($data);
