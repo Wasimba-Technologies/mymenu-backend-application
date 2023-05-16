@@ -67,21 +67,21 @@ export default function useOrders() {
         isLoading.value = true;
         await axios.post('/api/orders', data)
             .then(async response => {
-                data['order_id'] = response.data.order.id
-                await axios.post('/api/order_items', data).then(response =>{
-                    swal({
-                        icon: 'success',
-                        title: 'Order placed successfully'
-                    })
-                    console.log(response.data)
-                    order.value = response.data
-                    router.push(
-                        {
-                            name: 'order_details.guest',
-                        }
-                    )
-                    }
-                ).catch(error => {
+                console.log(response.data)
+                if (response.data.status !== 'failure'){
+                    data['order_id'] = response.data.order.id
+                    await axios.post('/api/order_items', data).then(response =>{
+                        swal({
+                            icon: 'success',
+                            title: 'Order placed successfully'
+                        })
+                        order.value = response.data
+                        router.push(
+                            {
+                                name: 'order_details.guest',
+                            }
+                        )
+                    }).catch(error => {
                         if (error.response?.data) {
                             errors.value = error.response.data.errors
                         } else {
@@ -94,6 +94,12 @@ export default function useOrders() {
                 ).finally(
                     () => isLoading.value = false
                 )
+                }else{
+                    swal({
+                        icon: 'warning',
+                        title: response.data.message
+                    })
+                }
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors

@@ -8,6 +8,8 @@ use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Menu;
 use App\Models\Order;
+use App\Models\Restaurant;
+use App\Models\Scopes\TenantScope;
 use Illuminate\Http\Response;
 
 class OrderController extends Controller
@@ -35,17 +37,26 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        $data = request()->json()->all();
-        $order = Order::create(
-            [
-                'table_id'=> $data['table_id'],
-                'status' => 'Pending'
-            ]
-        );
+        $orders = Order::all();
+        $tenant_id = $request->header('X-TENANT-ID');
+        $tenant = Restaurant::withoutGlobalScope(TenantScope::class )->with('plan')->findOrFail($tenant_id);
+        if(count($orders) < $tenant->plan->users) {
+            $data = request()->json()->all();
+            $order = Order::create(
+                [
+                    'table_id' => $data['table_id'],
+                    'status' => 'Pending'
+                ]
+            );
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order created successfully',
+                'order' => $order
+            ]);
+        }
         return response()->json([
-            'status' => 'success',
-            'message' => 'Order created successfully',
-            'order' => $order
+            'status'=> 'failure',
+            'message'=> "Maximum orders in your plan reached"
         ]);
     }
 

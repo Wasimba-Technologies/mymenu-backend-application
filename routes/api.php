@@ -32,7 +32,18 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::get('browse/{id}', [MenuBrowser::class, 'browse']);
-
+Route::apiResource(
+    'menus', MenuController::class
+)->only('index');
+Route::apiResource(
+    'menu_items', MenuItemController::class
+)->only('index');
+Route::apiResource(
+    'orders', OrderController::class
+)->only(['store','show']);
+Route::apiResource(
+    'order_items', OrderMenuItemController::class
+)->only(['store','show']);
 
 Route::middleware(['auth:sanctum'])->group(
     function (){
@@ -41,19 +52,20 @@ Route::middleware(['auth:sanctum'])->group(
         );
         Route::apiResource(
             'menus', MenuController::class
-        );
+        )->except('index');
         Route::apiResource(
             'menu_items', MenuItemController::class
-        );
+        )->except('index');
         Route::apiResource(
             'tables', TableController::class
         );
         Route::apiResource(
             'orders', OrderController::class
-        );
+        )->except(['store','show']);
+
         Route::apiResource(
             'order_items', OrderMenuItemController::class
-        );
+        )->except(['store','show']);
         Route::apiResource(
             'payments', PaymentController::class
         );

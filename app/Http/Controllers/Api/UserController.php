@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Models\Order;
+use App\Models\Restaurant;
+use App\Models\Scopes\TenantScope;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
@@ -24,11 +28,20 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request): UserResource
+    public function store(UserRequest $request): UserResource | JsonResponse
     {
-        $data = $request->validated();
-        $user = User::create($data);
-        return new UserResource($user);
+        $orders = Order::all();
+        $tenant_id = $request->header('X-TENANT-ID');
+        $tenant = Restaurant::withoutGlobalScope(TenantScope::class)->with('plan')->findOrFail($tenant_id);
+        if(count($orders) < $tenant->plan->users) {
+            $data = $request->validated();
+            $user = User::create($data);
+            return new UserResource($user);
+        }
+        return response()->json([
+            'status'=> 'failure',
+            'message'=> "Maximum users in your plan reached"
+        ]);
     }
 
     /**

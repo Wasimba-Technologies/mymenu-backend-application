@@ -7,7 +7,11 @@ use App\Http\Requests\MenuItemRequest;
 use App\Http\Resources\MenuItemCollection;
 use App\Http\Resources\MenuItemResource;
 use App\Models\MenuItem;
+use App\Models\Order;
+use App\Models\Restaurant;
+use App\Models\Scopes\TenantScope;
 use App\Traits\HasImage;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -30,13 +34,21 @@ class MenuItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MenuItemRequest $request): MenuItemResource
+    public function store(MenuItemRequest $request): MenuItemResource | JsonResponse
     {
-        //$data = $request->validated();
-        $data = $this->getDataAndSaveImage('images', $request);
-        //$data['tenant_id'] = $request->header('X-TENANT-ID');
-        $menu_item = MenuItem::create($data);
-        return new MenuItemResource($menu_item);
+        $orders = Order::all();
+        $tenant_id = $request->header('X-TENANT-ID');
+        $tenant = Restaurant::withoutGlobalScope(TenantScope::class)->with('plan')->findOrFail($tenant_id);
+        if(count($orders) < $tenant->plan->menu_items){
+            $data = $this->getDataAndSaveImage('images', $request);
+            //$data['tenant_id'] = $request->header('X-TENANT-ID');
+            $menu_item = MenuItem::create($data);
+            return new MenuItemResource($menu_item);
+        }
+        return response()->json([
+            'status'=> 'failure',
+            'message'=> "Maximum menu items in your plan reached"
+        ]);
     }
 
     /**

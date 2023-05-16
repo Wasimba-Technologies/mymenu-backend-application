@@ -116,6 +116,7 @@ const handleQtyChange = (event, product) =>{
 }
 
 const placeOrder =  () => {
+    console.log(shopping_cart.value)
     storeOrder(
         {
             'menu_items': shopping_cart.value,
