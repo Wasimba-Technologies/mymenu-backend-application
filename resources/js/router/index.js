@@ -87,7 +87,9 @@ const routes =[
     {
         path : '/browse/:id',
         name : 'browse',
-        component : MenuItemBrowser
+        component : MenuItemBrowser,
+        meta: { title: 'Browse Menu' }
+
     },
     {
         path : '/order_details/:id/guest',

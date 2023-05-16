@@ -1,5 +1,6 @@
 <template>
 <div class="px-4">
+    <title>{{currentPageTitle}}</title>
     <div class="relative pt-6 px-4 sm:px-6 lg:px-8">
         <BrowserNav />
     </div>
@@ -144,6 +145,10 @@ const filterMenuItems = (item) =>{
         return menu_item?.menu.id === item.id
     })
 }
+
+const currentPageTitle = computed(() =>{
+    return router.meta.title;
+})
 
 
 
