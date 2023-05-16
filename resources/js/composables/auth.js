@@ -135,9 +135,9 @@ export default function useAuth(){
                 can(permissions)
 
                 ability.update(rules)
-
-                console.log(ability.rules)
-                console.log(ability.can('restaurants.create'));
+                //
+                // console.log(ability.rules)
+                // console.log(ability.can('restaurants.create'));
             })
     }
 

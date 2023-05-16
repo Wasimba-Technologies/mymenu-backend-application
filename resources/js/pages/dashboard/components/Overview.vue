@@ -56,9 +56,9 @@ const props = defineProps([
 // ]
 
 const stats = ref([
-    { id: 1, name: 'Sales Volume (Today)', href: '/orders', icon: ArrowTrendingUpIcon, stat: 'Tsh '+utils.numFormat(props.totalSold.value), color: "bg-indigo-500" },
-    { id:2, name: 'Orders (Today)', href: '/orders', icon: ShoppingCartIcon,  stat: props.totalOrders.value, color: "bg-green-500" },
-    { id:3, name: 'Products Sold', href: '/orders', icon: FolderIcon, stat: props.totalSoldProducts.value+' Items', color: "bg-yellow-500" },
+    { id: 1, name: 'Sales Volume (Today)', href: '/orders', icon: ArrowTrendingUpIcon, stat: 'Tsh '+utils.numFormat(props.totalSold), color: "bg-indigo-500" },
+    { id:2, name: 'Orders (Today)', href: '/orders', icon: ShoppingCartIcon,  stat: props.totalOrders, color: "bg-green-500" },
+    { id:3, name: 'Products Sold', href: '/orders', icon: FolderIcon, stat: props.totalSoldProducts+' Items', color: "bg-yellow-500" },
 ])
 
 //const stats = inject('stats')

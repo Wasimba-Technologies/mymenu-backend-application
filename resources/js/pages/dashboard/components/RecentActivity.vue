@@ -21,6 +21,9 @@
                   </span>
                 </a>
             </li>
+            <li v-if="orders?.length === 0">
+                    <p class="m-4 italic text-center text-gray-500">Oops! There are no Order activity Yet.</p>
+            </li>
         </ul>
 
         <nav class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200" aria-label="Pagination">
@@ -70,6 +73,11 @@
                                 <time :datetime="order.datetime">{{ order?.created_at }}</time>
                             </td>
                         </tr>
+                        <tr v-if="orders?.length === 0">
+                            <td colSpan="4">
+                                <p class="m-4 italic text-center text-gray-500">Oops! There are no Order activity Yet.</p>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <!-- Pagination -->
@@ -111,39 +119,6 @@ import {
     ChevronRightIcon,
 } from '@heroicons/vue/20/solid'
 
-// const orders = [
-//     {
-//         id: 1,
-//         name: 'Table Zebra Inside',
-//         href: '#',
-//         amount: '$900',
-//         currency: 'USD',
-//         status: 'success',
-//         date: 'July 11, 2022',
-//         datetime: '2020-07-11',
-//     },
-//     {
-//         id: 2,
-//         name: 'Table Lion Inside',
-//         href: '#',
-//         amount: '$200',
-//         currency: 'USD',
-//         status: 'rejected',
-//         date: 'July 11, 2022',
-//         datetime: '2020-07-11',
-//     },
-//     {
-//         id: 1,
-//         name: 'Table Antelope Outside',
-//         href: '#',
-//         amount: '$600',
-//         currency: 'USD',
-//         status: 'processing',
-//         date: 'July 11, 2022',
-//         datetime: '2020-07-11',
-//     },
-//     // More orders...
-// ]
 
 const statusStyles = {
     Processing: 'bg-yellow-100 text-yellow-800',

@@ -69,7 +69,7 @@ import useAuth from "../../composables/auth";
     const totalSoldProducts = computed(()=>{
         let sum = 0;
         orders.value?.forEach((order)=>{
-            order.order_items?.forEach((variant) => {
+            order?.order_items?.forEach((variant) => {
                 sum += variant.pivot.qty
             })
         })
@@ -79,7 +79,7 @@ import useAuth from "../../composables/auth";
     const totalSold = computed(()=>{
         let sum = 0;
         orders.value?.forEach((order)=>{
-            order.order_items?.forEach((variant) => {
+            order?.order_items?.forEach((variant) => {
                 sum += (variant.pivot.qty * variant.price)
             })
         })
