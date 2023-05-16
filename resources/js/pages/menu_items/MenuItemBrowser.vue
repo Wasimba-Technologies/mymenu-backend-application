@@ -7,10 +7,10 @@
         <img src="http://localhost:8000/storage/logos/banner-sm.png"  alt="banner"/>
     </div>
     <div class="mt-4">
-        <AutoComplete label="Filter Menu" :items="menus" />
+        <AutoComplete label="Filter Menu" :items="menus" @list-item-clicked="filterMenuItems"/>
     </div>
     <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div v-for="product in menu_items" :key="product.id" class="relative flex items-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-rose-500 focus-within:ring-offset-2 hover:border-gray-400">
+        <div v-for="product in menu_products" :key="product.id" class="relative flex items-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-rose-500 focus-within:ring-offset-2 hover:border-gray-400">
             <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img :src="product.image" :alt="product.name" class="h-full w-full object-cover object-center" />
             </div>
@@ -64,11 +64,16 @@ const {storeOrder, numFormat} = useOrders()
 const open = ref(false)
 const router = useRoute()
 const shopping_cart = ref([])
-
+const menu_products = ref([])
 
 onMounted(()=>{
     getMenus('')
     browseMenuByTable(router.params.id)
+})
+
+watch(menu_items,() =>{
+    //re-assign into new variable to enable non db filtering, see filter fn below
+    menu_products.value = menu_items.value
 })
 
 const addToShoppingCart = (product) => {
@@ -133,6 +138,12 @@ const grandTotal = computed(() => {
         (total, item) => (item.qty * item.menu_item.price) + total, 0)
     )
 });
+
+const filterMenuItems = (item) =>{
+    menu_products.value = menu_items.value?.filter((menu_item)=>{
+        return menu_item?.menu.id === item.id
+    })
+}
 
 
 

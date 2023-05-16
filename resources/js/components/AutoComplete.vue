@@ -3,17 +3,17 @@
         <ComboboxLabel class="block text-sm font-medium text-gray-700">{{label}}</ComboboxLabel>
         <div class="relative mt-1">
             <ComboboxInput class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500 sm:text-sm"
-                           @change="selectedItemChanged"
+                           @change="selectedItemChanged($event)"
                            :display-value="(item) => item?.name"
                            required
             />
             <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-                <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <ChevronUpDownIcon class="h-5  w-5 text-gray-400" aria-hidden="true" />
             </ComboboxButton>
 
             <ComboboxOptions v-if="filteredItem?.length > 0" class="absolute z-10 mt-1 max-h-60 w-full overflow-auto
                         rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <ComboboxOption v-for="item in filteredItem" :key="item.id" :value="item" as="template" v-slot="{ active, selected }">
+                <ComboboxOption v-for="item in filteredItem" :key="item.id" :value="item" as="template" v-slot="{ active, selected }" @click="listItemClicked(item)">
                     <li :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-rose-600 text-white' : 'text-gray-900']">
                         <span :class="['block truncate', selected && 'font-semibold']">
                           {{ item.name }}
@@ -45,6 +45,10 @@ let props = defineProps([
     'label','items','selectedItem'
 ])
 
+let emit = defineEmits([
+    'listItemClicked'
+])
+
 
 
 const query = ref('')
@@ -59,6 +63,10 @@ const filteredItem = computed(() =>
 
 const selectedItemChanged = (event) =>{
     query.value = event.target.value
+    console.log(event.target.value)
 }
 
+const listItemClicked = (item) => {
+    emit('listItemClicked', item)
+}
 </script>

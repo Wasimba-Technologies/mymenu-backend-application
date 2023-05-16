@@ -18,12 +18,12 @@
                                     {{order.restaurant?.name}}
                                 </div>
                                 <div class="m-2 font-normal text-sm">
-                                    {{order.restaurant?.address_one}},
-                                    {{order.restaurant?.address_two}},
-                                    {{order.restaurant?.country}}
+                                    {{order?.restaurant?.address_one}},
+                                    {{order?.restaurant?.address_two}},
+                                    {{order?.restaurant?.country}}
                                 </div>
                                 <div class="m-2 font-normal text-sm text-gray-500">
-                                    {{order.created_at}}
+                                    {{order?.created_at}}
                                 </div>
                             </div>
                         </div>
