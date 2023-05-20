@@ -74,7 +74,6 @@ export default function useTenants(){
         await axios.post('/api/tenants', formData)
             .then(async response => {
                 tenants.value = response.data.data
-                console.log(response.data)
                 localStorage.setItem('X-Tenant-ID', response.data.data.id)
                 const subscription = {
                     'plan': response.data.data.plan

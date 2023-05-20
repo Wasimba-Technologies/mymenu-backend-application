@@ -10,19 +10,34 @@
 </template>
 
 <script setup>
-import {provide} from "vue";
+import {inject, onMounted, provide} from "vue";
 import useTables from "../../composables/tables";
 import TableFormComponent from "./components/TableFormComponent.vue";
-import utils from "../../utils/utils";
 import {useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
+import useQRBuilder from "../../composables/qr_codes";
+import router from "../../router";
 
+const swal = inject('$swal')
 const {errors, tableForm, isLoading, storeTable} = useTables()
-
+const {qr_code, getQRCodeFeatures} = useQRBuilder()
 
 const saveTable = async () => {
     await storeTable({...tableForm});
 }
+
+onMounted( async () => {
+    //getQrCode appearance
+    await getQRCodeFeatures()
+    console.log(qr_code.value)
+    if (qr_code.value === {} || qr_code.value === null) {
+        swal({
+            icon: 'warning',
+            title: "First Create Qr code appearance",
+        })
+        await router.push({name: 'qr-builder'})
+    }
+})
 
 
 provide('isLoading', isLoading)

@@ -26,6 +26,7 @@ class TableController extends Controller
      */
     public function store(TableRequest $request): TableResource
     {
+        $this->authorize('create', Table::class);
         $data = $request->validated();
         $table = Table::create($data);
         $this->generateQrCode($table);
@@ -45,6 +46,7 @@ class TableController extends Controller
      */
     public function update(TableRequest $request, Table $table): TableResource
     {
+        $this->authorize('update', $table);
         $data = $request->validated();
         $table->update($data);
         return new TableResource($table);
@@ -55,6 +57,7 @@ class TableController extends Controller
      */
     public function destroy(Table $table): Response
     {
+        $this->authorize('delete', $table);
         $table->delete();
         return response()->noContent();
     }

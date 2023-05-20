@@ -93,9 +93,9 @@ export default function useAuth(){
             await router.push({path: '/register-restaurant'})
             await getAbilities()
         }else{
-            localStorage.setItem('X-Tenant-ID', response.data.user.tenant_id)
-            localStorage.setItem('tenant', JSON.stringify(response.data.user.tenant))
-            localStorage.setItem('user', JSON.stringify(response.data.user))
+            await localStorage.setItem('X-Tenant-ID', response.data.user.tenant_id)
+            await localStorage.setItem('tenant', JSON.stringify(response.data.user.tenant))
+            await localStorage.setItem('user', JSON.stringify(response.data.user))
             await getAbilities()
             await router.push({path: '/dashboard'})
         }
@@ -106,7 +106,7 @@ export default function useAuth(){
 
         isLoading.value = true
 
-        axios.post('api/auth/logout')
+        axios.post('/api/auth/logout')
             .then(response => {
                     if (localStorage.getItem('access_token')) {
                         localStorage.removeItem('access_token')

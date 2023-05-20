@@ -2,7 +2,7 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center flex-row-reverse">
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <router-link to="/menu-items/create"
+                <router-link v-if="can('menu_items.create')" to="/menu-items/create"
                              class="inline-flex items-center justify-center rounded-md border border-transparent
                                          bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700
                                          focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:w-auto">
@@ -51,7 +51,7 @@
                                     {{menu_item.menu?.name}}
                                 </td>
                                 <td>
-                                    <router-link :to="`/menu-items/${menu_item.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
+                                    <router-link :to="`/menu-items/${menu_item.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900" :disabled="can('menu_items.update')">Edit</router-link>
                                 </td>
                             </tr>
                             <tr v-if="menu_items?.length === 0 && ! isFetching">

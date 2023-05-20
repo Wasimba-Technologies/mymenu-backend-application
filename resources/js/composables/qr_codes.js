@@ -3,7 +3,7 @@ import router from "../router";
 
 
 export default function useQRBuilder() {
-    const qr_code = ref([]);
+    const qr_code = ref(null);
     const errors = ref({})
     const isLoading = ref(false)
     const isFetching = ref(false)
@@ -17,17 +17,11 @@ export default function useQRBuilder() {
             caption_line_one: 'Point your Camera here: ',
             caption_line_two: 'to access our menu',
             sub_caption: 'Cant Scan? Visit the below link for the menu:',
-            logo: ''
         }
     )
 
     const storeQRFeatures = async (data) =>{
         isLoading.value = true;
-
-        //Delete image key if form has no image
-        if (!(data.logo instanceof File)) {
-            delete data.logo
-        }
 
         await axios.post('/api/qr_appearance', data)
             .then(response =>{
@@ -36,7 +30,6 @@ export default function useQRBuilder() {
                     icon: 'success',
                     title: response.data.message
                 })
-                console.log(qr_code.value)
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors
@@ -51,18 +44,36 @@ export default function useQRBuilder() {
             )
     }
 
-    const getQRCode = async () => {
-
+    const getQRCodeFeatures = async () => {
+        //get QrCode
+        isFetching.value = true
+        await axios.get('/api/qr_appearance')
+            .then(response => {
+                qr_code.value = response.data.data
+            })
+            .catch(error => {
+                if (error.response?.data) {
+                    errors.value = error.response.data.errors
+                } else {
+                    swal({
+                        icon: 'error',
+                        title: error.message
+                    })
+                }})
+            .finally(
+            () => isFetching.value = false
+        )
     }
 
 
     return {
         errors,
+        qr_code,
         isFetching,
         isLoading,
         qrCodeForm,
         storeQRFeatures,
-        qr_code
+        getQRCodeFeatures,
     }
 
 }

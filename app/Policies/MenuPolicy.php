@@ -2,26 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\Order;
+use App\Models\Menu;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class OrderPolicy
+class MenuPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission('orders.viewAny');
+        return $user->hasPermission('menus.viewAny');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Order $order): bool
+    public function view(User $user, Menu $menu): bool
     {
-        return $user->hasPermission('orders.view');
+        return $user->hasPermission('menus.view');
     }
 
     /**
@@ -29,30 +29,29 @@ class OrderPolicy
      */
     public function create(User $user): bool
     {
-        //Anyone can create order
-        return true;
+        return $user->hasPermission('menus.create');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Order $order): bool
+    public function update(User $user, Menu $menu): bool
     {
-        return $user->hasPermission('orders.update');
+        return $user->hasPermission('menus.update');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Order $order): bool
+    public function delete(User $user, Menu $menu): bool
     {
-        return $user->hasPermission('orders.delete');
+        return $user->hasPermission('menus.delete');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Order $order): bool
+    public function restore(User $user, Menu $menu): bool
     {
         //
     }
@@ -60,7 +59,7 @@ class OrderPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Order $order): bool
+    public function forceDelete(User $user, Menu $menu): bool
     {
         //
     }

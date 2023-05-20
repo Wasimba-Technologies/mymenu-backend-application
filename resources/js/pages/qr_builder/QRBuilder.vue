@@ -88,7 +88,7 @@ const submitQRCodeFeatures  = () =>{
 
 provide('isLoading', isLoading)
 
-utils.has_perm('qr_codes.create')
+// utils.has_perm('qr_codes.create')
 const {can} = useAbility()
 const {logout} = useAuth()
 

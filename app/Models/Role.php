@@ -18,10 +18,11 @@ class Role extends Model
 {
     use HasFactory, BelongsToTenant;
 
-    const ADMIN = 1;
-    const CHEF = 2;
-    const WAITER = 3;
-    const CASHIER = 4;
+    const SUPER_ADMIN = 1;
+    const ADMIN = 2;
+    const CHEF = 3;
+    const WAITER = 4;
+    const CASHIER = 5;
 
     public function users(): HasMany
     {
@@ -32,4 +33,6 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class, 'role_permission')->withoutGlobalScope(TenantScope::class);
     }
+
+
 }

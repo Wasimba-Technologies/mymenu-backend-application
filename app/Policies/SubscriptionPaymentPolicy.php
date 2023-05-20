@@ -13,7 +13,7 @@ class SubscriptionPaymentPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermission('subscription_payments.viewAny');
     }
 
     /**
@@ -21,7 +21,7 @@ class SubscriptionPaymentPolicy
      */
     public function view(User $user, SubscriptionPayment $subscriptionPayment): bool
     {
-        //
+        return $user->hasPermission('subscription_payments.view');
     }
 
     /**
@@ -29,7 +29,7 @@ class SubscriptionPaymentPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermission('subscription_payments.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class SubscriptionPaymentPolicy
      */
     public function update(User $user, SubscriptionPayment $subscriptionPayment): bool
     {
-        //
+        return $user->hasPermission('subscription_payments.update');
     }
 
     /**
@@ -45,7 +45,7 @@ class SubscriptionPaymentPolicy
      */
     public function delete(User $user, SubscriptionPayment $subscriptionPayment): bool
     {
-        //
+        return $user->hasPermission('subscription_payments.delete');
     }
 
     /**

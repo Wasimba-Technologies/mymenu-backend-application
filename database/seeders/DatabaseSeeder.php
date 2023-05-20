@@ -21,9 +21,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            PermissionSeeder::class,
             RoleSeeder::class,
             QrCodeSeeder::class,
-            PermissionSeeder::class
+            PlanSeeder::class
         ]);
     }
 }

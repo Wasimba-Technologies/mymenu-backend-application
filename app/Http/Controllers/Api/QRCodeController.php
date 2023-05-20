@@ -33,4 +33,12 @@ class QRCodeController extends Controller
             'data' => $qr_code_data,
         ], 200);
     }
+
+    public function showQrFeatures(): JsonResponse
+    {
+        $qr_appearance = QrCode::where('tenant_id', request()->header('X-TENANT-ID'))->first();
+        return response()->json([
+            'data' => $qr_appearance,
+        ], 200);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Role;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +14,7 @@ class SubscriptionPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermission('subscriptions.viewAny');
     }
 
     /**
@@ -21,7 +22,7 @@ class SubscriptionPolicy
      */
     public function view(User $user, Subscription $subscription): bool
     {
-        //
+        return $user->hasPermission('subscriptions.view');
     }
 
     /**
@@ -29,7 +30,7 @@ class SubscriptionPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermission('subscriptions.create');
     }
 
     /**
@@ -37,7 +38,7 @@ class SubscriptionPolicy
      */
     public function update(User $user, Subscription $subscription): bool
     {
-        //
+        return $user->hasPermission('subscriptions.update');
     }
 
     /**
@@ -45,7 +46,7 @@ class SubscriptionPolicy
      */
     public function delete(User $user, Subscription $subscription): bool
     {
-        //
+        return $user->hasPermission('subscriptions.delete');
     }
 
     /**
