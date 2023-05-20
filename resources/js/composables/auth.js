@@ -49,6 +49,8 @@ export default function useAuth(){
             'password': '',
             'password_confirmation': '',
             'logo': '',
+            'role': '',
+            'permissions': []
         }
     )
 

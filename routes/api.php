@@ -82,14 +82,15 @@ Route::middleware(['auth:sanctum'])->group(
         );
 
         Route::get('abilities', function(Request $request) {
-            return $request->user()->role()->with('permissions')
+            return $request->user()->role()->with('role_permissions')
                 ->get()
-                ->pluck('permissions')
+                ->pluck('role_permissions')
                 ->flatten()
                 ->pluck('name')
                 ->unique()
                 ->values()
                 ->toArray();
+//            ->merge($request->user()->user_permissions)
         });
 
         Route::get('/auth/roles', [AuthController::class, 'getRoles']);

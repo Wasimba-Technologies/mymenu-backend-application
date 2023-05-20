@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +24,7 @@ class UserResource extends JsonResource
             'tenant_id' => $this->tenant_id,
             'tenant' => $this->tenant,
             'role' => new RoleResource($this->whenLoaded('role')),
+            'permissions' => $this->role->role_permissions->merge($this->user_permissions),
         ];
     }
 }

@@ -106,6 +106,23 @@
                             </div>
                             <p class="mt-2 text-sm text-red-600" id="logo-error" v-for="error in errors?.image">{{error}}</p>
                         </div>
+
+                        <div class="col-span-3 sm:col-span-6">
+                            <label for="permissions" class="block text-sm font-medium text-gray-700">Permissions</label>
+                            <div class="grid grid-cols-4 gap-1 m-4 p-2  border-b border-1 border-b-gray-200">
+                                <fieldset class="mt-4 col-span-3 lg:col-span-1" v-for="sys_perm in SystemPermissions">
+                                    <legend class="sr-only">{{sys_perm.model}}</legend>
+                                    <div class="text-base font-bold text-gray-900" aria-hidden="true">{{sys_perm.model}}</div>
+                                    <div class="mt-4 space-y-4">
+                                        <LabeledCheckBox
+                                            v-for="perm in sys_perm.permissions"
+                                            :label="perm.name" :system-permission="perm"
+                                            :user-permissions="userForm.permissions"
+                                        />
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -122,6 +139,8 @@
 <script setup>
 
 import LoadingSpinner from "../../../components/LoadingSpinner.vue";
+import LabeledCheckBox from "./LabeledCheckBox.vue";
+import PermissionField from "./PermissionField.vue";
 
 let props = defineProps([
     'userForm', 'errors', 'isLoading',
@@ -135,6 +154,92 @@ const genders = [
 
 const emit = defineEmits(['submitUser', 'loadImage'])
 
+const SystemPermissions = [
+    {
+        'model': 'User',
+        'permissions': [
+            {id: 'users.viewAny', name: 'ViewAll'},
+            {id: 'users.view', name: 'ViewOne'},
+            {id: 'users.create', name: 'Create'},
+            {id: 'users.update', name: 'Update'},
+            {id: 'users.delete', name: 'Delete'},
+        ]
+    },
+    {
+        'model': 'Menus',
+        'permissions': [
+            {id: 'menus.viewAny', name: 'ViewAll'},
+            {id: 'menus.view', name: 'ViewOne'},
+            {id: 'menus.create', name: 'Create'},
+            {id: 'menus.update', name: 'Update'},
+            {id: 'menus.delete', name: 'Delete'},
+        ]
+    },
+    {
+        'model': 'MenuItems',
+        'permissions': [
+            {id: 'menu_items.viewAny', name: 'ViewAll'},
+            {id: 'menu_items.view', name: 'ViewOne'},
+            {id: 'menu_items.create', name: 'Create'},
+            {id: 'menu_items.update', name: 'Update'},
+            {id: 'menu_items.delete', name: 'Delete'},
+        ]
+    },
+    {
+        'model': 'Tables',
+        'permissions': [
+            {id: 'tables.viewAny', name: 'ViewAll'},
+            {id: 'tables.view', name: 'ViewOne'},
+            {id: 'tables.create', name: 'Create'},
+            {id: 'tables.update', name: 'Update'},
+            {id: 'tables.delete', name: 'Delete'},
+        ]
+    },
+    {
+        'model': 'QrCode Appearance',
+        'permissions': [
+            {id: 'qr_codes.viewAny', name: 'ViewAll'},
+            {id: 'qr_codes.view', name: 'ViewOne'},
+            {id: 'qr_codes.create', name: 'Create'},
+            {id: 'qr_codes.update', name: 'Update'},
+            {id: 'qr_codes.delete', name: 'Delete'},
+        ]
+    },
+    {
+        'model': 'Orders',
+        'permissions': [
+            {id: 'orders.viewAny', name: 'ViewAll'},
+            {id: 'orders.view', name: 'ViewOne'},
+            {id: 'orders.create', name: 'Create'},
+            {id: 'orders.update', name: 'Update'},
+            {id: 'orders.delete', name: 'Delete'},
+        ]
+    },
+    {
+        'model': 'Payments',
+        'permissions': [
+            {id: 'payments.viewAny', name: 'ViewAll'},
+            {id: 'payments.view', name: 'ViewOne'},
+            {id: 'payments.create', name: 'Create'},
+            {id: 'payments.update', name: 'Update'},
+            {id: 'payments.delete', name: 'Delete'},
+        ]
+    },
+    {
+        'model': 'Restaurant',
+        'permissions': [
+            {id: 'restaurants.view', name: 'ViewOne'},
+            {id: 'restaurants.update', name: 'Update'},
+        ]
+    },
+    {
+        'model': 'Plans',
+        'permissions': [
+            {id: 'plans.viewAny', name: 'ViewAll'},
+            {id: 'plans.view', name: 'ViewOne'},
+        ]
+    },
+]
 
 
 const loadFile = (event) => {
