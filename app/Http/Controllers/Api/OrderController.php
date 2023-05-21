@@ -40,7 +40,7 @@ class OrderController extends Controller
         $orders = Order::all();
         $tenant_id = $request->header('X-TENANT-ID');
         $tenant = Restaurant::withoutGlobalScope(TenantScope::class )->with('plan')->findOrFail($tenant_id);
-        if(count($orders) < $tenant->plan->users) {
+        if(count($orders) < $tenant->plan->orders) {
             $data = request()->json()->all();
             $order = Order::create(
                 [

@@ -67,7 +67,6 @@ export default function useOrders() {
         isLoading.value = true;
         await axios.post('/api/orders', data)
             .then(async response => {
-                console.log(response.data)
                 if (response.data.status !== 'failure'){
                     data['order_id'] = response.data.order.id
                     await axios.post('/api/order_items', data).then(response =>{
@@ -76,11 +75,8 @@ export default function useOrders() {
                             title: 'Order placed successfully'
                         })
                         order.value = response.data
-                        router.push(
-                            {
-                                name: 'order_details.guest',
-                            }
-                        )
+                        console.log(response.data)
+                        router.push('/order_details/'+response.data?.order.id+'/guest')
                     }).catch(error => {
                         if (error.response?.data) {
                             errors.value = error.response.data.errors
