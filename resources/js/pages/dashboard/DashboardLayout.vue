@@ -149,7 +149,7 @@
 
 
 <script setup>
-import {computed, inject, ref} from 'vue'
+import {computed, inject, onMounted, ref} from 'vue'
 import {Dialog, DialogPanel, MenuButton, Menu, MenuItem, MenuItems, TransitionChild, TransitionRoot} from '@headlessui/vue'
 import {
     HomeIcon,
@@ -192,10 +192,11 @@ const sidebarOpen = ref(false)
 const sidebarStaticOpen = ref(true)
 const route = useRoute()
 const { can } = useAbility()
-
 const {getAbilities} = useAuth()
 
-getAbilities()
+onMounted(async () => {
+    await getAbilities()
+})
 
 
 

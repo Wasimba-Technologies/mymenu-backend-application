@@ -137,9 +137,6 @@ export default function useAuth(){
                 can(permissions)
 
                 ability.update(rules)
-                //
-                // console.log(ability.rules)
-                // console.log(ability.can('restaurants.create'));
             })
     }
 
@@ -266,25 +263,25 @@ export default function useAuth(){
 
 
     return {
-        submitLogin,
-        registerOwner,
+        user,
+        users,
+        roles,
+        errors,
         logout,
+        getUser,
+        getUsers,
+        userForm,
+        getRoles,
+        storeUser,
         isLoading,
         isFetching,
         loginForm,
         ownerForm,
-        userForm,
-        errors,
-        roles,
-        getAbilities,
-        getRoles,
-        getUsers,
-        getUser,
-        storeUser,
         updateUser,
-        user,
-        users,
+        submitLogin,
+        getAbilities,
+        registerOwner,
+        paginationLinks,
         paginationMetaData,
-        paginationLinks
     }
 }

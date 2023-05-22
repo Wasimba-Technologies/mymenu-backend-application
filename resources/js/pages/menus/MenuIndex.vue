@@ -130,7 +130,7 @@ const searchMenuByName = (ev) => {
 const {can} = useAbility()
 const {logout} = useAuth()
 
-if(!can('menus.view')){
+if(!can('menus.viewAny')){
     logout()
 }
 </script>

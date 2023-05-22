@@ -116,7 +116,7 @@ const printQRByTable = (table) =>{
 const {can} = useAbility()
 const {logout} = useAuth()
 
-if(!can('tables.view')){
+if(!can('tables.viewAny')){
     logout()
 }
 </script>

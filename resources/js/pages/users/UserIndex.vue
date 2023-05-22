@@ -130,7 +130,7 @@ const searchUsersByName = (ev) => {
 const {can} = useAbility()
 const {logout} = useAuth()
 
-if(!can('users.view')){
+if(!can('users.viewAny')){
     logout()
 }
 </script>

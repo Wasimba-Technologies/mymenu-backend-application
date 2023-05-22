@@ -129,7 +129,7 @@ const statusStyles = {
 const {can} = useAbility()
 const {logout} = useAuth()
 
-if(!can('orders.view')){
+if(!can('orders.viewAny')){
     logout()
 }
 </script>

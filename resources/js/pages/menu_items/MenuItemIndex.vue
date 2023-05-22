@@ -131,7 +131,7 @@ const searchMenuItemsByName = (ev) => {
 const {can} = useAbility()
 const {logout} = useAuth()
 
-if(!can('menu_items.view')){
+if(!can('menu_items.viewAny')){
     logout()
 }
 </script>

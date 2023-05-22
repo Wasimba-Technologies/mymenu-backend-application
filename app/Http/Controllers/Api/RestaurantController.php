@@ -46,9 +46,10 @@ class RestaurantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): RestaurantResource
+    public function show(Restaurant $tenant): RestaurantResource
     {
-        $this->authorize('show', Restaurant::class);
+        $user = request()->user();
+        $this->authorize('view', [$user, $tenant]);
         $restaurant = Restaurant::where('id', $id)->first();
         return new RestaurantResource($restaurant);
     }

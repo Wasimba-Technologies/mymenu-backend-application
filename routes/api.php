@@ -38,9 +38,11 @@ Route::apiResource(
 Route::apiResource(
     'menu_items', MenuItemController::class
 )->only('index');
+
 Route::apiResource(
     'orders', OrderController::class
 )->only(['store','show']);
+
 Route::apiResource(
     'order_items', OrderMenuItemController::class
 )->only(['store','show']);

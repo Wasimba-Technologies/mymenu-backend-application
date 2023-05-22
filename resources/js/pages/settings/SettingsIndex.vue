@@ -113,8 +113,8 @@
                                                                             :class="[errors?.plan_id === undefined ? 'valid-select' : 'invalid-select']">
                                                                         <option value="" disabled>--Select Plan--</option>
                                                                         <option v-for="plan in plans" :value="plan.id"
-                                                                                :selected='parseInt(tenant.plan.id) === parseInt(plan.id)' :key="plan.id">
-                                                                            {{plan.name}} - {{Intl.NumberFormat().format(plan.price)}}
+                                                                                :selected='parseInt(tenant?.plan?.id) === parseInt(plan?.id)' :key="plan.id">
+                                                                            {{plan?.name}} - {{Intl.NumberFormat().format(plan?.price)}}
                                                                         </option>
                                                                     </select>
                                                                 </div>
@@ -223,7 +223,7 @@
     const {can} = useAbility()
     const {logout} = useAuth()
 
-    if(!can('restaurants.update')){
+    if(!can('restaurants.view')){
         logout()
     }
 </script>

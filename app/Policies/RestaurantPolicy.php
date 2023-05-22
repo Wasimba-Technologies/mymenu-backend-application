@@ -22,7 +22,7 @@ class RestaurantPolicy
      */
     public function view(User $user, Restaurant $restaurant): bool
     {
-        return $user->tenant() == $restaurant;
+        return $user->tenant()->id == $restaurant->id;
     }
 
     /**

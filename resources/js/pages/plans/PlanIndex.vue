@@ -109,7 +109,7 @@ onMounted(()=>{
 const {can} = useAbility()
 const {logout} = useAuth()
 
-if(!can('plans.view')){
+if(!can('plans.viewAny')){
     logout()
 }
 </script>

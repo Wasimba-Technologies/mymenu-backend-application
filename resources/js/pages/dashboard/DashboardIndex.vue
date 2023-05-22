@@ -54,11 +54,14 @@ import useAuth from "../../composables/auth";
         paginationMetaData
     } = useOrders()
 
+   const {getAbilities} = useAuth()
+
 
     onMounted( async () => {
         let date = new Date()
         let start_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrYesterday(date)
         let end_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrTomorrowDate(date)
+        // await getAbilities()
         watchEffect(async ()=>await getOrders('', start_date, end_date))
     })
 
@@ -105,6 +108,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 const tenant = JSON.parse(localStorage.getItem('tenant'))
 
 const {can} = useAbility()
+
 const {logout} = useAuth()
 
 if(!can('restaurants.update')){
