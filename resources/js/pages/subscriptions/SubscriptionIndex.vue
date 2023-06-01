@@ -105,7 +105,7 @@ const showPayments = () =>{
 const {can} = useAbility()
 const {logout} = useAuth()
 
-if(!can('subscription.viewAny')){
+if(!can('subscriptions.viewAny')){
     logout()
 }
 </script>

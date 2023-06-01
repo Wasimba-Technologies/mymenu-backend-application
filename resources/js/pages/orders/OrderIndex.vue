@@ -7,7 +7,16 @@
         <div class="mt-4 flex flex-col">
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                    <TableSearch @searchData="searchMenuByName" />
+                    <div class="sm:flex justify-between  sm:items-center">
+                        <div class="w-1/4">
+                            <select class="p-4 valid-select" v-model="filterOrderForm.order_status">
+                                <option v-for="option in status_options" :selected="option === 'All'">
+                                    {{option}}
+                                </option>
+                            </select>
+                        </div>
+                        <DateFilter :filter-date-form="filterOrderForm" />
+                    </div>
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="bg-gray-50">
@@ -46,7 +55,7 @@
                                 <td colSpan="5">
                                     <NoDataSVG
                                         class="flex flex-col justify-center items-center mt-10"
-                                        message="Oops! There are no buses Yet."
+                                        message="Oops! There are no orders Yet."
                                     />
                                 </td>
                             </tr>
@@ -70,7 +79,7 @@
 
 <script setup>
 
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {onMounted, reactive, ref, watch, watchEffect} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
@@ -80,6 +89,7 @@ import useOrders from "../../composables/orders";
 import utils from "../../utils/utils";
 import {useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
+import DateFilter from "../../components/DateFilter.vue";
 
 const searchName = ref('')
 const {
@@ -94,7 +104,14 @@ const {
 } = useOrders()
 
 
-
+const status_options = ref([
+    'Processing',
+    'Confirmed',
+    'Paid',
+    'Shipped',
+    'Delivered',
+    'All'
+])
 const onNextClicked = () => {
     changeTenantsUrl(paginationLinks.value.next)
 }
@@ -108,15 +125,19 @@ onMounted(()=>{
     watchEffect(()=>getOrders())
 })
 
-
-
-watch(searchName, (currentName) => {
-    getOrders(currentName)
+const filterOrderForm =  reactive({
+    start_date: '',
+    end_date: '',
+    order_status: ''
 })
 
-const searchMenuByName = (ev) => {
-    searchName.value = ev.target.value
-}
+watch(filterOrderForm, () =>{
+    getOrders(
+        filterOrderForm.order_status,
+        filterOrderForm.start_date,
+        filterOrderForm.end_date
+    )
+})
 
 const statusStyles = {
     Confirmed: 'bg-green-100 text-green-800',

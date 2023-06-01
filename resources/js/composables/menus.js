@@ -24,8 +24,7 @@ export default function useMenus() {
 
     const getMenus = async (searchName) => {
         isFetching.value = true
-        //searchName = searchName === undefined ? '' : searchName
-        await axios.get(menuURL.value).then(response =>{
+        await axios.get(menuURL.value+'?name='+searchName).then(response =>{
             menus.value = response.data.data
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
@@ -127,15 +126,15 @@ export default function useMenus() {
         menu,
         menus,
         errors,
-        getMenus,
         getMenu,
+        menuForm,
+        getMenus,
         storeMenu,
+        isLoading,
         updateMenu,
         isFetching,
-        isLoading,
-        menuForm,
+        paginationLinks,
         paginationMetaData,
-        paginationLinks
     }
 
 }

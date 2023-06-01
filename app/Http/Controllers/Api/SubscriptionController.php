@@ -19,6 +19,7 @@ class SubscriptionController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
+        $this->authorize('viewAny', Subscription::class);
         return SubscriptionResource::collection(
             Subscription::with(['plan','payments'])->get()
         );

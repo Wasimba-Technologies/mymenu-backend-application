@@ -37,7 +37,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        if($user->role() != Role::ADMIN){
+        if($user->role()->id != Role::ADMIN){
             return $user->hasPermission('users.update') && $user->id == $model->id;
         }
         return $user->hasPermission('users.update');
@@ -48,7 +48,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        if($user->role() != Role::ADMIN){
+        if($user->role()->id != Role::ADMIN){
             return $user->hasPermission('users.delete') && $user->id == $model->id;
         }
         return $user->hasPermission('users.update');

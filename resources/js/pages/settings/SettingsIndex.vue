@@ -223,7 +223,7 @@
     const {can} = useAbility()
     const {logout} = useAuth()
 
-    if(!can('restaurants.view')){
+    if(!can('restaurants.update')){
         logout()
     }
 </script>

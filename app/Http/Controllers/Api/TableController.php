@@ -26,7 +26,7 @@ class TableController extends Controller
      */
     public function store(TableRequest $request): TableResource
     {
-        $this->authorize('create', Table::class);
+        $this->authorize('create',Table::class);
         $data = $request->validated();
         $table = Table::create($data);
         $this->generateQrCode($table);

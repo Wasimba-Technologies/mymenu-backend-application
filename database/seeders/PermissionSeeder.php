@@ -19,6 +19,18 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'users.update']);
         Permission::create(['name' => 'users.delete']);
 
+        Permission::create(['name' => 'roles.viewAny']);
+        Permission::create(['name' => 'roles.view']);
+        Permission::create(['name' => 'roles.create']);
+        Permission::create(['name' => 'roles.update']);
+        Permission::create(['name' => 'roles.delete']);
+
+        Permission::create(['name' => 'permissions.viewAny']);
+        Permission::create(['name' => 'permissions.view']);
+        Permission::create(['name' => 'permissions.create']);
+        Permission::create(['name' => 'permissions.update']);
+        Permission::create(['name' => 'permissions.delete']);
+
         Permission::create(['name' => 'menus.viewAny']);
         Permission::create(['name' => 'menus.view']);
         Permission::create(['name' => 'menus.create']);
@@ -62,10 +74,30 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'plans.update']);
         Permission::create(['name' => 'plans.delete']);
 
+        Permission::create(['name' => 'subscriptions.viewAny']);
+        Permission::create(['name' => 'subscriptions.view']);
+        Permission::create(['name' => 'subscriptions.create']);
+        Permission::create(['name' => 'subscriptions.update']);
+        Permission::create(['name' => 'subscriptions.delete']);
+
+        Permission::create(['name' => 'subscriptions.viewAny']);
+        Permission::create(['name' => 'subscriptions.view']);
+        Permission::create(['name' => 'subscriptions.create']);
+        Permission::create(['name' => 'subscriptions.update']);
+        Permission::create(['name' => 'subscriptions.delete']);
+
+
+        Permission::create(['name' => 'subscription_payments.viewAny']);
+        Permission::create(['name' => 'subscription_payments.view']);
+        Permission::create(['name' => 'subscription_payments.create']);
+        Permission::create(['name' => 'subscription_payments.update']);
+        Permission::create(['name' => 'subscription_payments.delete']);
+
         Permission::create(['name' => 'restaurants.viewAny']);
         Permission::create(['name' => 'restaurants.view']);
         Permission::create(['name' => 'restaurants.create']);
         Permission::create(['name' => 'restaurants.update']);
         Permission::create(['name' => 'restaurants.delete']);
+
     }
 }

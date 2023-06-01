@@ -128,16 +128,17 @@ export default function useAuth(){
             })
     }
 
-    const getAbilities = () =>{
-        axios.get('/api/abilities')
+    const getAbilities = async () => {
+        await axios.get('/api/abilities')
             .then(response => {
                 const permissions = response.data
-                const { can, rules } = new AbilityBuilder(createMongoAbility)
+                const {can, rules} = new AbilityBuilder(createMongoAbility)
 
                 can(permissions)
 
                 ability.update(rules)
             })
+        console.log()
     }
 
     const getRoles = async () =>{

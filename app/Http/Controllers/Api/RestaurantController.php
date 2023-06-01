@@ -48,22 +48,19 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $tenant): RestaurantResource
     {
-        $user = request()->user();
-        $this->authorize('view', [$user, $tenant]);
-        $restaurant = Restaurant::where('id', $id)->first();
-        return new RestaurantResource($restaurant);
+        $this->authorize('view', [$tenant]);
+        return new RestaurantResource($tenant);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(RestaurantRequest $request, $id)
+    public function update(RestaurantRequest $request, Restaurant $tenant)
     {
-        $this->authorize('update', Restaurant::class);
-        $restaurant = Restaurant::where('id', $id)->first();
+        $this->authorize('update', $tenant);
         $data = $this->getDataAndSaveImage('logos', $request);
-        $restaurant->update($data);
-        return new RestaurantResource($restaurant);
+        $tenant->update($data);
+        return new RestaurantResource($tenant);
     }
 
     /**

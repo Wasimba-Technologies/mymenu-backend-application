@@ -165,7 +165,8 @@ import {
 } from '@heroicons/vue/24/outline'
 
 import {useRoute} from "vue-router";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
+const ability = inject(ABILITY_TOKEN)
 import useAuth from "../../composables/auth";
 
 const navigation = [
@@ -195,9 +196,10 @@ const { can } = useAbility()
 const {getAbilities} = useAuth()
 
 onMounted(async () => {
-    await getAbilities()
+    //await
 })
 
+getAbilities()
 
 
 const currentPageTitle = computed(() =>{

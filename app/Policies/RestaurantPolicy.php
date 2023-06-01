@@ -22,7 +22,7 @@ class RestaurantPolicy
      */
     public function view(User $user, Restaurant $restaurant): bool
     {
-        return $user->tenant()->id == $restaurant->id;
+        return $user->tenant_id == $restaurant->id;
     }
 
     /**
@@ -38,7 +38,7 @@ class RestaurantPolicy
      */
     public function update(User $user, Restaurant $restaurant): bool
     {
-        //
+        return $user->tenant_id == $restaurant->id && $user->hasPermission('restaurants.update');
     }
 
     /**
@@ -46,7 +46,7 @@ class RestaurantPolicy
      */
     public function delete(User $user, Restaurant $restaurant): bool
     {
-        //
+        return $user->tenant_id == $restaurant->id && $user->hasPermission('restaurants.delete');
     }
 
     /**
