@@ -110,12 +110,11 @@ const {
 
 
 const status_options = ref([
-    'Processing',
+    'Pending',
     'Confirmed',
     'Paid',
     'Shipped',
     'Delivered',
-    'All'
 ])
 const onNextClicked = () => {
     changeTenantsUrl(paginationLinks.value.next)
