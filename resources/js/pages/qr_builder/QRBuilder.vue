@@ -63,9 +63,9 @@
 import LoadingSpinner from "../../components/LoadingSpinner.vue";
 import useQRBuilder from "../../composables/qr_codes";
 import useTables from "../../composables/tables";
-import {onMounted, provide, ref} from "vue";
+import {inject, onMounted, provide, ref} from "vue";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const {errors, isLoading, storeQRFeatures, qr_code, qrCodeForm} = useQRBuilder()
@@ -91,10 +91,22 @@ provide('isLoading', isLoading)
 // utils.has_perm('qr_codes.create')
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
+//
+// getAbilities()
+// if(!can('qr_codes.create')){
+//     logout()
+// }
 
-if(!can('qr_codes.create')){
-    logout()
-}
+
+onMounted(async () => {
+    await getAbilities()
+
+    if (!can('menus.create')) {
+        await logout()
+    }
+})
 </script>
 
 

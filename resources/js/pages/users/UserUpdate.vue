@@ -14,13 +14,13 @@
 </template>
 
 <script setup>
-import {onMounted, provide, ref, watch, } from "vue";
+import {inject, onMounted, provide, ref, watch,} from "vue";
 import {useRoute} from "vue-router";
 import useAuth from "../../composables/auth";
 import UserFormComponent from "./components/UserFormComponent.vue";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 
 const {
     errors,
@@ -72,8 +72,13 @@ watch(user, ()=>{
 //utils.has_perm('users.update')
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('users.update')){
-    logout()
-}
+onMounted(async () => {
+    await getAbilities()
+    if (!can('users.update')) {
+        await logout()
+    }
+})
 </script>

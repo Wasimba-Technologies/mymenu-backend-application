@@ -13,7 +13,7 @@
 import {inject, onMounted, provide} from "vue";
 import useTables from "../../composables/tables";
 import TableFormComponent from "./components/TableFormComponent.vue";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 import useQRBuilder from "../../composables/qr_codes";
 import router from "../../router";
@@ -45,8 +45,18 @@ provide('isLoading', isLoading)
 //utils.has_perm('tables.create')
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('tables.create')){
-    logout()
-}
+// getAbilities()
+// if(!can('tables.create')){
+//     logout()
+// }
+
+onMounted(async () => {
+    await getAbilities()
+    if (!can('tables.create')) {
+        await logout()
+    }
+})
 </script>

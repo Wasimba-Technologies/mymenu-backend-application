@@ -9,7 +9,7 @@
                     <p class="mt-2 text-sm text-gray-600">
                         Or
                         {{ ' ' }}
-                        <router-link to="/register" class="font-medium text-rose-600 hover:text-rose-500"> start your 14-day free trial </router-link>
+                        <a href="/register" class="font-medium text-rose-600 hover:text-rose-500"> start your 14-day free trial </a>
                     </p>
                 </div>
 

@@ -11,12 +11,12 @@
 </template>
 
 <script setup>
-import {onMounted, provide} from "vue";
+import {inject, onMounted, provide} from "vue";
 import {useRoute} from "vue-router";
 import usePlans from "../../composables/plans";
 import PlanFormComponent from "./components/PlanFormComponent.vue";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const {errors, plan, isLoading, isFetching, updatePlan, getPlan} = usePlans()
@@ -30,12 +30,24 @@ onMounted(()=>{
     getPlan(route.params.id)
 })
 
-const {can} = useAbility()
-const {logout} = useAuth()
+// const {can} = useAbility()
+// const {logout} = useAuth()
+// const ability = inject(ABILITY_TOKEN)
+// const {getAbilities} = useAuth()
+//
+// getAbilities()
+// if(!can('plans.update')){
+//     logout()
+// }
 
-if(!can('plans.update')){
-    logout()
-}
+
+onMounted(async () => {
+    await getAbilities()
+
+    if (!can('menus.create')) {
+        await logout()
+    }
+})
 provide('isLoading', isLoading)
 // utils.has_perm('plans.update')
 </script>

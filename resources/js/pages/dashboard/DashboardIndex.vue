@@ -36,15 +36,15 @@
 
 
 <script setup>
-import {ArrowTrendingUpIcon, BuildingOfficeIcon, FolderIcon, ShoppingCartIcon} from '@heroicons/vue/24/outline'
+    import {ArrowTrendingUpIcon, BuildingOfficeIcon, FolderIcon, ShoppingCartIcon} from '@heroicons/vue/24/outline'
     import RecentActivity from "./components/RecentActivity.vue";
     import Overview from "./components/Overview.vue";
     import utils from "../../utils/utils";
-import {computed, onMounted, provide, watch, watchEffect} from "vue";
+    import {computed, inject, onMounted, provide, watch, watchEffect} from "vue";
     import useOrders from "../../composables/orders";
-import {useAbility} from "@casl/vue";
-import useAuth from "../../composables/auth";
-
+    import useAuth from "../../composables/auth";
+    import {useAbility} from "@casl/vue";
+    const {getAbilities} = useAuth()
     const {
         orders,
         getOrders,
@@ -59,6 +59,10 @@ import useAuth from "../../composables/auth";
     const {logout} = useAuth()
 
     onMounted( async () => {
+        await getAbilities()
+        if(!can('restaurants.update')){
+            await logout()
+        }
         let date = new Date()
         let start_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrDate(date)
         let end_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrTomorrowDate(date)
@@ -102,8 +106,6 @@ const user = JSON.parse(localStorage.getItem('user'))
 const tenant = JSON.parse(localStorage.getItem('tenant'))
 
 
-if(!can('restaurants.update')){
-    logout()
-}
+
 
 </script>

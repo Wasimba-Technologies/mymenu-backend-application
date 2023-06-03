@@ -63,13 +63,13 @@
 
 <script setup>
 
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useSubscriptions from "../../composables/subscription";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const searchName = ref('')
@@ -104,8 +104,19 @@ const showPayments = () =>{
 //utils.has_perm('subscription.view')
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('subscriptions.viewAny')){
-    logout()
-}
+// getAbilities()
+// if(!can('subscriptions.viewAny')){
+//     logout()
+// }
+
+onMounted(async () => {
+    await getAbilities()
+
+    if (!can('subscriptions.viewAny')) {
+        await logout()
+    }
+})
 </script>

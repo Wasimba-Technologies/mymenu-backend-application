@@ -13,11 +13,11 @@
 </template>
 
 <script setup>
-import {onMounted, provide, ref} from "vue";
+import {inject, onMounted, provide, ref} from "vue";
 import useAuth from "../../composables/auth";
 import UserFormComponent from "./components/UserFormComponent.vue";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 
 const {errors, userForm, isLoading, roles, getRoles, storeUser} = useAuth()
 
@@ -46,10 +46,15 @@ onMounted(()=>{
 
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('users.create')){
-    logout()
-}
-
+//getAbilities()
+onMounted(async () => {
+    await getAbilities()
+    if (!can('users.create')) {
+        await logout()
+    }
+})
 
 </script>

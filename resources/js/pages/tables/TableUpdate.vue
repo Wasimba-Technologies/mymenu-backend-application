@@ -11,13 +11,13 @@
 </template>
 
 <script setup>
-import {onMounted, provide} from "vue";
+import {inject, onMounted, provide} from "vue";
 import useTables from "../../composables/tables";
 import TableFormComponent from "./components/TableFormComponent.vue";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const {errors, getTable, updateTable, isLoading, isFetching, table} = useTables()
@@ -39,10 +39,16 @@ onMounted(() => {
 
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('tables.update')){
-    logout()
-}
+//getAbilities()
+onMounted(async () => {
+    await getAbilities()
+    if (!can('tables.update')) {
+        await logout()
+    }
+})
 
 provide('isLoading', isLoading)
 

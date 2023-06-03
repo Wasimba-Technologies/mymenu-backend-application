@@ -134,14 +134,13 @@ import {computed, inject, onMounted, provide, ref, toRaw} from "vue";
 import {useRoute} from "vue-router";
 import LoadingSpinner from "../../components/LoadingSpinner.vue";
 import usePayments from "../../composables/payments";
-import { useAbility } from '@casl/vue'
+import {ABILITY_TOKEN, useAbility} from '@casl/vue'
 import RibbonConfirmed from "../../components/RibbonConfirmed.vue";
 import RibbonPending from "../../components/RibbonPending.vue";
 import RibbonRejected from "../../components/RibbonRejected.vue";
 import utils from "../../utils/utils";
 import useAuth from "../../composables/auth";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
-const { can } = useAbility()
 
 
 const {
@@ -155,13 +154,21 @@ const {
     printReceipt
 } = useOrders()
 const {storePayment, errors} = usePayments()
+const {can} = useAbility()
+const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
 const router = useRoute()
 
 const swal = inject('$swal')
 
-onMounted(()=>{
-    getOrder(router.params.id)
+onMounted(async () => {
+    await getAbilities()
+    if (!can('orders.update')) {
+        await logout()
+    }
+    await getOrder(router.params.id)
 })
 
 const grandTotal = computed(() => {
@@ -223,12 +230,6 @@ const printOrder= (order) =>{
     printReceipt(order.id)
 }
 
-
-const {logout} = useAuth()
-
-if(!can('orders.update')){
-    logout()
-}
 provide('isLoading', isLoading)
 
 //utils.has_perm('orders.update')

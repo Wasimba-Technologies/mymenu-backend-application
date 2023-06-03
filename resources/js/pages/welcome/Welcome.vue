@@ -1,6 +1,5 @@
 <template>
     <div>
-        <title>MyMenu | Digital menu in customers mobile phones</title>
         <!-- Hero Section -->
         <div class="relative bg-white overflow-hidden">
             <div class="mx-auto">
@@ -9,7 +8,6 @@
                          fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                         <polygon points="50,0 100,0 50,100 0,100" />
                     </svg>
-
                     <Popover>
                         <div class="relative pt-6 px-4 sm:px-6 lg:px-8">
                             <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">

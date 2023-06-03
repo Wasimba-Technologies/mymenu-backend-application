@@ -58,25 +58,25 @@ const routes =[
         name : 'notFound',
         component : NotFound
     },
-    {
-        path : '',
-        name : 'welcome',
-        component : Welcome
-    },
-    {
-        path : '/login',
-        name : 'login',
-        component : Login
-    },
+    // {
+    //     path : '',
+    //     name : 'welcome',
+    //     component : Welcome
+    // },
+    // {
+    //     path : '/login',
+    //     name : 'login',
+    //     component : Login
+    // },
+    // {
+    //     path : '/register',
+    //     name : 'register',
+    //     component : Register
+    // },
     {
         path : '/logout',
         name : 'logout',
         beforeEnter: logoutAndRedirect
-    },
-    {
-        path : '/register',
-        name : 'register',
-        component : Register
     },
     {
         path : '/register-restaurant',

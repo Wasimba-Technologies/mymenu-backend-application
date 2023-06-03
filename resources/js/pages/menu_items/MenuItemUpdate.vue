@@ -14,14 +14,14 @@
 </template>
 
 <script setup>
-import {onMounted, provide, ref, watch, watchEffect} from "vue";
+import {inject, onMounted, provide, ref, watch, watchEffect} from "vue";
 import useMenuItems from "../../composables/menu_items";
 import MenuItemFormComponent from "./components/MenuItemFormComponent.vue";
 import useMenus from "../../composables/menus";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const {
@@ -55,9 +55,14 @@ const loadImage = (event) => {
 
 provide('isLoading', isLoading)
 
-onMounted(()=>{
+onMounted(async () => {
+    await getAbilities()
+
+    if (!can('menu_items.update')) {
+        logout()
+    }
     getMenuItem(route.params.id)
-    watchEffect(()=>getMenus(""))
+    watchEffect(() => getMenus(""))
 })
 
 watch(menu_item, ()=>{
@@ -71,9 +76,9 @@ watch(menu_item, ()=>{
 //utils.has_perm('menu_items.update')
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('menu_items.update')){
-    logout()
-}
+
 </script>
 

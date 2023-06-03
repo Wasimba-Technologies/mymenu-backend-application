@@ -81,14 +81,14 @@
 
 <script setup>
 
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {inject, onMounted, ref, watch, watchEffect} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useTenants from "../../composables/restaurant";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 import utils from "../../utils/utils";
 
@@ -130,8 +130,20 @@ const searchMenuByName = (ev) => {
 //utils.has_perm('restaurants.view')
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('restaurants.viewAny')){
-    logout()
-}
+// getAbilities()
+// if(!can('restaurants.viewAny')){
+//     logout()
+// }
+
+
+onMounted(async () => {
+    await getAbilities()
+
+    if (!can('menus.create')) {
+        await logout()
+    }
+})
 </script>

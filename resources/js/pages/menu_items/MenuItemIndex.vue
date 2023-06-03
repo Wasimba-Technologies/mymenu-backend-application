@@ -82,14 +82,14 @@
 
 <script setup>
 
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {inject, onMounted, ref, watch, watchEffect} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import TableSearch from "../../components/TableSearch.vue";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useMenuItems from "../../composables/menu_items";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const searchName = ref('')
@@ -112,9 +112,15 @@ const onPrevClicked =() =>{
     changeTenantsUrl(paginationLinks.value.prev)
 }
 
-onMounted(()=>{
+onMounted(async () => {
     //if URL changes perform side effects
-    watchEffect(()=>getMenuItems(searchName.value))
+    watchEffect(() => getMenuItems(searchName.value))
+
+    await getAbilities()
+
+    if (!can('menu_items.viewAny')) {
+        await logout()
+    }
 })
 
 
@@ -128,11 +134,11 @@ const searchMenuItemsByName = (ev) => {
 }
 
 //utils.has_perm('menu_items.view')
-const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const { can } = useAbility()
+const {getAbilities} = useAuth()
 
-if(!can('menu_items.viewAny')){
-    logout()
-}
+
 </script>
 

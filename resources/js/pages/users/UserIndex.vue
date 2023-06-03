@@ -82,14 +82,14 @@
 
 <script setup>
 
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {inject, onMounted, ref, watch, watchEffect} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import TableSearch from "../../components/TableSearch.vue";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useAuth from "../../composables/auth";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 
 const searchName = ref('')
 const {
@@ -129,10 +129,16 @@ const searchUsersByName = (ev) => {
 //utils.has_perm('users.view')
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('users.viewAny')){
-    logout()
-}
+//getAbilities()
+onMounted(async () => {
+    await getAbilities()
+    if (!can('users.viewAny')) {
+        await logout()
+    }
+})
 </script>
 
 

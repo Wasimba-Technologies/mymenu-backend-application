@@ -73,13 +73,13 @@
 
 <script setup>
 
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {inject, onMounted, ref, watch, watchEffect} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useTables from "../../composables/tables";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const {
@@ -115,9 +115,15 @@ const printQRByTable = (table) =>{
 
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('tables.viewAny')){
-    logout()
-}
+//getAbilities()
+onMounted(async () => {
+    await getAbilities()
+    if (!can('tables.viewAny')) {
+        await logout()
+    }
+})
 </script>
 

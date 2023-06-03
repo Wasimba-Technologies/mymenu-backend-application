@@ -1,6 +1,6 @@
-import {useAbility} from "@casl/vue";
 import useAuth from "../composables/auth";
 import {inject} from "vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 
 function greeting(){
     const myDate = new Date();
@@ -38,12 +38,13 @@ function getStrTomorrowDate(dateObj){
     let date = new Date(yesterday).getDate()
     return date >= 10 ? date : "0"+date
 }
-//
+
 // const {can} = useAbility()
 // const {logout} = useAuth()
-// const has_perm = (perm) =>{
-//     if(!can(perm)){
-//         logout()
+// const has_perm = async (perm) => {
+//     await getAbilities()
+//     if (!can(perm)) {
+//         await logout()
 //     }
 // }
 

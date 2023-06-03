@@ -69,7 +69,7 @@
 
 <script setup>
 
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {inject, onMounted, ref, watch, watchEffect} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
@@ -77,7 +77,7 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import usePlans from "../../composables/plans";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const searchName = ref('')
@@ -108,8 +108,24 @@ onMounted(()=>{
 
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('plans.viewAny')){
-    logout()
-}
+onMounted(async () => {
+    await getAbilities()
+
+    if (!can('menus.create')) {
+        await logout()
+    }
+})
+
+// const {can} = useAbility()
+// const {logout} = useAuth()
+// const ability = inject(ABILITY_TOKEN)
+// const {getAbilities} = useAuth()
+//
+// getAbilities()
+// if(!can('plans.viewAny')){
+//     logout()
+// }
 </script>

@@ -186,10 +186,10 @@
         //{ name: 'Business Info', href: '#', current: false },
     ]
 
-    import {computed, onMounted, ref, watch} from "vue";
+    import {computed, inject, onMounted, ref, watch} from "vue";
     import usePlans from "../../composables/plans";
     import utils from "../../utils/utils";
-    import {useAbility} from "@casl/vue";
+    import {ABILITY_TOKEN, useAbility} from "@casl/vue";
     import useAuth from "../../composables/auth";
 
     const {tenant, getTenant, updateTenant, errors} = useTenants();
@@ -222,8 +222,19 @@
     //utils.has_perm('restaurants.update')
     const {can} = useAbility()
     const {logout} = useAuth()
+    const ability = inject(ABILITY_TOKEN)
+    const {getAbilities} = useAuth()
 
-    if(!can('restaurants.update')){
-        logout()
-    }
+    // getAbilities()
+    // if(!can('restaurants.update')){
+    //     logout()
+    // }
+
+    onMounted(async () => {
+        await getAbilities()
+
+        if (!can('menus.create')) {
+            await logout()
+        }
+    })
 </script>

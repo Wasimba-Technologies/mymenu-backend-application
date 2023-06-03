@@ -168,6 +168,7 @@ import {useRoute} from "vue-router";
 import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 const ability = inject(ABILITY_TOKEN)
 import useAuth from "../../composables/auth";
+const {getAbilities} = useAuth()
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon, perm: 'restaurants.update'},
@@ -192,14 +193,12 @@ const userNavigation = [
 const sidebarOpen = ref(false)
 const sidebarStaticOpen = ref(true)
 const route = useRoute()
-const { can } = useAbility()
-const {getAbilities} = useAuth()
+
+const {can} = useAbility()
 
 onMounted(async () => {
-    //await
+    //await getAbilities()
 })
-
-getAbilities()
 
 
 const currentPageTitle = computed(() =>{

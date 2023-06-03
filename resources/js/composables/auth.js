@@ -3,6 +3,7 @@ import {useRouter} from "vue-router";
 import { AbilityBuilder, createMongoAbility } from '@casl/ability';
 import {ABILITY_TOKEN} from "@casl/vue";
 import router from "../router";
+import {rule} from "postcss";
 
 export default function useAuth(){
     const isLoading = ref(false)
@@ -116,7 +117,7 @@ export default function useAuth(){
                         localStorage.removeItem('user')
                         localStorage.removeItem('tenant')
                     }
-                    router.push({ name: 'login' })
+                    window.location.pathname = '/login'
                 }
             ).catch(err => {
             if(err.response?.data){
@@ -137,8 +138,8 @@ export default function useAuth(){
                 can(permissions)
 
                 ability.update(rules)
+                console.log(rules)
             })
-        console.log()
     }
 
     const getRoles = async () =>{

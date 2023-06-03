@@ -79,7 +79,7 @@
 
 <script setup>
 
-import {onMounted, reactive, ref, watch, watchEffect} from "vue";
+import {inject, onMounted, reactive, ref, watch, watchEffect} from "vue";
 import Pagination from "../../components/Pagination.vue";
 import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
@@ -87,9 +87,14 @@ import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
 import useOrders from "../../composables/orders";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 import DateFilter from "../../components/DateFilter.vue";
+
+const {can} = useAbility()
+const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
 const searchName = ref('')
 const {
@@ -120,9 +125,13 @@ const onPrevClicked =() =>{
     changeTenantsUrl(paginationLinks.value.prev)
 }
 
-onMounted(()=>{
+onMounted(async () => {
     //if URL changes perform side effects
-    watchEffect(()=>getOrders())
+    await getAbilities()
+    if (!can('orders.viewAny')) {
+        await logout()
+    }
+    watchEffect(() => getOrders())
 })
 
 const filterOrderForm =  reactive({
@@ -147,10 +156,6 @@ const statusStyles = {
 }
 
 //utils.has_perm('orders.view')
-const {can} = useAbility()
-const {logout} = useAuth()
 
-if(!can('orders.viewAny')){
-    logout()
-}
+
 </script>

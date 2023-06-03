@@ -11,13 +11,13 @@
 </template>
 
 <script setup>
-import {onMounted, provide} from "vue";
+import {inject, onMounted, provide} from "vue";
 import useMenus from "../../composables/menus";
 import MenuFormComponent from "./components/MenuFormComponent.vue";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import utils from "../../utils/utils";
-import {useAbility} from "@casl/vue";
+import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const {errors, menu, isLoading, isFetching, updateMenu, getMenu} = useMenus()
@@ -30,13 +30,28 @@ const changeMenu = async () => {
 onMounted(()=>{
     getMenu(route.params.id)
 })
-
 const {can} = useAbility()
 const {logout} = useAuth()
+const ability = inject(ABILITY_TOKEN)
+const {getAbilities} = useAuth()
 
-if(!can('menus.update')){
-    logout()
-}
+onMounted(async () => {
+    await getAbilities()
+
+    if (!can('menus.create')) {
+        await logout()
+    }
+})
+
+// const {can} = useAbility()
+// const {logout} = useAuth()
+// const ability = inject(ABILITY_TOKEN)
+// const {getAbilities} = useAuth()
+//
+// getAbilities()
+// if(!can('menus.update')){
+//     logout()
+// }
 
 provide('isLoading', isLoading)
 
