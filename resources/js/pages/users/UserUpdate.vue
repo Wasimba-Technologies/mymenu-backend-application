@@ -52,10 +52,8 @@ const loadImage = (event) => {
 }
 
 
-provide('isLoading', isLoading)
 
 onMounted(()=>{
-    console.log(route.params.id)
     getUser(route.params.id)
     getRoles()
 })
@@ -67,7 +65,10 @@ watch(user, ()=>{
     modified_user.value.phone_number = user.value.phone_number
     modified_user.value.image =  user.value.image
     modified_user.value.role_id = user.value.role_id
+    modified_user.value.permissions = user.value.permissions
 })
+
+
 
 //utils.has_perm('users.update')
 const {can} = useAbility()

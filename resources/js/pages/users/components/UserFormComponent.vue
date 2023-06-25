@@ -141,6 +141,7 @@
 import LoadingSpinner from "../../../components/LoadingSpinner.vue";
 import LabeledCheckBox from "./LabeledCheckBox.vue";
 import PermissionField from "./PermissionField.vue";
+import {inject, onMounted} from "vue";
 
 let props = defineProps([
     'userForm', 'errors', 'isLoading',
@@ -239,9 +240,19 @@ const SystemPermissions = [
             {id: 'plans.view', name: 'ViewOne'},
         ]
     },
+    {
+        'model': 'Subscriptions',
+        'permissions': [
+            {id: 'subscriptions.viewAny', name: 'ViewAll'},
+            {id: 'subscriptions.view', name: 'ViewOne'},
+        ]
+    },
 ]
 
 
+onMounted(()=>{
+    console.log(props.userForm)
+})
 const loadFile = (event) => {
     emit('loadImage', event)
 }
