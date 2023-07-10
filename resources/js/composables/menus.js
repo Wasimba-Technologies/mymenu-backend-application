@@ -18,7 +18,8 @@ export default function useMenus() {
         {
             name: '',
             start_time: '',
-            end_time: ''
+            end_time: '',
+            image: ''
         }
     )
 
@@ -55,7 +56,15 @@ export default function useMenus() {
     const storeMenu = async (data) => {
         isLoading.value = true;
 
-        await axios.post('/api/menus', data)
+        //Serialization of formData to include file uploads
+        let formData = new FormData();
+        for (let item in data) {
+            if (data.hasOwnProperty(item)) {
+                formData.append(item, data[item])
+            }
+        }
+
+        await axios.post('/api/menus', formData)
             .then(response =>{
                 menu.value = response.data.data
                 router.push({name: 'menu.index'})
@@ -96,7 +105,7 @@ export default function useMenus() {
         formData.append("_method", "put");
 
         //Delete Logo key if form has no image
-        if (!(data.logo instanceof File)){
+        if (!(data.image instanceof File)){
             formData.delete('image')
         }
 

@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->string('image');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
         });

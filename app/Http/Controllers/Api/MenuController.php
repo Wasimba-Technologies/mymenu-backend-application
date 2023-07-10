@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MenuRequest;
+use App\Http\Requests\StoreMenuRequest;
+use App\Http\Requests\UpdateMenuRequest;
 use App\Http\Resources\MenuCollection;
 use App\Http\Resources\MenuResource;
 use App\Models\Menu;
+use App\Traits\HasImage;
 use Illuminate\Http\Response;
 
 class MenuController extends Controller
 {
+    use HasImage;
 
     /**
      * Display a listing of the resource.
@@ -25,9 +28,9 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MenuRequest $request): MenuResource
+    public function store(StoreMenuRequest $request): MenuResource
     {
-        $data = $request->validated();
+        $data = $this->getDataAndSaveImage('images', $request);
         $menu = Menu::create($data);
         return new MenuResource($menu);
     }
@@ -43,9 +46,9 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(MenuRequest $request, Menu $menu)
+    public function update(UpdateMenuRequest $request, Menu $menu)
     {
-        $data = $request->validated();
+        $data = $this->getDataAndSaveImage('images', $request);
         $menu->update($data);
         return new  MenuResource($menu);
     }

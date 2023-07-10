@@ -7,21 +7,23 @@
         form-description="Update your menu by filling the form below"
         btn-message="Update"
         :errors="errors"
+        :img-url="tempImgUrl"
+        @load-image="loadImage"
     />
 </template>
 
 <script setup>
-import {inject, onMounted, provide} from "vue";
+import {inject, onMounted, provide, ref} from "vue";
 import useMenus from "../../composables/menus";
 import MenuFormComponent from "./components/MenuFormComponent.vue";
 import {useRoute} from "vue-router";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
-import utils from "../../utils/utils";
 import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 
 const {errors, menu, isLoading, isFetching, updateMenu, getMenu} = useMenus()
 const route = useRoute()
+const tempImgUrl = ref(null)
 
 const changeMenu = async () => {
     await updateMenu(route.params.id);
@@ -43,17 +45,13 @@ onMounted(async () => {
     }
 })
 
-// const {can} = useAbility()
-// const {logout} = useAuth()
-// const ability = inject(ABILITY_TOKEN)
-// const {getAbilities} = useAuth()
-//
-// getAbilities()
-// if(!can('menus.update')){
-//     logout()
-// }
+const loadImage = (event) => {
+    menu.value.image = event.target.files[0]
+    //Preview Image
+    tempImgUrl.value = window.URL.createObjectURL(event.target.files[0])
+    URL.revokeObjectURL(event.target.files[0])
+}
 
 provide('isLoading', isLoading)
 
-// utils.has_perm('menus.update')
 </script>

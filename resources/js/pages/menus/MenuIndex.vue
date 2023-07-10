@@ -57,7 +57,7 @@
                                 <td colSpan="5">
                                     <NoDataSVG
                                         class="flex flex-col justify-center items-center mt-10"
-                                        message="Oops! There are no buses Yet."
+                                        message="Oops! There are no menus Yet."
                                     />
                                 </td>
                             </tr>

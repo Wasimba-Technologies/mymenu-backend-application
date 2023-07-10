@@ -1,4 +1,3 @@
-
 @extends('layouts.base-guest')
 @section('title')
     Pricing
