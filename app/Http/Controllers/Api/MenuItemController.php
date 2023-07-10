@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MenuItemRequest;
+use App\Http\Requests\StoreMenuItemRequest;
+use App\Http\Requests\UpdateMenuItemRequest;
 use App\Http\Resources\MenuItemCollection;
 use App\Http\Resources\MenuItemResource;
 use App\Models\MenuItem;
@@ -37,7 +38,7 @@ class MenuItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MenuItemRequest $request): MenuItemResource | JsonResponse
+    public function store(StoreMenuItemRequest $request): MenuItemResource | JsonResponse
     {
         $items = MenuItem::count();
         $tenant_id = $request->header('X-TENANT-ID');
@@ -65,7 +66,7 @@ class MenuItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(MenuItemRequest $request, MenuItem $menu_item)
+    public function update(UpdateMenuItemRequest $request, MenuItem $menu_item)
     {
         //$data = $request->validated();
         $data = $this->getDataAndSaveImage('images', $request);
