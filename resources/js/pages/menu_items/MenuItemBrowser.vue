@@ -13,7 +13,7 @@
     <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div v-for="product in menu_products" :key="product.id" class="relative flex items-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-rose-500 focus-within:ring-offset-2 hover:border-gray-400">
             <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                <img :src="product.image" :alt="product.name" class="h-full w-full object-cover object-center" />
+                <img :src="product.image == null ? product.menu.image : product.image" :alt="product.name" class="h-full w-full object-cover object-center" />
             </div>
 
             <div class="ml-4 flex flex-1 flex-col justify-between">

@@ -27,12 +27,5 @@ class MenuItem extends Model
         return $this->belongsToMany(Order::class, 'order_menu_item');
     }
 
-    protected function image(): Attribute
-    {
-        //Transform image to be a URL
-        return Attribute::make(
-            get: fn (string $value) => env('APP_URL'). Storage::url($value),
-        );
-    }
 
 }

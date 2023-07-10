@@ -15,6 +15,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
+/**
+ * @method static count()
+ */
 class MenuItemController extends Controller
 {
     use HasImage;
@@ -36,10 +39,10 @@ class MenuItemController extends Controller
      */
     public function store(MenuItemRequest $request): MenuItemResource | JsonResponse
     {
-        $orders = Order::all();
+        $items = MenuItem::count();
         $tenant_id = $request->header('X-TENANT-ID');
         $tenant = Restaurant::withoutGlobalScope(TenantScope::class)->with('plan')->findOrFail($tenant_id);
-        if(count($orders) < $tenant->plan->menu_items){
+        if($items < $tenant->plan->menu_items){
             $data = $this->getDataAndSaveImage('images', $request);
             //$data['tenant_id'] = $request->header('X-TENANT-ID');
             $menu_item = MenuItem::create($data);

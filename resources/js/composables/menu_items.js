@@ -65,6 +65,10 @@ export default function useMenuItems() {
             }
         }
 
+        //Delete image key if form has no image
+        if (!(data.image instanceof File)) {
+            formData.delete('image')
+        }
 
         await axios.post('/api/menu_items', formData)
             .then(response => {
@@ -72,7 +76,7 @@ export default function useMenuItems() {
                 router.push({name: 'menu_items.index'})
                 swal({
                     icon: 'success',
-                    title: 'Information Stored successfully'
+                    title: response.data.message
                 })
             }).catch(error => {
                 if (error.response?.data) {
@@ -98,7 +102,6 @@ export default function useMenuItems() {
             }
         }
 
-       // formData = Object.assign(formData, data)
         //Method Spoofing, for laravel put/patch handling
         formData.append("_method", "put");
 

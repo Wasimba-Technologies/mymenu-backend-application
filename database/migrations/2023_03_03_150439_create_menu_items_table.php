@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('price');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->foreignId('menu_id')->constrained('id')->on('menus');
             $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
