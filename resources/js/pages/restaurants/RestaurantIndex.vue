@@ -142,7 +142,7 @@ const {getAbilities} = useAuth()
 onMounted(async () => {
     await getAbilities()
 
-    if (!can('menus.create')) {
+    if (!can('restaurants.viewAny')) {
         await logout()
     }
 })

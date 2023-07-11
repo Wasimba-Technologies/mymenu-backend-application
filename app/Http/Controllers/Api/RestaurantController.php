@@ -34,7 +34,6 @@ class RestaurantController extends Controller
      */
     public function store(RestaurantRequest $request): RestaurantResource
     {
-        //$data = $request->validated();
         $this->authorize('create', Restaurant::class);
         $data = $this->getDataAndSaveImage('logos', $request);
         $restaurant = Restaurant::create($data);

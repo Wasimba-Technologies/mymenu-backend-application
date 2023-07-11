@@ -28,6 +28,7 @@ class MenuItemController extends Controller
      */
     public function index(): MenuItemCollection
     {
+        $this->authorize('viewAny', MenuItem::class);
         return new MenuItemCollection(MenuItem::when(
             request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
@@ -40,6 +41,7 @@ class MenuItemController extends Controller
      */
     public function store(StoreMenuItemRequest $request): MenuItemResource | JsonResponse
     {
+        $this->authorize('create', MenuItem::class);
         $items = MenuItem::count();
         $tenant_id = $request->header('X-TENANT-ID');
         $tenant = Restaurant::withoutGlobalScope(TenantScope::class)->with('plan')->findOrFail($tenant_id);
@@ -60,6 +62,7 @@ class MenuItemController extends Controller
      */
     public function show(MenuItem $menu_item): MenuItemResource
     {
+        $this->authorize('view', $menu_item);
         return new MenuItemResource($menu_item);
     }
 
@@ -68,7 +71,7 @@ class MenuItemController extends Controller
      */
     public function update(UpdateMenuItemRequest $request, MenuItem $menu_item)
     {
-        //$data = $request->validated();
+        $this->authorize('update', $menu_item);
         $data = $this->getDataAndSaveImage('images', $request);
         $menu_item->update($data);
         return new  MenuItemResource($menu_item);
@@ -79,6 +82,7 @@ class MenuItemController extends Controller
      */
     public function destroy(MenuItem $menu_item): Response
     {
+        $this->authorize('delete', $menu_item);
         $menu_item->delete();
         return response()->noContent();
     }

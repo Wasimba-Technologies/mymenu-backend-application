@@ -100,21 +100,21 @@
                             </button>
                             <button class="btn-sm-submit" @click="rejectOrder(order)"
                                     :class="{'disabled:opacity-25' : isDisabled}" :disabled="isDisabled"
-                                    v-if="active"
+                                    v-if="active && can('orders.update')"
                             >
                                 <LoadingSpinner :is-loading="isRejecting" />
                                 Reject
                             </button>
                             <button class="btn-primary" @click="confirmOrder(order)"
                                 :class="{'disabled:opacity-25' : isDisabled}" :disabled="isDisabled"
-                                v-if="active"
+                                v-if="active && can('orders.update')"
                             >
                                 <LoadingSpinner :is-loading="isLoading" />
                                 Confirm
                             </button>
                             <button class="btn-primary" @click="payOrder(order)"
                                     :class="{'disabled:opacity-25' : order.status === 'Paid'}" :disabled="order.status === 'Paid'"
-                                    v-if="order.status === 'Confirmed'"
+                                    v-if="order.status === 'Confirmed' && can('orders.update')"
                             >
                                 <LoadingSpinner :is-loading="isLoading" />
                                 Pay
@@ -165,7 +165,7 @@ const swal = inject('$swal')
 
 onMounted(async () => {
     await getAbilities()
-    if (!can('orders.update')) {
+    if (!can('orders.view')) {
         await logout()
     }
     await getOrder(router.params.id)

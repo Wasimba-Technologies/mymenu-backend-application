@@ -38,7 +38,9 @@
                                     {{plan.price}}
                                 </td>
                                 <td>
-                                    <router-link :to="`/plans/${plan.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
+                                    <router-link :to="`/plans/${plan.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900" :disabled="!(can('plans.update'))">
+                                        Edit
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr v-if="plans?.length === 0 && ! isFetching">
@@ -114,7 +116,7 @@ const {getAbilities} = useAuth()
 onMounted(async () => {
     await getAbilities()
 
-    if (!can('menus.create')) {
+    if (!can('plans.viewAny')) {
         await logout()
     }
 })

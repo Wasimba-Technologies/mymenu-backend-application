@@ -17,6 +17,7 @@ class PlanController extends Controller
      */
     public function index(): PlanCollection
     {
+        $this->authorize('viewAny', Plan::class);
         $plans = Plan::withoutGlobalScope(TenantScope::class)->paginate(20);
         return new PlanCollection($plans);
     }
@@ -26,6 +27,7 @@ class PlanController extends Controller
      */
     public function store(PlanRequest $request): PlanResource
     {
+        $this->authorize('create', Plan::class);
         $data = $request->validated();
         $plan = Plan::create($data);
         return new PlanResource($plan);
@@ -36,6 +38,7 @@ class PlanController extends Controller
      */
     public function show(Plan $plan): PlanResource
     {
+        $this->authorize('view', $plan);
         return new PlanResource($plan);
     }
 
@@ -44,6 +47,7 @@ class PlanController extends Controller
      */
     public function update(PlanRequest $request, Plan $plan): PlanResource
     {
+        $this->authorize('update', $plan);
         $data = $request->validated();
         Plan::update($data);
         return new PlanResource($plan);
@@ -54,6 +58,7 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan): Response
     {
+        $this->authorize('delete', $plan);
         $plan->delete();
         return response()->noContent();
     }

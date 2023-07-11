@@ -18,6 +18,7 @@ class TableController extends Controller
      */
     public function index(): TableCollection
     {
+        $this->authorize('viewAny', Table::class);
         return new TableCollection(Table::paginate(20));
     }
 
@@ -38,6 +39,7 @@ class TableController extends Controller
      */
     public function show(Table $table): TableResource
     {
+        $this->authorize('view', $table);
         return new TableResource($table);
     }
 

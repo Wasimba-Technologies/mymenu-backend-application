@@ -15,6 +15,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Payment::class);
         return new PaymentCollection(Payment::paginate(20));
     }
 
@@ -23,6 +24,7 @@ class PaymentController extends Controller
      */
     public function store(PaymentRequest $request)
     {
+        $this->authorize('create', Payment::class);
         $data = request()->json()->all();
         $payment = Payment::create(
             [
@@ -44,6 +46,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
+        $this->authorize('view', $payment);
         return new PaymentResource($payment);
     }
 
@@ -60,6 +63,7 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
+        $this->authorize('delete', $payment);
         $payment->delete();
         return response()->noContent();
     }

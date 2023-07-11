@@ -41,7 +41,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <router-link :to="`/tables/${table.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
+                                    <router-link :to="`/tables/${table.id}/update`" :disabled="!can('tables.update')" >
+                                        Edit
+                                    </router-link>
                                     <a href="#" @click="printQRByTable(table)" class="px-3 py-4 text-rose-600 hover:text-rose-900">Print QR</a>
                                 </td>
                             </tr>

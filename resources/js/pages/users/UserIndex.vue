@@ -51,7 +51,9 @@
                                     {{user.phone_number}}
                                 </td>
                                 <td>
-                                    <router-link :to="`/users/${user.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
+                                    <router-link :to="`/users/${user.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900" :disabled="!can('users.update')">
+                                        Edit
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr v-if="users?.length === 0 && ! isFetching">

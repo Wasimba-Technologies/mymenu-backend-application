@@ -50,7 +50,9 @@
                                     {{menu.end_time}}
                                 </td>
                                 <td>
-                                    <router-link :to="`/menu/${menu.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900">Edit</router-link>
+                                    <router-link :to="`/menu/${menu.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900" :disabled="!can('menus.update')">
+                                        Edit
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr v-if="menus?.length === 0 && ! isFetching">
@@ -124,7 +126,7 @@ const {getAbilities} = useAuth()
 onMounted(async () => {
     await getAbilities()
 
-    if (!can('menus.create')) {
+    if (!can('menus.viewAny')) {
         await logout()
     }
 })

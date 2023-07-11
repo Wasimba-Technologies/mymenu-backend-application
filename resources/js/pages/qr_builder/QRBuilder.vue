@@ -103,7 +103,7 @@ const {getAbilities} = useAuth()
 onMounted(async () => {
     await getAbilities()
 
-    if (!can('menus.create')) {
+    if (!can('qr_codes.create')) {
         await logout()
     }
 })

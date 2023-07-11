@@ -59,9 +59,9 @@ onMounted(async () => {
     await getAbilities()
 
     if (!can('menu_items.update')) {
-        logout()
+        await logout()
     }
-    getMenuItem(route.params.id)
+    await getMenuItem(route.params.id)
     watchEffect(() => getMenus(""))
 })
 

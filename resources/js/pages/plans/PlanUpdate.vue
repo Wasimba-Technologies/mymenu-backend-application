@@ -18,6 +18,7 @@ import PlanFormComponent from "./components/PlanFormComponent.vue";
 import utils from "../../utils/utils";
 import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
+import BlurredSpinner from "../../components/BlurredSpinner.vue";
 
 const {errors, plan, isLoading, isFetching, updatePlan, getPlan} = usePlans()
 const route = useRoute()
@@ -44,7 +45,7 @@ onMounted(()=>{
 onMounted(async () => {
     await getAbilities()
 
-    if (!can('menus.create')) {
+    if (!can('plans.update')) {
         await logout()
     }
 })

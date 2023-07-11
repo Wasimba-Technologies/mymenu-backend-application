@@ -19,6 +19,7 @@ class OrderController extends Controller
      */
     public function index(): OrderCollection
     {
+        $this->authorize('viewAny', Order::class);
         return new OrderCollection(
             Order::with(['menu_items','table'])
             ->when(request('status'), function($query){
@@ -37,7 +38,8 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        $total_orders = Order::all()->count(); //
+        $this->authorize('create', Order::class);
+        $total_orders = Order::count();
         $tenant_id = $request->header('X-TENANT-ID');
         $tenant = Restaurant::withoutGlobalScope(TenantScope::class )->with('plan')->findOrFail($tenant_id);
         if($total_orders < $tenant->plan->orders) {
@@ -65,6 +67,7 @@ class OrderController extends Controller
      */
     public function show(Order $order): OrderResource
     {
+        $this->authorize('view', $order);
         $order->load(['table','menu_items','tenant']);
         return new OrderResource($order);
     }
@@ -74,6 +77,7 @@ class OrderController extends Controller
      */
     public function update(OrderRequest $request, Order $order)
     {
+        $this->authorize('update', $order);
         $data = request()->json()->all();
         $order->status = $data['status'];
         $order->save();
@@ -90,6 +94,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order): Response
     {
+        $this->authorize('delete', $order);
         $order->delete();
         return response()->noContent();
     }

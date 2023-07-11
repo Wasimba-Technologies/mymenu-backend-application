@@ -51,7 +51,9 @@
                                     {{menu_item.menu?.name}}
                                 </td>
                                 <td>
-                                    <router-link :to="`/menu-items/${menu_item.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900" :disabled="can('menu_items.update')">Edit</router-link>
+                                    <router-link :to="`/menu-items/${menu_item.id}/update`" class="px-3 py-4 text-rose-600 hover:text-rose-900" :disabled="!can('menu_items.update')">
+                                        Edit
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr v-if="menu_items?.length === 0 && ! isFetching">

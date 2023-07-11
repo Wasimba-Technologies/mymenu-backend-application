@@ -233,7 +233,7 @@
     onMounted(async () => {
         await getAbilities()
 
-        if (!can('menus.create')) {
+        if (!can('restaurants.update')) {
             await logout()
         }
     })

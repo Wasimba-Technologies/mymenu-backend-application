@@ -20,6 +20,7 @@ class UserController extends Controller
      */
     public function index(): UserCollection
     {
+        $this->authorize('viewAny', User::class);
         return new UserCollection(User::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
         })->paginate(20));
@@ -30,6 +31,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request): UserResource | JsonResponse
     {
+        $this->authorize('create', User::class);
         $orders = Order::all();
         $tenant_id = $request->header('X-TENANT-ID');
         $tenant = Restaurant::withoutGlobalScope(TenantScope::class)->with('plan')->findOrFail($tenant_id);
@@ -49,6 +51,7 @@ class UserController extends Controller
      */
     public function show(User $user): UserResource
     {
+        $this->authorize('view', $user);
         return new UserResource($user->load(['role']));
     }
 
@@ -58,6 +61,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user): UserResource
     {
+        $this->authorize('update', $user);
         $data = $request->validated();
         $user->update($data);
         return new UserResource($user);
@@ -68,6 +72,7 @@ class UserController extends Controller
      */
     public function destroy(User $user): Response
     {
+        $this->authorize('delete', $user);
         $user->delete();
         return response()->noContent();
     }

@@ -22,6 +22,7 @@ class QRCodeController extends Controller
 {
     public function store(QrCodeRequest $request): JsonResponse
     {
+        $this->authorize('create', QrCode::class);
         $data = $request->validated();
         $qr_code_data = QrCode::updateOrCreate(
             ['tenant_id' =>  request()->header('X-TENANT-ID')],
@@ -36,6 +37,7 @@ class QRCodeController extends Controller
 
     public function showQrFeatures(): JsonResponse
     {
+        $this->authorize('viewAny', QrCode::class);
         $qr_appearance = QrCode::where('tenant_id', request()->header('X-TENANT-ID'))->first();
         return response()->json([
             'data' => $qr_appearance,

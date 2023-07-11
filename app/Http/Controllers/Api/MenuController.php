@@ -20,6 +20,7 @@ class MenuController extends Controller
      */
     public function index(): MenuCollection
     {
+        $this->authorize('viewAny', Menu::class);
         return new MenuCollection(Menu::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
         })->paginate(20));
@@ -30,6 +31,7 @@ class MenuController extends Controller
      */
     public function store(StoreMenuRequest $request): MenuResource
     {
+        $this->authorize('create', Menu::class);
         $data = $this->getDataAndSaveImage('images', $request);
         $menu = Menu::create($data);
         return new MenuResource($menu);
@@ -40,6 +42,7 @@ class MenuController extends Controller
      */
     public function show(Menu $menu): MenuResource
     {
+        $this->authorize('view', $menu);
         return new MenuResource($menu);
     }
 
@@ -48,6 +51,7 @@ class MenuController extends Controller
      */
     public function update(UpdateMenuRequest $request, Menu $menu)
     {
+        $this->authorize('update', $menu);
         $data = $this->getDataAndSaveImage('images', $request);
         $menu->update($data);
         return new  MenuResource($menu);
@@ -58,6 +62,7 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu): Response
     {
+        $this->authorize('delete', $menu);
         $menu->delete();
         return response()->noContent();
     }

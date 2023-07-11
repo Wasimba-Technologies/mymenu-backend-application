@@ -30,6 +30,7 @@ class SubscriptionController extends Controller
      */
     public function store(StoreSubscriptionRequest $request): JsonResponse
     {
+        $this->authorize('create', Subscription::class);
         $subscription = [];
         $data = (object)$request->json()->all();
         $subscription['plan_id'] = $data->plan['id']; //plan is an array
