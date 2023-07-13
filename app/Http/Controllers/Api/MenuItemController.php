@@ -28,7 +28,7 @@ class MenuItemController extends Controller
      */
     public function index(): MenuItemCollection
     {
-        $this->authorize('viewAny', MenuItem::class);
+        //$this->authorize('viewAny', MenuItem::class); all users should see this
         return new MenuItemCollection(MenuItem::when(
             request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');

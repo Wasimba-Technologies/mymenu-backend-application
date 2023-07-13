@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Restaurant;
+use App\Models\Table;
 use App\Models\User;
 
 class TablePolicy
@@ -18,7 +19,7 @@ class TablePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Restaurant $restaurant): bool
+    public function view(User $user, Table $table): bool
     {
         return $user->hasPermission('tables.view');
     }
@@ -33,12 +34,12 @@ class TablePolicy
         return $user->hasPermission('tables.create');
     }
 
-    public function update(User $user): bool
+    public function update(User $user, Table $table): bool
     {
         return $user->hasPermission('tables.update');
     }
 
-    public function delete(User $user): bool
+    public function delete(User $user, Table $table): bool
     {
         return $user->hasPermission('tables.delete');
     }

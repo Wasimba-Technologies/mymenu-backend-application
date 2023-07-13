@@ -38,7 +38,7 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        $this->authorize('create', Order::class);
+        //$this->authorize('create', Order::class);
         $total_orders = Order::count();
         $tenant_id = $request->header('X-TENANT-ID');
         $tenant = Restaurant::withoutGlobalScope(TenantScope::class )->with('plan')->findOrFail($tenant_id);

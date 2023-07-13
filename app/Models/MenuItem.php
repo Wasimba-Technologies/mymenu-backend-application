@@ -28,4 +28,11 @@ class MenuItem extends Model
     }
 
 
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Storage::url($value) : Storage::url($this->menu->image),
+        );
+    }
+
 }

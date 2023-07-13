@@ -58,7 +58,7 @@
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="h-10 w-10 flex-shrink-0">
-                                                <img class="h-10 w-10 rounded-full" :src="item?.image" alt="" />
+                                                <img class="h-10 w-10 rounded-full" :src="item.image" alt="" />
                                             </div>
                                             <div class="ml-4">
                                                 <div class="font-medium text-gray-900">{{ item.name }}</div>

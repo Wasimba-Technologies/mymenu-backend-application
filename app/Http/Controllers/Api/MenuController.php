@@ -20,7 +20,7 @@ class MenuController extends Controller
      */
     public function index(): MenuCollection
     {
-        $this->authorize('viewAny', Menu::class);
+        //$this->authorize('viewAny', Menu::class); //end users should see this
         return new MenuCollection(Menu::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
         })->paginate(20));

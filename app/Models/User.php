@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class)->withoutGlobalScope(TenantScope::class);
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role->name == 'admin';
+    }
+
     public function user_permissions(): BelongsToMany
     {
         return $this->belongsToMany(

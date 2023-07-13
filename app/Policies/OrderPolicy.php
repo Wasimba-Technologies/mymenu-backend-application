@@ -8,6 +8,18 @@ use Illuminate\Auth\Access\Response;
 
 class OrderPolicy
 {
+
+    /**
+     * Perform pre-authorization checks.
+     */
+    public function before(User $user, string $ability): bool|null
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return null;
+    }
     /**
      * Determine whether the user can view any models.
      */
@@ -30,7 +42,7 @@ class OrderPolicy
     public function create(User $user): bool
     {
         //Anyone can create order
-        return true;
+        return $user->hasPermission('orders.create');
     }
 
     /**

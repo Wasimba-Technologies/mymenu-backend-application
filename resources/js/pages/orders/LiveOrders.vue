@@ -25,7 +25,7 @@
             <div class="flex flex-col divide-y divide-gray-200 bg-white rounded drop-shadow-md grow h-full  ">
                 <h3 class="text-lg font-bold text-gray-700 px-8 py-4">Accepted Orders</h3>
                 <ul role="list" class="divide-y divide-gray-200 p-8 ">
-                    <li v-for="order in newOrders" :key="order.id" class="py-4 flex flex-col">
+                    <li v-for="order in acceptedOrders" :key="order.id" class="py-4 flex flex-col">
                         <p class="text-gray-600 text-sm">{{ order.createdAt }}</p>
                         <p class="text-gray-900 font-bold flex justify-between"> <span
                             class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-amber-400 opacity-75"></span><span>{{ order.id }}</span>
@@ -43,7 +43,7 @@
             <div class="flex flex-col divide-y divide-gray-200 bg-white rounded drop-shadow-md grow ">
                 <h3 class="text-lg font-bold text-gray-700 px-8 py-4">Done</h3>
                 <ul role="list" class="divide-y divide-gray-200 p-8 ">
-                    <li v-for="order in newOrders" :key="order.id" class="py-4 flex flex-col">
+                    <li v-for="order in doneOrders" :key="order.id" class="py-4 flex flex-col">
                         <p class="text-gray-600 text-sm">{{ order.createdAt }}</p>
                         <p class="text-gray-900 font-bold flex justify-between"> <span
                             class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-green-400 opacity-75"></span><span>{{ order.id }}</span>
@@ -63,7 +63,11 @@
 
 
 <script setup>
-const newOrders = [
+import useOrders from "../../composables/orders";
+import {onMounted, ref} from "vue";
+import utils from "../../utils/utils";
+
+const newOrdersOld = [
     {
         id: "#100 Pizza",
         table: "Inside - Table 3",
@@ -83,5 +87,34 @@ const newOrders = [
         createdAt: "Friday, July 15, 2022 6:42 AM"
     },
 ]
+
+const acceptedOrders = ref([])
+const doneOrders = ref([])
+const newOrders = ref([])
+
+    const {
+        order,
+        orders,
+        getOrders,
+        isFetching,
+        paginationLinks,
+        changeTenantsUrl,
+        paginationMetaData,
+
+    } = useOrders()
+
+    onMounted(() => {
+        const date = new Date();
+        let start_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrDate(date)
+        let end_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrTomorrowDate(date)
+        getOrders(
+            '',
+            start_date,
+            end_date,
+        )
+        newOrders.value = orders.value.filter(order => order.status === 'pending')
+        acceptedOrders.value = orders.value.filter(order => order.status === 'paid')
+        doneOrders.value = orders.value.filter(order => order.status === 'done')
+    })
 </script>
 

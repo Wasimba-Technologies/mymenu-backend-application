@@ -39,6 +39,12 @@ function getStrTomorrowDate(dateObj){
     return date >= 10 ? date : "0"+date
 }
 
+function getStrTodayDate(dateObj){
+    let today = dateObj.setDate(dateObj.getDate());
+    let date = new Date(today).getDate()
+    return date >= 10 ? date : "0"+date
+}
+
 // const {can} = useAbility()
 // const {logout} = useAuth()
 // const has_perm = async (perm) => {
@@ -59,6 +65,7 @@ const utils = {
     getStrDate,
     getStrMonth,
     getStrYesterday,
+    getStrTodayDate,
     getStrTomorrowDate,
 }
 

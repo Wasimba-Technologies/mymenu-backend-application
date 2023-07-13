@@ -17,7 +17,7 @@ class PlanController extends Controller
      */
     public function index(): PlanCollection
     {
-        $this->authorize('viewAny', Plan::class);
+        //$this->authorize('viewAny', Plan::class); should be public
         $plans = Plan::withoutGlobalScope(TenantScope::class)->paginate(20);
         return new PlanCollection($plans);
     }

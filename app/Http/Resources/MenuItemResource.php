@@ -21,7 +21,8 @@ class MenuItemResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
-            'image' => $this->image ? Storage::disk('public')->url($this->image) : null,
+//            'image' => $this->image ? Storage::disk('public')->url($this->image) : null,
+            'image' => $this->image,
             'menu' => new MenuResource($this->menu),
         ];
     }

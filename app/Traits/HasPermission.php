@@ -14,9 +14,9 @@ trait HasPermission
         return $this->belongsToMany(Permission::class, 'user_permission')->withoutGlobalScope(TenantScope::class);
     }
 
-    public function hasPermission($perm){
-        return $this->permissions->contains('name', $perm) ||
-                $this->role->permissions->contains('name', $perm);
+    public function hasPermission($perm): bool
+    {
+        return $this->user_permissions->contains('name', $perm) || $this->role->role_permissions->contains('name', $perm);
     }
 
 }

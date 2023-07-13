@@ -168,12 +168,13 @@ import {useRoute} from "vue-router";
 import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 const ability = inject(ABILITY_TOKEN)
 import useAuth from "../../composables/auth";
+import {BoltIcon} from "@heroicons/vue/20/solid";
 const {getAbilities} = useAuth()
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: ComputerDesktopIcon, perm: 'restaurants.update'},
-    // { name: 'Live Orders', href: '/live-orders', icon: BoltIcon },
-    { name: 'Orders', href: '/orders', icon: ShoppingBagIcon,perm: 'orders.view'},
+    { name: 'Live Orders', href: '/live-orders', icon: BoltIcon, perm: 'orders.view'},
+    { name: 'Orders', href: '/orders', icon: ShoppingBagIcon, perm: 'orders.view'},
     { name: 'restaurants', href: '/restaurants', icon: HomeIcon , perm: 'restaurants.view'},
     { name: 'Menu', href: '/menu', icon: DocumentDuplicateIcon, perm: 'menus.view'},
     { name: 'Menu Items', href: '/menu-items', icon: Squares2X2Icon, perm: 'menu_items.view'},

@@ -36,13 +36,14 @@ Route::get('browse/{id}', [MenuBrowser::class, 'browse']);
 Route::apiResource(
     'menus', MenuController::class
 )->only('index');
+
 Route::apiResource(
     'menu_items', MenuItemController::class
 )->only('index');
 
 Route::apiResource(
     'orders', OrderController::class
-)->only(['store','show']);
+)->only(['store']);
 
 Route::apiResource(
     'order_items', OrderMenuItemController::class
@@ -56,6 +57,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::apiResource(
             'menus', MenuController::class
         )->except('index');
+
         Route::apiResource(
             'menu_items', MenuItemController::class
         )->except('index');
@@ -64,7 +66,7 @@ Route::middleware(['auth:sanctum'])->group(
         );
         Route::apiResource(
             'orders', OrderController::class
-        )->except(['store','show']);
+        )->except(['store']);
 
         Route::apiResource(
             'order_items', OrderMenuItemController::class
