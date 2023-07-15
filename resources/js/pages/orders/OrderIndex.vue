@@ -105,7 +105,7 @@ const {
     getOrders,
     isFetching,
     paginationLinks,
-    changeTenantsUrl,
+    changeOrdersUrl,
     paginationMetaData,
 
 } = useOrders()
@@ -115,15 +115,16 @@ const status_options = ref([
     'Pending',
     'Confirmed',
     'Paid',
+    'Done',
     'Shipped',
     'Delivered',
 ])
 const onNextClicked = () => {
-    changeTenantsUrl(paginationLinks.value.next)
+    changeOrdersUrl(paginationLinks.value.next)
 }
 
 const onPrevClicked =() =>{
-    changeTenantsUrl(paginationLinks.value.prev)
+    changeOrdersUrl(paginationLinks.value.prev)
 }
 
 onMounted(async () => {
@@ -152,6 +153,7 @@ watch(filterOrderForm, () =>{
 const statusStyles = {
     Confirmed: 'bg-green-100 text-green-800',
     Paid: 'bg-green-100 text-green-800',
+    Done: 'bg-green-100 text-green-800',
     Pending: 'bg-yellow-100 text-yellow-800',
     Rejected: 'bg-gray-100 text-gray-800',
 }

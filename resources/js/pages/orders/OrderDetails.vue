@@ -119,6 +119,13 @@
                                 <LoadingSpinner :is-loading="isLoading" />
                                 Pay
                             </button>
+                            <button class="btn-primary" @click="completeOrder(order)"
+                                    :class="{'disabled:opacity-25' : order.status === 'Paid'}"
+                                    v-if="order.status === 'Paid' && can('orders.update')"
+                            >
+                                <LoadingSpinner :is-loading="isLoading" />
+                                Complete
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -197,6 +204,15 @@ const rejectOrder = (order) => {
         order.id,
         {
             'status': 'Rejected'
+        }
+    )
+}
+
+const completeOrder = (order) => {
+    updateOrderStatus(
+        order.id,
+        {
+            'status': 'Done'
         }
     )
 }

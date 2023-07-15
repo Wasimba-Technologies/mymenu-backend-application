@@ -55,11 +55,11 @@
                                             <dl class="-my-4 divide-y divide-gray-200 text-sm">
                                                 <div class="flex items-center justify-between py-4">
                                                     <dt class="text-gray-600">Subtotal</dt>
-                                                    <dd class="font-medium text-gray-900">{{grandTotal}}</dd>
+                                                    <dd class="font-medium text-gray-900">Tsh {{grandTotal}}</dd>
                                                 </div>
                                                 <div class="flex items-center justify-between py-4">
                                                     <dt class="text-base font-medium text-gray-900">Order total</dt>
-                                                    <dd class="text-base font-medium text-gray-900">{{grandTotal}}</dd>
+                                                    <dd class="text-base font-medium text-gray-900">Tsh {{grandTotal}}</dd>
                                                 </div>
                                             </dl>
                                         </div>
@@ -111,10 +111,6 @@ const removeCartItem = product =>{
 const placeOrder =  () =>{
     emit('placeOrder')
 }
-
-
-
-
 
 </script>
 

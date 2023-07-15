@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\PrinterController;
 use App\Http\Controllers\Api\QRCodeController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\SocialController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\UserController;
@@ -32,6 +33,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
+Route::get('auth/login/{provider}/callback',[SocialController::class, 'callback']);
+Route::get('auth/login/{provider}',[SocialController::class, 'redirect']);
+
 Route::get('browse/{id}', [MenuBrowser::class, 'browse']);
 Route::apiResource(
     'menus', MenuController::class
@@ -41,13 +45,11 @@ Route::apiResource(
     'menu_items', MenuItemController::class
 )->only('index');
 
-Route::apiResource(
-    'orders', OrderController::class
-)->only(['store']);
 
 Route::apiResource(
     'order_items', OrderMenuItemController::class
 )->only(['store','show']);
+
 
 Route::middleware(['auth:sanctum'])->group(
     function (){
@@ -66,7 +68,7 @@ Route::middleware(['auth:sanctum'])->group(
         );
         Route::apiResource(
             'orders', OrderController::class
-        )->except(['store']);
+        );
 
         Route::apiResource(
             'order_items', OrderMenuItemController::class

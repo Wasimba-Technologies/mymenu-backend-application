@@ -22,6 +22,12 @@ class OrderResource extends JsonResource
             'created_at' => Carbon::parse($this->created_at)->isoFormat('D MMM YYYY HH:mm'),
             'updated_at' => Carbon::parse($this->updated_at)->isoFormat('D MMM YYYY HH:mm'),
             'table' => new TableResource($this->whenLoaded('table')),
+            'delivery_method' => $this->delivery_method,
+            'sub_total' => $this->sub_total,
+            'discount' => $this->discount,
+            'tax' => $this->tax,
+            'shipping' => $this->shipping,
+            'grand_total' => $this->grand_total,
             'order_items' => $this->whenLoaded('menu_items'),
             'restaurant' => new RestaurantResource($this->whenLoaded('tenant'))
         ];

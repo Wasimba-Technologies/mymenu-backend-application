@@ -8,14 +8,15 @@
                 <h3 class="text-lg font-bold text-gray-700 px-8 py-4">New Orders</h3>
                 <ul role="list" class="divide-y divide-gray-200 p-8 ">
                     <li v-for="order in newOrders" :key="order.id" class="py-4 flex flex-col">
-                        <p class="text-gray-600 text-sm">{{ order.createdAt }}</p>
+                        <p class="text-gray-600 text-sm">{{ order.created_at }}</p>
                         <p class="text-gray-900 font-bold flex justify-between"> <span
-                            class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-blue-400 opacity-75"></span><span>{{ order.id }}</span>
-                            <button type="button"
-                                    class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium ml-10 rounded shadow-sm text-white bg-rose-400 hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">Details</button>
+                            class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-blue-400 opacity-75"></span><span> Order # {{ order.id }}, {{ order.table.name}}</span>
+                            <router-link :to="`/orders/${order.id}/details`" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium ml-10 rounded shadow-sm text-white bg-rose-400 hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                                Details
+                            </router-link>
                         </p>
-                        <p class="text-gray-600 text-sm">{{ order.table }}</p>
-                        <p class="text-gray-600 text-sm">TZS {{ order.cost }}</p>
+                        <p class="text-gray-600 text-sm">{{ order.delivery_method }}</p>
+                        <p class="text-gray-600 text-sm">Tsh {{ numFormat(order.sub_total) }}</p>
                     </li>
                 </ul>
 
@@ -26,14 +27,15 @@
                 <h3 class="text-lg font-bold text-gray-700 px-8 py-4">Accepted Orders</h3>
                 <ul role="list" class="divide-y divide-gray-200 p-8 ">
                     <li v-for="order in acceptedOrders" :key="order.id" class="py-4 flex flex-col">
-                        <p class="text-gray-600 text-sm">{{ order.createdAt }}</p>
+                        <p class="text-gray-600 text-sm">{{ order.created_at }}</p>
                         <p class="text-gray-900 font-bold flex justify-between"> <span
-                            class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-amber-400 opacity-75"></span><span>{{ order.id }}</span>
-                            <button type="button"
-                                    class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium ml-10 rounded shadow-sm text-white bg-rose-400 hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">Details</button>
+                            class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-amber-400 opacity-75"></span><span>Order # {{ order.id }}, {{ order.table.name}} </span>
+                            <router-link :to="`/orders/${order.id}/details`" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium ml-10 rounded shadow-sm text-white bg-rose-400 hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                                Details
+                            </router-link>
                         </p>
-                        <p class="text-gray-600 text-sm">{{ order.table }}</p>
-                        <p class="text-gray-600 text-sm">TZS {{ order.cost }}</p>
+                        <p class="text-gray-600 text-sm">{{ order.delivery_method }}</p>
+                        <p class="text-gray-600 text-sm">Tsh {{ numFormat(order.sub_total) }}</p>
                     </li>
                 </ul>
 
@@ -44,14 +46,15 @@
                 <h3 class="text-lg font-bold text-gray-700 px-8 py-4">Done</h3>
                 <ul role="list" class="divide-y divide-gray-200 p-8 ">
                     <li v-for="order in doneOrders" :key="order.id" class="py-4 flex flex-col">
-                        <p class="text-gray-600 text-sm">{{ order.createdAt }}</p>
+                        <p class="text-gray-600 text-sm">{{ order.created_at }}</p>
                         <p class="text-gray-900 font-bold flex justify-between"> <span
-                            class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-green-400 opacity-75"></span><span>{{ order.id }}</span>
-                            <button type="button"
-                                    class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium ml-10 rounded shadow-sm text-white bg-rose-400 hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">Details</button>
+                            class="animate-ping absolute left-2 h-3 w-3 rounded-full bg-green-400 opacity-75"></span><span>Order # {{ order.id }}, {{ order.table.name}}</span>
+                            <router-link :to="`/orders/${order.id}/details`" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium ml-10 rounded shadow-sm text-white bg-rose-400 hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                                Details
+                            </router-link>
                         </p>
-                        <p class="text-gray-600 text-sm">{{ order.table }}</p>
-                        <p class="text-gray-600 text-sm">TZS {{ order.cost }}</p>
+                        <p class="text-gray-600 text-sm">{{ order.delivery_method }}</p>
+                        <p class="text-gray-600 text-sm">Tsh {{ numFormat(order.sub_total) }}</p>
                     </li>
                 </ul>
 
@@ -96,25 +99,25 @@ const newOrders = ref([])
         order,
         orders,
         getOrders,
+        numFormat,
         isFetching,
         paginationLinks,
-        changeTenantsUrl,
         paginationMetaData,
 
     } = useOrders()
 
-    onMounted(() => {
+    onMounted(async () => {
         const date = new Date();
         let start_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrDate(date)
         let end_date = date.getFullYear() + "-" + utils.getStrMonth(date) + "-" + utils.getStrTomorrowDate(date)
-        getOrders(
+        await getOrders(
             '',
             start_date,
             end_date,
         )
-        newOrders.value = orders.value.filter(order => order.status === 'pending')
-        acceptedOrders.value = orders.value.filter(order => order.status === 'paid')
-        doneOrders.value = orders.value.filter(order => order.status === 'done')
+        newOrders.value = orders.value.filter(order => order.status === 'Confirmed')
+        acceptedOrders.value = orders.value.filter(order => order.status === 'Paid')
+        doneOrders.value = orders.value.filter(order => order.status === 'Done')
     })
 </script>
 

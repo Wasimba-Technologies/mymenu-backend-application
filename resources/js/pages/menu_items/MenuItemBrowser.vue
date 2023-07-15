@@ -42,8 +42,10 @@
         @handle-qty-change="handleQtyChange"
         @remove-cart-item="removeItem"
         @place-order="placeOrder"
-        :grand-total="grandTotal"
+        :grand-total="numFormat(grandTotal)"
     />
+
+    <LoginModal />
 </div>
 </template>
 
@@ -58,11 +60,13 @@ import {useRoute} from "vue-router";
 import useMenuItems from "../../composables/menu_items";
 import useMenus from "../../composables/menus";
 import useOrders from "../../composables/orders";
+import LoginModal from "./components/LoginModal.vue";
 
 const {menu_items, browseMenuByTable} = useMenuItems()
 const {menus, getMenus} = useMenus()
 const {storeOrder, numFormat} = useOrders()
 const open = ref(false)
+const openLoginModal = ref(false)
 const router = useRoute()
 const shopping_cart = ref([])
 const menu_products = ref([])
@@ -70,6 +74,9 @@ const menu_products = ref([])
 onMounted(()=>{
     getMenus('')
     browseMenuByTable(router.params.id)
+    if (localStorage.getItem('shopping_cart') !== null){
+        shopping_cart.value = JSON.parse(localStorage.getItem('shopping_cart'))
+    }
 })
 
 watch(menu_items,() =>{
@@ -86,6 +93,7 @@ const addToShoppingCart = (product) => {
 
     if (index === -1) {
         shopping_cart.value.push({
+            'menu_item_id': product.id,
             'menu_item': product,
             'qty': parseInt(document.getElementById(`quantity-${product.id}`).value)
         })
@@ -116,28 +124,36 @@ const handleQtyChange = (event, product) =>{
 }
 
 const placeOrder =  () => {
-    console.log(shopping_cart.value)
+    if (localStorage.getItem('access_token') === null){
+        openLoginModal.value = true
+        open.value = false
+        localStorage.setItem('shopping_cart', JSON.stringify(shopping_cart.value))
+        return
+    }
     storeOrder(
         {
+            'table_id': router.params.id,
+            'sub_total': parseFloat(grandTotal.value),
+            'discount': 0,
+            'shipping': 0,
+            'tax': 0,
+            'grand_total': parseFloat(grandTotal.value),
             'menu_items': shopping_cart.value,
         }
     )
+    if (localStorage.getItem('shopping_cart') !== null){
+        localStorage.removeItem('shopping_cart')
+    }
 }
 
-
-
-
-provide('open', open)
-
-provide('menu_items', menu_items)
 
 watch(shopping_cart, (new_cart) => {
     shopping_cart.value = new_cart
 })
 
 const grandTotal = computed(() => {
-    return numFormat(shopping_cart.value.reduce(
-        (total, item) => (item.qty * item.menu_item.price) + total, 0)
+    return shopping_cart.value.reduce(
+        (total, item) => (item.qty * item.menu_item.price) + total, 0
     )
 });
 
@@ -152,7 +168,9 @@ const currentPageTitle = computed(() =>{
 })
 
 
-
+provide('open', open)
+provide('openLoginModal', openLoginModal)
+provide('menu_items', menu_items)
 provide('shopping_cart', shopping_cart)
 
 

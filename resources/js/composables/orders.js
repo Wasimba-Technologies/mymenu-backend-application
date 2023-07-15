@@ -63,39 +63,15 @@ export default function useOrders() {
     }
 
     const storeOrder = async (data) => {
-        data['table_id'] = localStorage.getItem('table_id')
         isLoading.value = true;
         await axios.post('/api/orders', data)
             .then(async response => {
-                if (response.data.status !== 'failure'){
-                    data['order_id'] = response.data.order.id
-                    await axios.post('/api/order_items', data).then(response =>{
-                        swal({
-                            icon: 'success',
-                            title: 'Order placed successfully'
-                        })
-                        order.value = response.data
-                        console.log(response.data)
-                        router.push('/order_details/'+response.data?.order.id+'/guest')
-                    }).catch(error => {
-                        if (error.response?.data) {
-                            errors.value = error.response.data.errors
-                        } else {
-                            swal({
-                                icon: 'error',
-                                title: error.message
-                            })
-                        }
-                    }
-                ).finally(
-                    () => isLoading.value = false
-                )
-                }else{
-                    swal({
-                        icon: 'warning',
-                        title: response.data.message
-                    })
-                }
+                swal({
+                    icon: 'success',
+                    title: 'Order placed successfully'
+                })
+                order.value = response.data
+                await router.push('/order_details/' + response.data?.order.id + '/guest')
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors

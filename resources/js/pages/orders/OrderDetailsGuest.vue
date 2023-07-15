@@ -6,7 +6,7 @@
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="p-12 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                        <RibbonConfirmed v-if='order?.status==="Confirmed" || order?.status==="Paid"' :status="order?.status"/>
+                        <RibbonConfirmed v-if='order?.status==="Confirmed" || order?.status==="Paid" || order?.status==="Done"' :status="order?.status"/>
                         <RibbonPending v-if='order?.status==="Pending"' :status="order?.status"/>
                         <RibbonRejected v-if='order?.status==="Rejected"' :status="order?.status"/>
                         <div class="flex justify-between">

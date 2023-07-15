@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderRequest;
+use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Menu;
@@ -36,20 +37,20 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(OrderRequest $request)
+    public function store(StoreOrderRequest $request)
     {
         //$this->authorize('create', Order::class);
+        $data = $request->validated();
         $total_orders = Order::count();
-        $tenant_id = $request->header('X-TENANT-ID');
-        $tenant = Restaurant::withoutGlobalScope(TenantScope::class )->with('plan')->findOrFail($tenant_id);
+        $tenant = Restaurant::withoutGlobalScope(TenantScope::class )
+            ->with('plan')
+            ->findOrFail($request->header('X-TENANT-ID'));
         if($total_orders < $tenant->plan->orders) {
-            $data = request()->json()->all();
-            $order = Order::create(
-                [
-                    'table_id' => $data['table_id'],
-                    'status' => 'Pending'
-                ]
-            );
+            $data['customer_id'] = $request->user()->id;
+            $order_items = $data['menu_items'];
+            unset($data['menu_items']);
+            $order = Order::create($data);
+            $order->menu_items()->attach($order_items);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Order created successfully',
@@ -75,7 +76,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(OrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
         $this->authorize('update', $order);
         $data = request()->json()->all();

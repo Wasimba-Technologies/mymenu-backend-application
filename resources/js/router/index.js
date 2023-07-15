@@ -28,6 +28,7 @@ import UserCreate from "../pages/users/UserCreate.vue";
 import UserIndex from "../pages/users/UserIndex.vue";
 import OrderDetailsGuest from "../pages/orders/OrderDetailsGuest.vue";
 import SubscriptionIndex from "../pages/subscriptions/SubscriptionIndex.vue";
+import SocialLoginCallBack from "../pages/auth/SocialLoginCallBack.vue";
 
 
 
@@ -55,21 +56,11 @@ const routes =[
         name : 'notFound',
         component : NotFound
     },
-    // {
-    //     path : '',
-    //     name : 'welcome',
-    //     component : Welcome
-    // },
-    // {
-    //     path : '/login',
-    //     name : 'login',
-    //     component : Login
-    // },
-    // {
-    //     path : '/register',
-    //     name : 'register',
-    //     component : Register
-    // },
+    {
+        path : '/auth/login/google/callback',
+        name : 'google.callback',
+        component: SocialLoginCallBack
+    },
     {
         path : '/logout',
         name : 'logout',
