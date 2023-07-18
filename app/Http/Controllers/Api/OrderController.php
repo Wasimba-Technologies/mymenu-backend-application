@@ -41,11 +41,7 @@ class OrderController extends Controller
     {
         //$this->authorize('create', Order::class);
         $data = $request->validated();
-        $total_orders = Order::count();
-        $tenant = Restaurant::withoutGlobalScope(TenantScope::class )
-            ->with('plan')
-            ->findOrFail($request->header('X-TENANT-ID'));
-        if($total_orders < $tenant->plan->orders) {
+        if($request->hasNotExceededOrderLimit($request->header('X-TENANT-ID'))) {
             $data['customer_id'] = $request->user()->id;
             $order_items = $data['menu_items'];
             unset($data['menu_items']);

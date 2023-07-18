@@ -12,7 +12,7 @@
                       <span class="flex flex-col text-gray-500 text-sm truncate">
                         <span class="truncate">{{ order.name }}</span>
                         <span
-                        ><span class="text-gray-900 font-medium">{{ order.amount }}</span> {{ order.currency }}</span
+                        ><span class="text-gray-900 font-medium">{{ numFormat(order.grand_total) }}</span> {{ order.currency }}</span
                         >
                         <time :datetime="order.datetime">{{ order.date }}</time>
                       </span>
@@ -61,7 +61,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                                <span class="text-gray-900 font-medium">{{ order.amount }} </span>
+                                <span class="text-gray-900 font-medium">{{ numFormat(order.grand_total) }} </span>
                                 {{ order.currency }}
                             </td>
                             <td class="hidden px-6 py-4 whitespace-nowrap text-sm text-gray-500 md:block">
@@ -127,6 +127,10 @@ const statusStyles = {
     Shipped: 'bg-purple-100 text-purple-800',
     Delivered: 'bg-pink-100 text-pink-800',
     Rejected: 'bg-gray-100 text-gray-800',
+}
+
+const numFormat = (num) => {
+    return new Intl.NumberFormat().format(num)
 }
 
 const props = defineProps([

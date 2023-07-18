@@ -8,6 +8,7 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\Order;
 use App\Models\Restaurant;
+use App\Models\Role;
 use App\Models\Scopes\TenantScope;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +24,7 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         return new UserCollection(User::when(request('name'), function($query){
             $query->where('name', 'like', '%'.request('name').'%');
-        })->paginate(20));
+        })->where('role_id', '!=', Role::CUSTOMER)->paginate(20));
     }
 
     /**

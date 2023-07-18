@@ -139,6 +139,7 @@ const placeOrder =  () => {
             'tax': 0,
             'grand_total': parseFloat(grandTotal.value),
             'menu_items': shopping_cart.value,
+            'delivery_method': 'Dine-In'
         }
     )
     if (localStorage.getItem('shopping_cart') !== null){

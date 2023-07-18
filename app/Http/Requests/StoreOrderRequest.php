@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Order;
+use App\Models\Restaurant;
+use App\Models\Scopes\TenantScope;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -37,5 +40,17 @@ class StoreOrderRequest extends FormRequest
             'menu_items.*.menu_item_id' => ['required', 'exists:menu_items,id'],
             'menu_items.*.qty' => ['required', 'integer'],
         ];
+    }
+
+    public function hasNotExceededOrderLimit($tenant): bool
+    {
+        $total_orders = Order::count();
+        $tenant = Restaurant::withoutGlobalScope(TenantScope::class )
+            ->with('plan')
+            ->findOrFail($tenant);
+        if($total_orders < $tenant->plan->orders) {
+            return true;
+        }
+        return false;
     }
 }

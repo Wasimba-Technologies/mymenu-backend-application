@@ -24,6 +24,8 @@ class Role extends Model
     const WAITER = 4;
     const CASHIER = 5;
 
+    const CUSTOMER = 6;
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
