@@ -62,6 +62,11 @@ const routes =[
         component: SocialLoginCallBack
     },
     {
+        path : '/auth/login/facebook/callback',
+        name : 'facebook.callback',
+        component: SocialLoginCallBack
+    },
+    {
         path : '/logout',
         name : 'logout',
         beforeEnter: logoutAndRedirect

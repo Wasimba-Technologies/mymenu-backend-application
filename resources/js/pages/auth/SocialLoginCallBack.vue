@@ -11,8 +11,15 @@ const isLoading = ref(true)
 const swal = inject('$swal')
 const route = useRoute()
 const callBackCode = route.query.code
+const provider = ref('facebook')
 
-await axios.get('/api/auth/login/google/callback?code='+callBackCode)
+if (route.query.path === '/auth/login/facebook/callback'){
+    provider.value = 'facebook'
+}else if (route.query.path === '/auth/login/google/callback'){
+    provider.value = 'google'
+}
+
+await axios.get('/api/auth/login/'+provider.value+'/callback?code='+callBackCode)
     .then(res =>{
         isLoading.value = false
         localStorage.setItem('access_token', res.data.access_token)
