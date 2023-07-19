@@ -11,11 +11,15 @@ const isLoading = ref(true)
 const swal = inject('$swal')
 const route = useRoute()
 const callBackCode = route.query.code
-const provider = ref('facebook')
+const provider = ref('google')
 
 if (route.query.path === '/auth/login/facebook/callback'){
     provider.value = 'facebook'
 }else if (route.query.path === '/auth/login/google/callback'){
+    provider.value = 'google'
+}else if (route.query.path === '/auth/login/twitter/callback'){
+    provider.value = 'twitter'
+}else {
     provider.value = 'google'
 }
 

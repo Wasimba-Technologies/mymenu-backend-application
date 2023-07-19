@@ -40,6 +40,8 @@ return [
         'client_id'     => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
         'redirect'      => env('TWITTER_URL'),
+        'oauth'         => 2 // this value is important coz
+        // Socialite is not supporting stateless auth with oauth 1.0
     ],
     'google' => [
         'client_id'     => env('GOOGLE_CLIENT_ID'),

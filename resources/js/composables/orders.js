@@ -66,12 +66,19 @@ export default function useOrders() {
         isLoading.value = true;
         await axios.post('/api/orders', data)
             .then(async response => {
-                swal({
-                    icon: 'success',
-                    title: 'Order placed successfully'
-                })
-                order.value = response.data
-                await router.push('/order_details/' + response.data?.order.id + '/guest')
+                if (response.data.status === 'success') {
+                    swal({
+                        icon: 'success',
+                        title: 'Order placed successfully'
+                    })
+                    order.value = response.data
+                    await router.push('/order_details/' + response.data?.order.id + '/guest')
+                }else{
+                    swal({
+                        icon: 'error',
+                        title: response.data.message
+                    })
+                }
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors
