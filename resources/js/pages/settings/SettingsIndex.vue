@@ -113,7 +113,7 @@
                                                                             :class="[errors?.plan_id === undefined ? 'valid-select' : 'invalid-select']">
                                                                         <option value="" disabled>--Select Plan--</option>
                                                                         <option v-for="plan in plans" :value="plan.id"
-                                                                                :selected='parseInt(tenant?.plan?.id) === parseInt(plan?.id)' :key="plan.id">
+                                                                                :selected='parseInt(tenant?.plan?.id) === parseInt(plan?.id)' :key="plan.id" disabled>
                                                                             {{plan?.name}} - {{Intl.NumberFormat().format(plan?.price)}}
                                                                         </option>
                                                                     </select>

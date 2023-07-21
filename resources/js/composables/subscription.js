@@ -90,11 +90,16 @@ export default function useSubscriptions() {
             )
     }
 
+    const numFormat =  (num) => {
+        return new Intl.NumberFormat().format(num)
+    }
+
 
 
     return {
         errors,
         isLoading,
+        numFormat,
         isFetching,
         subscription,
         subscriptions,

@@ -15,7 +15,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Plan extends Model
 {
     use HasFactory, BelongsToTenant;
-    protected $guarded = [];
+
+    const FREE_PLAN = 1;
+
+    protected $guarded = ['id'];
 
     public function restaurants(): HasMany
     {

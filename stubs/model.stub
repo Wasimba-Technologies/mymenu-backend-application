@@ -9,4 +9,6 @@ use App\Traits\BelongsToTenant;
 class {{ class }} extends Model
 {
     use HasFactory, BelongsToTenant;
+
+        protected $guarded = ['id'];
 }

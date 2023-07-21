@@ -138,7 +138,7 @@ export default function useAuth(){
                 can(permissions)
 
                 ability.update(rules)
-                console.log(rules)
+                // console.log(rules)
             })
     }
 

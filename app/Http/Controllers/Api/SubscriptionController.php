@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Requests\UpdateSubscriptionRequest;
+use App\Http\Resources\SubscriptionCollection;
 use App\Http\Resources\SubscriptionResource;
 use App\Models\Subscription;
 use Carbon\Carbon;
@@ -17,11 +18,11 @@ class SubscriptionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): SubscriptionCollection
     {
         $this->authorize('viewAny', Subscription::class);
-        return SubscriptionResource::collection(
-            Subscription::with(['plan','payments'])->get()
+        return new SubscriptionCollection(
+            Subscription::with(['plan'])->paginate(10)
         );
     }
 
@@ -61,7 +62,7 @@ class SubscriptionController extends Controller
      */
     public function show(Subscription $subscription)
     {
-        //
+        return new SubscriptionResource($subscription->load(['payments','plan','tenant']));
     }
 
     /**

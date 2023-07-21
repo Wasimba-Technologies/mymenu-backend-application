@@ -10,6 +10,8 @@
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Plan</th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Start</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">End</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Amount</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Action
                                 </th>
@@ -31,8 +33,16 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     {{subscription.end_date}}
                                 </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    Tsh. {{numFormat(subscription.plan.price)}}
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    <span :class="[statusStyles[subscription.status], 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize']">
+                                        {{ subscription.status }}
+                                    </span>
+                                </td>
                                 <td>
-                                    <a href="#" class="px-3 py-4 text-rose-600 hover:text-rose-900" @click="showPayments">payments</a>
+                                    <router-link :to="`/subscriptions/${subscription.id}/details`" class="px-3 py-4 text-rose-600 hover:text-rose-900">details</router-link>
                                 </td>
                             </tr>
                             <tr v-if="subscriptions?.length === 0 && ! isFetching">
@@ -74,12 +84,14 @@ import useAuth from "../../composables/auth";
 
 const searchName = ref('')
 const {
+    numFormat,
+    isFetching,
     subscriptions,
-    getSubscriptions,
     paginationLinks,
+    getSubscriptions,
     paginationMetaData,
     changeSubscriptionsUrl,
-    isFetching
+
 } = useSubscriptions()
 
 
@@ -107,10 +119,12 @@ const {logout} = useAuth()
 const ability = inject(ABILITY_TOKEN)
 const {getAbilities} = useAuth()
 
-// getAbilities()
-// if(!can('subscriptions.viewAny')){
-//     logout()
-// }
+const statusStyles = {
+    active: 'bg-green-100 text-green-800',
+    paid: 'bg-green-100 text-green-800',
+    pending: 'bg-yellow-100 text-yellow-800',
+    rejected: 'bg-gray-100 text-gray-800',
+}
 
 onMounted(async () => {
     await getAbilities()

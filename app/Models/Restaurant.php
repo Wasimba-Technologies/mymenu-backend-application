@@ -16,7 +16,7 @@ class Restaurant extends Model
 {
     use HasFactory, HasUlids;
 
-    protected $guarded= [];
+    protected $guarded = ['id'];
 
    protected $primaryKey = 'id';
     protected $keyType = 'string';

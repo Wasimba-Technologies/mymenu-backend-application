@@ -29,6 +29,7 @@ import UserIndex from "../pages/users/UserIndex.vue";
 import OrderDetailsGuest from "../pages/orders/OrderDetailsGuest.vue";
 import SubscriptionIndex from "../pages/subscriptions/SubscriptionIndex.vue";
 import SocialLoginCallBack from "../pages/auth/SocialLoginCallBack.vue";
+import SubscriptionDetails from "../pages/subscriptions/SubscriptionDetails.vue";
 
 
 
@@ -236,6 +237,12 @@ const routes =[
                 name : 'subscriptions',
                 component : SubscriptionIndex,
                 meta: { title: 'Subscriptions' }
+            },
+            {
+                path : '/subscriptions/:id/details',
+                name : 'subscriptions.details',
+                component : SubscriptionDetails,
+                meta: { title: 'Subscription Details' }
             },
         ]
     }

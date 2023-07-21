@@ -1,5 +1,10 @@
 <?php
 
+use App\Mail\SubscriptionExpired;
+use App\Models\Role;
+use App\Models\Subscription;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -167,6 +172,12 @@ Route::view(
 Route::view(
     '/login', 'login'
 );
+
+Route::get('/mailable', function () {
+    $subscription = Subscription::find(1);
+    $user = User::where('tenant_id', $subscription->tenant->id)->where('role_id', Role::ADMIN)->first();
+    return new SubscriptionExpired($subscription, $user);
+});
 
 
 Route::view(
