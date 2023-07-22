@@ -62,7 +62,7 @@ class SubscriptionController extends Controller
      */
     public function show(Subscription $subscription)
     {
-        return new SubscriptionResource($subscription->load(['payments','plan','tenant']));
+        return new SubscriptionResource($subscription->load(['payment','plan','tenant']));
     }
 
     /**
