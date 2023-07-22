@@ -30,6 +30,7 @@ import OrderDetailsGuest from "../pages/orders/OrderDetailsGuest.vue";
 import SubscriptionIndex from "../pages/subscriptions/SubscriptionIndex.vue";
 import SocialLoginCallBack from "../pages/auth/SocialLoginCallBack.vue";
 import SubscriptionDetails from "../pages/subscriptions/SubscriptionDetails.vue";
+import SubscriptionPayment from "../pages/subscriptions/SubscriptionPayment.vue";
 
 
 
@@ -243,6 +244,12 @@ const routes =[
                 name : 'subscriptions.details',
                 component : SubscriptionDetails,
                 meta: { title: 'Subscription Details' }
+            },
+            {
+                path : '/subscriptions/:id/payment',
+                name : 'subscriptions.payment',
+                component : SubscriptionPayment,
+                meta: { title: 'Subscription Payment' }
             },
         ]
     }

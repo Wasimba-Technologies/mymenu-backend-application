@@ -16,9 +16,9 @@ class Subscription extends Model
 
     protected $guarded = [];
 
-    public function payments(): HasMany
+    public function payment(): HasOne
     {
-        return $this->hasMany(SubscriptionPayment::class);
+        return $this->hasOne(SubscriptionPayment::class);
     }
 
     public function plan(): BelongsTo

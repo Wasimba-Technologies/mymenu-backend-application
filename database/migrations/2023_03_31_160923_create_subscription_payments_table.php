@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('subscription_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('subscription_id')->constrained('subscriptions');
-            $table->unsignedInteger('duration');
             $table->unsignedFloat('amount');
-            $table->string('status');
+            $table->string('status')->default('Paid');
+            $table->string('payment_method');
+            $table->string('account_number');
+            $table->string('transaction_ref');
             $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
         });

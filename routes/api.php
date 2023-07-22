@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AzamPayCallbackController;
 use App\Http\Controllers\Api\MenuBrowser;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuItemController;
@@ -31,11 +32,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//Public End Points
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::get('auth/login/{provider}/callback',[SocialController::class, 'callback']);
 Route::get('auth/login/{provider}',[SocialController::class, 'redirect']);
-
+Route::post('azampay/checkout/callback', [AzamPayCallbackController::class, 'store']);
 Route::get('browse/{id}', [MenuBrowser::class, 'browse']);
 Route::apiResource(
     'menus', MenuController::class
@@ -51,6 +54,8 @@ Route::apiResource(
 )->only(['store','show']);
 
 
+
+//Authentication Required endpoints
 Route::middleware(['auth:sanctum'])->group(
     function (){
         Route::apiResource(

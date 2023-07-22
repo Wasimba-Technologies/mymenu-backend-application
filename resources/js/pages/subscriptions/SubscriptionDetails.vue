@@ -122,20 +122,15 @@
 
 <script setup>
 
-import useOrders from "../../composables/orders";
-import {computed, inject, onMounted, provide, ref, toRaw} from "vue";
+import {computed, inject, onMounted, provide} from "vue";
 import {useRoute} from "vue-router";
 import LoadingSpinner from "../../components/LoadingSpinner.vue";
 import usePayments from "../../composables/payments";
 import {ABILITY_TOKEN, useAbility} from '@casl/vue'
-import RibbonConfirmed from "../../components/RibbonConfirmed.vue";
-import RibbonPending from "../../components/RibbonPending.vue";
-import RibbonRejected from "../../components/RibbonRejected.vue";
-import utils from "../../utils/utils";
 import useAuth from "../../composables/auth";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import useSubscriptions from "../../composables/subscription";
-
+import router from "../../router";
 
 const {
     isLoading,
@@ -144,7 +139,6 @@ const {
     isRejecting,
     subscription,
     getSubscription,
-    updateOrderStatus,
     printReceipt
 } = useSubscriptions()
 const {storePayment, errors} = usePayments()
@@ -153,7 +147,7 @@ const {logout} = useAuth()
 const ability = inject(ABILITY_TOKEN)
 const {getAbilities} = useAuth()
 
-const router = useRoute()
+const route = useRoute()
 
 const swal = inject('$swal')
 
@@ -162,7 +156,7 @@ onMounted(async () => {
     if (!can('orders.view')) {
         await logout()
     }
-    await getSubscription(router.params.id)
+    await getSubscription(route.params.id)
 })
 
 const grandTotal = computed(() => {
@@ -217,12 +211,13 @@ const paySubscription = (subscription) => {
         closeOnCancel: false
     }).then((results) => {
         if (results.isConfirmed) {
-            storePayment(
-                {
-                    'amount': parseFloat(grandTotal.value.replace(",", "")),
-                    'order_id' : subscription.id,
-                }
-            )
+            // storePayment(
+            //     {
+            //         'amount': parseFloat(grandTotal.value.replace(",", "")),
+            //         'order_id' : subscription.id,
+            //     }
+            // )
+            router.push('/subscriptions/'+route.params.id+'/payment')
         } else {
             swal("Cancelled", "Payment not recorded !", "error");
         }
