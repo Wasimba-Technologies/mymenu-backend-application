@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
@@ -20,5 +21,5 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('subscriptions.{subscriptionId}', function (User $user, int $subscriptionId) {
-    return $user->tenant->id === Subscription::findOrNew($subscriptionId)->tenant_id;
+    return $user->whereRoleId(Role::ADMIN) && ($user->tenant_id === Subscription::findOrNew($subscriptionId)->tenant_id);
 });

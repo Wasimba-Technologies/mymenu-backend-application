@@ -80,7 +80,8 @@ export default function usePaymentProcessor(){
     const checkAzamPayTransactionStatus = async(channelStr, eventStr) =>{
         Echo.private(channelStr)
             .listen(eventStr, (e) => {
-                    if (e.subscription.status === 'active') {
+                Echo.leaveChannel(channelStr);
+                if (e.subscription.status === 'active') {
                         Toast.fire({
                             icon: 'success',
                             title: 'Subscription Paid successfully',

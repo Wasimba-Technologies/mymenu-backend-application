@@ -5,7 +5,7 @@
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="relative p-12 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                        <div :class="[statusStyles[subscription.status], 'absolute w-36 text-center h-8 top-0 right-0 rounded']">
+                        <div :class="[statusStyles[subscription.status], 'absolute w-36 font-bold text-center h-8 top-0 right-0 rounded']">
                             {{subscription?.status }}
                         </div>
                         <div class="flex justify-between">
@@ -206,8 +206,6 @@ const paySubscription = (subscription) => {
     }).then((results) => {
         if (results.isConfirmed) {
             router.push('/subscriptions/'+route.params.id+'/payment')
-        } else {
-            swal("Cancelled", "Payment not recorded !", "error");
         }
     });
 }
@@ -226,14 +224,12 @@ const upgradeSubscription = (subscription) => {
     }).then((results) => {
         if (results.isConfirmed) {
 
-        } else {
-            swal("Cancelled", "Payment not recorded !", "error");
         }
     });
 }
 
 const statusStyles = {
-    active: 'bg-green-100 text-green-800',
+    active: 'bg-green-300 text-green-800',
     paid: 'bg-green-100 text-green-800',
     pending: 'bg-yellow-100 text-yellow-800',
     rejected: 'bg-red-100 text-red-800',
