@@ -235,7 +235,7 @@ const routes =[
             },
             {
                 path : '/subscriptions',
-                name : 'subscriptions',
+                name : 'subscriptions.index',
                 component : SubscriptionIndex,
                 meta: { title: 'Subscriptions' }
             },

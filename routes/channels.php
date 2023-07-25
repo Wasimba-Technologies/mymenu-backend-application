@@ -19,6 +19,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('subscriptions.{subscription}', function (User $user, Subscription $subscription) {
-    return $user->tenant->id === $subscription->tenant_id;
+Broadcast::channel('subscriptions.{subscriptionId}', function (User $user, int $subscriptionId) {
+    return $user->tenant->id === Subscription::findOrNew($subscriptionId)->tenant_id;
 });

@@ -25,13 +25,13 @@ export default function usePaymentProcessor(){
             })
             const result = await response.json();
             if (result.statusCode === 200){
-                sessionStorage.setItem('azam_api_key', result?.data?.accessToken)
-                sessionStorage.setItem('azam_api_expiry', result?.data?.expire)
+                return result?.data?.accessToken
             }else{
                 swal({
                     icon: 'error',
                     title: result.title
                 })
+                return null
             }
         }catch(err){
             console.error(err);
@@ -39,26 +39,20 @@ export default function usePaymentProcessor(){
                 icon: 'error',
                 title: err.message
             })
+            return null
         }
 
     }
 
     const initiateAzamPayPayment = async (data) => {
         paymentLoading.value = true
-
-        const AZAM_API_KEY = sessionStorage.getItem('azam_api_key')
-        const AZAM_KEY_EXPIRY = sessionStorage.getItem('azam_api_expiry')
-        if (AZAM_API_KEY && AZAM_KEY_EXPIRY){
-            if (AZAM_KEY_EXPIRY < Date.now()) {
-                console.log('Not expired')
-            }
-        }
+        let AZAM_ACCESS_TOKEN = await getAzamPayAccessToken()
         try {
             const response = await fetch(AZAMPAY_MNO_CHECKOUT_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer "+AZAM_API_KEY
+                    "Authorization": "Bearer "+AZAM_ACCESS_TOKEN
                 },
                 body: JSON.stringify(data),
             })
@@ -87,21 +81,21 @@ export default function usePaymentProcessor(){
     const checkAzamPayTransactionStatus = async(channelStr, eventStr) =>{
         Echo.private(channelStr)
             .listen(eventStr, (e) => {
-                console.log(e.subscription);
-                if (e.subscription.status === 'active'){
-                    swal({
-                        icon: 'success',
-                        title: 'Subscription Paid successfully'
-                    })
-                    router.push({name: 'subscriptions.index'})
-                }else{
-                    swal({
-                        icon: 'error',
-                        title: 'Subscription Could not Paid! Contact support'
-                    })
+                    if (e.subscription.status === 'active') {
+                        swal({
+                            icon: 'success',
+                            title: 'Subscription Paid successfully'
+                        })
+                        router.push({name: 'subscriptions.index'})
+                    } else {
+                        swal({
+                            icon: 'error',
+                            title: 'Subscription Could not be Paid! Contact support.'
+                        })
+                    }
+                    paymentLoading.value = false
                 }
-                paymentLoading.value = false
-            })
+            )
     }
 
     return {

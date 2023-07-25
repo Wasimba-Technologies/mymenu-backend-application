@@ -26,9 +26,9 @@ class AzamPayCallbackController extends Controller
                 SubscriptionPayment::create([
                   'subscription_id' =>  $subscription->id,
                   'amount' => $data->amount,
-                  'payment_method' => $data->provider,
+                  'payment_method' => $data->operator,
                   'payment_channel' => 'AzamPay',
-                  'account_no' => $data->msisdn,
+                  'account_number' => $data->msisdn,
                   'reference_no' => $data->reference,
                   'tenant_id' => $subscription->tenant_id,
                 ]);

@@ -95,9 +95,9 @@ Route::middleware(['auth:sanctum'])->group(
 
         Route::get('abilities', function(Request $request) {
             return Cache::remember('abilities', 3600, function () use ($request) {
-                return $request->user()->role()->with('role_permissions')
+                return $request->user()->role()->with('permissions')
                     ->get()
-                    ->pluck('role_permissions')
+                    ->pluck('permissions')
                     ->flatten()
                     ->pluck('name')
                     ->unique()

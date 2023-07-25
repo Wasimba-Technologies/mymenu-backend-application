@@ -60,7 +60,7 @@ class User extends Authenticatable
         return $this->role->name == 'admin';
     }
 
-    public function user_permissions(): BelongsToMany
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(
             Permission::class,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AzamPayCallbackRequest extends FormRequest
@@ -11,13 +12,13 @@ class AzamPayCallbackRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
@@ -32,8 +33,8 @@ class AzamPayCallbackRequest extends FormRequest
             'submerchantAcc' => ['required', 'string'],
             'mnoreference' => ['required', 'string'],
             'additionalProperties' => ['required', 'array'],
-            'additionalProperties.*.property1' => ['string', 'nullable'],
-            'additionalProperties.*.property2' => ['string', 'nullable'],
+//            'additionalProperties.*.property1' => ['string', 'nullable'],
+//            'additionalProperties.*.property2' => ['string', 'nullable'],
         ];
     }
 }

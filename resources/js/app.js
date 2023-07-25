@@ -13,3 +13,4 @@ app.use(abilitiesPlugin, ability,{
     useGlobalProperties: true
 })
 app.mount('#app')
+

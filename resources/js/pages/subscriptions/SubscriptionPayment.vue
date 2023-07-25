@@ -94,7 +94,6 @@ import {useRoute} from "vue-router";
 import {inject, onMounted, ref} from "vue";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
 import useSubscriptions from "../../composables/subscription";
-import useSubscriptionPayments from "../../composables/subscription_payments";
 import usePaymentProcessor from "../../composables/payment_processor";
 import router from "../../router";
 
@@ -105,10 +104,8 @@ const {
     subscription,
     getSubscription
 } = useSubscriptions()
-
 const {
     paymentLoading,
-    getAzamPayAccessToken,
     initiateAzamPayPayment,
     checkAzamPayTransactionStatus,
 } = usePaymentProcessor()
@@ -126,7 +123,10 @@ const accountNumber = ref(null)
 
 onMounted(async () => {
     await getSubscription(route.params.id)
-    await getAzamPayAccessToken()
+    await checkAzamPayTransactionStatus(
+        `subscriptions.${route.params.id}`,
+        '.subscription.paid'
+    )
 })
 
 
@@ -149,10 +149,7 @@ const initiateSubscriptionPayment = async () => {
     })
 }
 
-checkAzamPayTransactionStatus(
-    `subscriptions.${route.params.id}`,
-    'SubscriptionPaid'
-)
+
 
 
 

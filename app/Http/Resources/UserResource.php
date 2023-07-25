@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'tenant_id' => $this->tenant_id,
             'tenant' => $this->tenant,
             'role' => new RoleResource($this->whenLoaded('role')),
-            'permissions' => $this->role->role_permissions->merge($this->user_permissions),
+            'permissions' => $this->role->permissions->merge($this->permissions),
         ];
     }
 }
