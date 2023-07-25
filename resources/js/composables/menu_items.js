@@ -1,4 +1,4 @@
-import {inject, reactive, ref} from "vue";
+import { reactive, ref} from "vue";
 import router from "../router";
 
 
@@ -10,7 +10,6 @@ export default function useMenuItems() {
     const isFetching = ref(false)
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
-    const swal = inject('$swal')
     const menuURL = ref('api/menu_items')
 
     const menuItemForm = reactive(
@@ -30,7 +29,7 @@ export default function useMenuItems() {
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -44,7 +43,7 @@ export default function useMenuItems() {
         await axios.get('/api/menu_items/'+id).then(response =>{
             menu_item.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -74,7 +73,7 @@ export default function useMenuItems() {
             .then(response => {
                 menu_item.value = response.data.data
                 router.push({name: 'menu_items.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: response.data.message
                 })
@@ -82,7 +81,7 @@ export default function useMenuItems() {
                 if (error.response?.data) {
                     errors.value = error.response.data.errors
                 } else {
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -114,7 +113,7 @@ export default function useMenuItems() {
         await axios.post('/api/menu_items/' + id, formData)
             .then(response => {
                 router.push({name: 'menu_items.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Menu item Updated successfully'
                 })
@@ -122,7 +121,7 @@ export default function useMenuItems() {
                 if (error.response?.data) {
                     errors.value = error.response.data.errors
                 } else {
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -139,7 +138,7 @@ export default function useMenuItems() {
             localStorage.setItem('X-Tenant-ID',response.data.tenant_id)
             localStorage.setItem('table_id', id)
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })

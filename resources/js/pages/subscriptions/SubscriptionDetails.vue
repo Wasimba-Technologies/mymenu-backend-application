@@ -53,9 +53,6 @@
                                     <th scope="col" class="px-6 py-3">
                                         SubTotal
                                     </th>
-                                    <!--                                    <th scope="col" class="px-6 py-3">-->
-                                    <!--                                        <span class="sr-only">Edit</span>-->
-                                    <!--                                    </th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -80,9 +77,6 @@
                                     <td class="px-6 py-4">
                                         {{numFormat(subscription?.plan?.price)}}
                                     </td>
-                                    <!--                                    <td class="px-6 py-4 text-right">-->
-                                    <!--                                        <a href="#" class="font-medium text-rose-600 hover:underline">Edit</a>-->
-                                    <!--                                    </td>-->
                                 </tr>
                                 </tbody>
                                 <tfoot class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500">
@@ -98,7 +92,7 @@
                             </table>
                         </div>
                         <div class="mt-4 flex justify-end gap-3">
-                            <button class="btn-sm-submit"
+                            <button class="btn-sm-submit" @click="upgradeSubscription(subscription)"
                                     :class="{'disabled:opacity-25' : isDisabled}" :disabled="isDisabled"
                                     v-if="subscription.status === 'active' && can('subscriptions.viewAny')"
                             >
@@ -201,7 +195,7 @@ const completeSubscription = (subscription) => {
 const paySubscription = (subscription) => {
     swal({
         title: "Are you sure ?",
-        text: "You will record payment for this subscription!",
+        text: "You will redirected to payment!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#167B4A",
@@ -211,13 +205,27 @@ const paySubscription = (subscription) => {
         closeOnCancel: false
     }).then((results) => {
         if (results.isConfirmed) {
-            // storePayment(
-            //     {
-            //         'amount': parseFloat(grandTotal.value.replace(",", "")),
-            //         'order_id' : subscription.id,
-            //     }
-            // )
             router.push('/subscriptions/'+route.params.id+'/payment')
+        } else {
+            swal("Cancelled", "Payment not recorded !", "error");
+        }
+    });
+}
+
+const upgradeSubscription = (subscription) => {
+    swal({
+        title: "Are you sure ?",
+        text: "You will cancel the existing subscription!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#167B4A",
+        confirmButtonText: "Yes, record!",
+        cancelButtonText: "No, cancel !",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((results) => {
+        if (results.isConfirmed) {
+
         } else {
             swal("Cancelled", "Payment not recorded !", "error");
         }

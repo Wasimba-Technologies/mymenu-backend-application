@@ -11,8 +11,6 @@ export default function useSubscriptionPayments() {
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
 
-    const swal = inject('$swal')
-
 
     const getSubscriptionPayments = async (subscription_id) => {
         isLoading.value = true
@@ -21,7 +19,7 @@ export default function useSubscriptionPayments() {
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -39,7 +37,7 @@ export default function useSubscriptionPayments() {
                 if (error.response?.data) {
                     errors.value = error.response.data.errors
                 } else {
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

@@ -12,7 +12,6 @@ export default function usePlans() {
     const paginationLinks = ref({})
     const planURL = ref('/api/plans')
 
-    const swal = inject('$swal')
 
     const planForm = reactive(
         {
@@ -33,7 +32,7 @@ export default function usePlans() {
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -47,7 +46,7 @@ export default function usePlans() {
         await axios.get('/api/plans/'+id).then(response =>{
             plan.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -63,7 +62,7 @@ export default function usePlans() {
             .then(response =>{
                 plan.value = response.data.data
                 router.push({name: 'plans.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Information Stored successfully'
                 })
@@ -71,7 +70,7 @@ export default function usePlans() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -90,10 +89,10 @@ export default function usePlans() {
         let data = {...plan.value}
 
 
-        await axios.post('/api/plans/'+id, formData)
+        await axios.post('/api/plans/'+id, data)
             .then(response =>{
                 router.push({name: 'plans.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Plan Updated successfully'
                 })
@@ -101,7 +100,7 @@ export default function usePlans() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

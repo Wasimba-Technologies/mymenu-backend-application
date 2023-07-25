@@ -51,6 +51,7 @@ window.axios.interceptors.request.use(
 
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import {inject} from "vue";
 
 window.Pusher = Pusher;
 //Pusher.logToConsole = true;
@@ -70,4 +71,17 @@ window.Echo = new Echo({
     },
 });
 
-
+import Swal from 'sweetalert2'
+window.swal = Swal;
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+        timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', swal.stopTimer)
+        toast.addEventListener('mouseleave', swal.resumeTimer)
+    }
+});
+window.Toast = Toast

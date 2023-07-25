@@ -1,6 +1,5 @@
 import router from "../router";
 import {inject, ref} from "vue";
-import config from "tailwindcss/defaultConfig";
 
 
 export default function usePaymentProcessor(){
@@ -82,15 +81,15 @@ export default function usePaymentProcessor(){
         Echo.private(channelStr)
             .listen(eventStr, (e) => {
                     if (e.subscription.status === 'active') {
-                        swal({
+                        Toast.fire({
                             icon: 'success',
-                            title: 'Subscription Paid successfully'
+                            title: 'Subscription Paid successfully',
                         })
                         router.push({name: 'subscriptions.index'})
                     } else {
-                        swal({
+                        Toast.fire({
                             icon: 'error',
-                            title: 'Subscription Could not be Paid! Contact support.'
+                            title: 'Subscription Could not be Paid! Contact support.',
                         })
                     }
                     paymentLoading.value = false

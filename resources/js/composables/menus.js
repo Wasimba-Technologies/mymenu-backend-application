@@ -12,7 +12,6 @@ export default function useMenus() {
     const paginationLinks = ref({})
     const menuURL = ref('/api/menus')
 
-    const swal = inject('$swal')
 
     const menuForm = reactive(
         {
@@ -30,7 +29,7 @@ export default function useMenus() {
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -44,7 +43,7 @@ export default function useMenus() {
         await axios.get('/api/menus/'+id).then(response =>{
             menu.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -68,7 +67,7 @@ export default function useMenus() {
             .then(response =>{
                 menu.value = response.data.data
                 router.push({name: 'menu.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Information Stored successfully'
                 })
@@ -76,7 +75,7 @@ export default function useMenus() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -113,7 +112,7 @@ export default function useMenus() {
         await axios.post('/api/menus/'+id, formData)
             .then(response =>{
                 router.push({name: 'menu.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Menu Updated successfully'
                 })
@@ -121,7 +120,7 @@ export default function useMenus() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

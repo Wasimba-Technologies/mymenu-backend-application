@@ -8,7 +8,6 @@ export default function useQRBuilder() {
     const isLoading = ref(false)
     const isFetching = ref(false)
 
-    const swal = inject('$swal')
 
     const qrCodeForm = reactive(
         {
@@ -26,7 +25,7 @@ export default function useQRBuilder() {
         await axios.post('/api/qr_appearance', data)
             .then(response =>{
                 qr_code.value = response.data
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: response.data.message
                 })
@@ -34,7 +33,7 @@ export default function useQRBuilder() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -55,7 +54,7 @@ export default function useQRBuilder() {
                 if (error.response?.data) {
                     errors.value = error.response.data.errors
                 } else {
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

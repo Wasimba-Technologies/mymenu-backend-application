@@ -12,7 +12,6 @@ export default function useSubscriptions() {
     const paginationLinks = ref({})
     const subURL = ref('/api/subscriptions?page=1')
 
-    const swal = inject('$swal')
 
 
     const getSubscriptions = async () => {
@@ -22,7 +21,7 @@ export default function useSubscriptions() {
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -36,7 +35,7 @@ export default function useSubscriptions() {
         await axios.get('/api/subscriptions/'+id).then(response =>{
             subscription.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -53,7 +52,7 @@ export default function useSubscriptions() {
                 if (error.response?.data) {
                     errors.value = error.response.data.errors
                 } else {
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -72,7 +71,7 @@ export default function useSubscriptions() {
         await axios.put('/api/subscriptions/'+id, data)
             .then(response =>{
                 router.push({name: 'tables.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Subscription Updated successfully'
                 })
@@ -80,7 +79,7 @@ export default function useSubscriptions() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

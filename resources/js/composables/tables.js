@@ -12,7 +12,6 @@ export default function useTables() {
     const paginationLinks = ref({})
     const tableURL = ref('/api/tables')
 
-    const swal = inject('$swal')
 
     const tableForm = reactive(
         {
@@ -28,7 +27,7 @@ export default function useTables() {
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -42,7 +41,7 @@ export default function useTables() {
         await axios.get('/api/tables/'+id).then(response =>{
             table.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -58,7 +57,7 @@ export default function useTables() {
             .then(response =>{
                 table.value = response.data.data
                 router.push({name: 'tables.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Information Stored successfully'
                 })
@@ -66,7 +65,7 @@ export default function useTables() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -88,7 +87,7 @@ export default function useTables() {
         await axios.put('/api/tables/'+id, data)
             .then(response =>{
                 router.push({name: 'tables.index'})
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: 'Table Updated successfully'
                 })
@@ -96,7 +95,7 @@ export default function useTables() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -118,7 +117,7 @@ export default function useTables() {
                 if (error.response?.data) {
                     errors.value = error.response.data.errors
                 } else {
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

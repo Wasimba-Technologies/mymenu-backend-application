@@ -1,6 +1,7 @@
 import {inject, reactive, ref} from "vue";
 import router from "../router";
 import useSubscriptions from "./subscription";
+import Swal from "sweetalert2";
 
 export default function useTenants(){
     const tenants = ref({});
@@ -12,7 +13,7 @@ export default function useTenants(){
     const paginationLinks = ref({})
     const tenantsURL = ref('/api/tenants?page=1')
     const {storeSubscription} = useSubscriptions()
-    const swal = inject('$swal')
+    //const swal = inject('$swal')
 
     const tenantForm = reactive(
         {
@@ -126,18 +127,18 @@ export default function useTenants(){
 
         await axios.post('/api/tenants/'+id, formData)
             .then(response =>{
-                router.push({name: 'settings'})
-                swal({
+                router.push({name: 'dashboard'})
+                Toast.fire({
                     icon: 'success',
-                    title: 'Information Updated successfully'
+                    title: 'Settings Updated successfully',
                 })
             }).catch(error =>{
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
-                        title: error.message
+                        title: error.message,
                     })
                 }
             }).finally(

@@ -13,7 +13,6 @@ export default function useOrders() {
     const paginationLinks = ref({})
     const ordersURL = ref('/api/orders?page=1')
 
-    const swal = inject('$swal')
 
     const orderForm = reactive(
         {
@@ -39,7 +38,7 @@ export default function useOrders() {
             paginationMetaData.value = response.data.meta
             paginationLinks.value = response.data.links
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -53,7 +52,7 @@ export default function useOrders() {
         await axios.get('/api/orders/'+id).then(response =>{
             order.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -67,14 +66,14 @@ export default function useOrders() {
         await axios.post('/api/orders', data)
             .then(async response => {
                 if (response.data.status === 'success') {
-                    swal({
+                    await Toast.fire({
                         icon: 'success',
                         title: 'Order placed successfully'
                     })
                     order.value = response.data
                     await router.push('/order_details/' + response.data?.order.id + '/guest')
                 }else{
-                    swal({
+                    await Toast.fire({
                         icon: 'error',
                         title: response.data.message
                     })
@@ -83,7 +82,7 @@ export default function useOrders() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -104,7 +103,7 @@ export default function useOrders() {
         await axios.put('/api/orders/'+id, data)
             .then(response =>{
                 //window.location.reload()
-                swal({
+                Toast.fire({
                     icon: 'success',
                     title: response.data.message
                 })
@@ -113,7 +112,7 @@ export default function useOrders() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
@@ -139,7 +138,7 @@ export default function useOrders() {
                 if (error.response?.data) {
                     errors.value = error.response.data.errors
                 } else {
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

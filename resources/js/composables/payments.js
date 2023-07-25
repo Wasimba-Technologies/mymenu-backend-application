@@ -11,8 +11,6 @@ export default function usePayments() {
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
 
-    const swal = inject('$swal')
-
     const paymentForm = reactive(
         {
             // name: '',
@@ -29,7 +27,7 @@ export default function usePayments() {
                 paginationMetaData.value = response.data.meta
                 paginationLinks.value = response.data.links
             }).catch(error =>{
-                swal({
+                Toast.fire({
                     icon: 'error',
                     title: error.message
                 })
@@ -43,7 +41,7 @@ export default function usePayments() {
         await axios.get('/api/payments/'+id).then(response =>{
             payment.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -61,7 +59,7 @@ export default function usePayments() {
                 {
                     'status': 'Paid'
                 }).then(response =>{
-                        swal({
+                        Toast.fire({
                             icon: 'success',
                             title: 'Payment recorded successfully'
                         })
@@ -71,7 +69,7 @@ export default function usePayments() {
                         if (error.response?.data) {
                             errors.value = error.response.data.errors
                         } else {
-                            swal({
+                            Toast.fire({
                                 icon: 'error',
                                 title: error.message
                             })
@@ -84,7 +82,7 @@ export default function usePayments() {
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })
