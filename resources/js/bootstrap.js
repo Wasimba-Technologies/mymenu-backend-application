@@ -38,7 +38,7 @@ window.axios.interceptors.response.use(
         console.log(error)
         if (error.response?.status === 401 || error.response?.status === 403 || error.response?.status === 419) {
             if (localStorage.getItem('access_token')) {
-                if (error.response.data.message.includes("verified")){
+                if (error.response.data.message.includes("not verified")){
                     location.assign('/verify-otp')
                 }else{
                     localStorage.removeItem('access_token')
