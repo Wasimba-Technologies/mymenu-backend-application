@@ -7,6 +7,7 @@ use App\Models\Scopes\TenantScope;
 use App\Traits\BelongsToTenant;
 use App\Traits\HasPermission;
 use App\Traits\HasRole;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,7 +21,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static create(mixed $data)
  * @method static where(string $string, mixed $email)
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, BelongsToTenant, HasRole, HasPermission;
 

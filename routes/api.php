@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\SocialController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\VerificationController;
 use App\Models\Scopes\TenantScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -54,10 +55,15 @@ Route::apiResource(
 )->only(['store','show']);
 
 
+Route::middleware(['auth:sanctum'])->group(function (){
+    Route::post('/verify-otp', [VerificationController::class, 'verify']);
+    Route::get('/resend-otp', [VerificationController::class, 'resend']);
+});
 
 //Authentication Required endpoints
-Route::middleware(['auth:sanctum'])->group(
+Route::middleware(['auth:sanctum' ,'verified'])->group(
     function (){
+
         Route::apiResource(
             'tenants', RestaurantController::class
         );
@@ -113,7 +119,6 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('/print/{order}', [PrinterController::class, 'print']);
         Route::get('/print_qr/{table}', [PrinterController::class, 'print_qr']);
         Route::post('/auth/logout', [AuthController::class, 'logout']);
-
     }
 );
 

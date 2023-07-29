@@ -29,6 +29,11 @@ export default function useAuth(){
         }
     )
 
+    const otpForm = reactive({
+        'email': '',
+        'otp': '',
+    })
+
     const ownerForm = reactive(
         {
             'name': '',
@@ -73,14 +78,46 @@ export default function useAuth(){
         //router.push('dashboard');
     }
 
+    const verifyOTP = async () => {
+        if (isLoading.value) return
+
+        isLoading.value = true
+        await axios.post('/api/verify-otp', otpForm).then(async response =>{
+            await loginUser(response)
+        }).catch(err =>{
+            if(err.response?.data){
+                errors.value=err.response.data.errors
+            }
+        }).finally(
+            () => isLoading.value = false
+        )
+    }
+
+    const resendOTP = async () => {
+        isFetching.value = true
+        await axios.get('/api/resend-otp', otpForm).then(async response => {
+            await Toast.fire({
+                icon: 'success',
+                title: response.data.message
+            })
+        }).catch(err => {
+            Toast.fire({
+                icon: 'error',
+                title: err.response.data.message
+            })
+        }).finally(
+            () => isFetching.value = false
+        )
+    }
+
 
     const registerOwner = async () => {
         if (isLoading.value) return
 
         isLoading.value = true
         await axios.post('api/auth/register', ownerForm).then(async response =>{
-            localStorage.setItem('access_token', response.data.access_token)
-            await router.push({path: '/register-restaurant'})
+            await localStorage.setItem('access_token', response.data.access_token)
+            await router.push({path: '/verify-otp'})
         }).catch(err =>{
             if(err.response?.data){
                 errors.value=err.response.data.errors
@@ -197,8 +234,6 @@ export default function useAuth(){
                 formData.append(item, data[item])
             }
         }
-
-
         await axios.post('/api/users', formData)
             .then(response => {
                 user.value = response.data.data
@@ -271,15 +306,18 @@ export default function useAuth(){
         errors,
         logout,
         getUser,
+        otpForm,
         getUsers,
         userForm,
         getRoles,
         storeUser,
+        verifyOTP,
+        resendOTP,
         isLoading,
-        isFetching,
         loginForm,
         ownerForm,
         updateUser,
+        isFetching,
         submitLogin,
         getAbilities,
         registerOwner,

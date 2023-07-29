@@ -89,7 +89,6 @@ import TableSearch from "../../components/TableSearch.vue";
 import useMenus from "../../composables/menus";
 import SkeletonPlaceHolder from "../../components/SkeletonPlaceHolder.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
-import utils from "../../utils/utils";
 import {ABILITY_TOKEN, useAbility} from "@casl/vue";
 import useAuth from "../../composables/auth";
 

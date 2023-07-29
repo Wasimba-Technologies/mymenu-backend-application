@@ -31,6 +31,7 @@ import SubscriptionIndex from "../pages/subscriptions/SubscriptionIndex.vue";
 import SocialLoginCallBack from "../pages/auth/SocialLoginCallBack.vue";
 import SubscriptionDetails from "../pages/subscriptions/SubscriptionDetails.vue";
 import SubscriptionPayment from "../pages/subscriptions/SubscriptionPayment.vue";
+import VerifyOTP from "../pages/auth/VerifyOTP.vue";
 
 
 
@@ -67,6 +68,11 @@ const routes =[
         path : '/auth/login/facebook/callback',
         name : 'facebook.callback',
         component: SocialLoginCallBack
+    },
+    {
+        path : '/verify-otp',
+        name : 'verify-otp',
+        component: VerifyOTP
     },
     {
         path : '/logout',

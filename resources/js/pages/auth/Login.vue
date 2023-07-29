@@ -80,4 +80,8 @@ const {isLoading, submitLogin, errors, loginForm} = useAuth()
 
 provide('isLoading', isLoading)
 
+if (localStorage.getItem('access_token')){
+    window.location.pathname = '/dashboard'
+}
+
 </script>

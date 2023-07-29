@@ -1,5 +1,6 @@
 <template>
     <div class="min-h-full flex ">
+        <title>MyMenu |  Login</title>
         <div class="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
@@ -76,6 +77,10 @@
     import {provide} from "vue";
 
     const {isLoading, submitLogin, errors, loginForm} = useAuth()
+
+    if (localStorage.getItem('access_token')){
+        window.location.pathname = '/dashboard'
+    }
 
     provide('isLoading', isLoading)
 

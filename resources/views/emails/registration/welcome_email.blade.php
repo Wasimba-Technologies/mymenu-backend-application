@@ -5,13 +5,7 @@
 
     Welcome to our platform! We're thrilled to have you as a new member. Before you can fully access our services, we kindly request you to verify your email address.
 
-    @component('mail::button', ['url' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_token])])
-        Verify Email
-    @endcomponent
-
-    Alternatively, you can also copy and paste the following link into your browser's address bar:
-
-    {{ route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_token]) }}
+    You will be required to provide the One Time Password(OTP) which is {{ $user->otp }}
 
     Verifying your email ensures that you have a valid and active account with us, and it also allows us to keep you informed about important updates and notifications.
 

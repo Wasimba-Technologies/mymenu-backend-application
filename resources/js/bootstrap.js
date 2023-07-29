@@ -7,6 +7,21 @@
 //import _ from 'lodash';
 //window._ = _;
 
+
+import Swal from 'sweetalert2'
+window.swal = Swal;
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', swal.stopTimer)
+        toast.addEventListener('mouseleave', swal.resumeTimer)
+    }
+});
+window.Toast = Toast
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -20,10 +35,15 @@ window.axios.defaults.withCredentials = true;
 window.axios.interceptors.response.use(
     response => response,
     error => {
-        if (error.response?.status === 401 || error.response?.status === 419) {
+        console.log(error)
+        if (error.response?.status === 401 || error.response?.status === 403 || error.response?.status === 419) {
             if (localStorage.getItem('access_token')) {
-                localStorage.removeItem('access_token')
-                location.assign('/login')
+                if (error.response.data.message.includes("verified")){
+                    location.assign('/verify-otp')
+                }else{
+                    localStorage.removeItem('access_token')
+                    location.assign('/login')
+                }
             }
         }
 
@@ -71,17 +91,3 @@ window.Echo = new Echo({
     },
 });
 
-import Swal from 'sweetalert2'
-window.swal = Swal;
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-        timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', swal.stopTimer)
-        toast.addEventListener('mouseleave', swal.resumeTimer)
-    }
-});
-window.Toast = Toast

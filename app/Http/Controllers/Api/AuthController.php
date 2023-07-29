@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\Scopes\TenantScope;
 use App\Models\User;
+use App\Notifications\SendEmailVerificationOTPNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -29,6 +30,9 @@ class AuthController extends Controller
 
         public function register(RegisterUserRequest $request): JsonResponse
         {
+                //Generate OTP
+                $otp = rand(1000,9999);
+
                 $data = $request->validated();
                 $data['password'] = Hash::make($data['password']);
                 $data['role_id'] = null;
@@ -36,13 +40,15 @@ class AuthController extends Controller
                 $role = Role::withoutGlobalScope(TenantScope::class)
                         ->where('name', 'Admin')->first();
                 $user->role_id = $role->id;
+                $user->otp = $otp;
                 $user->save();
 
-                //event(new Registered($user));
+                //Send Email verification
+                $user->notify(new SendEmailVerificationOTPNotification());
 
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'User Created Successfully',
+                    'message' => 'Verification Password(OTP) Sent to your email',
                     'access_token' => $user->createToken("API TOKEN")->plainTextToken,
                     'user' => $user
                 ], 200);
