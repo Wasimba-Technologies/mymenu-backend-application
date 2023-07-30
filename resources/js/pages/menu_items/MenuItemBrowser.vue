@@ -26,15 +26,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex overflow-scroll">
-            <button  type="button" :class="[activeFilter===null || activeFilter===undefined ? 'bg-[#740053] text-white' :'', 'text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-4 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 m-2']"  @click="filterMenuItems('All')">
+        <div class="flex overflow-auto">
+            <button  type="button" :class="[activeFilter===null || activeFilter===undefined ? 'bg-[#740053] text-white' :'', 'flex-shrink-0 text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-2 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2']"  @click="filterMenuItems('All')">
                 All
             </button>
-            <div v-for="menu in menus">
-                <button :key="menu.id" type="button" :class="[activeFilter=== menu.id ? 'bg-[#740053] text-white' :'']" class="text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-4 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 m-2" @click="filterMenuItems(menu)">
-                    {{menu.name}}
-                </button>
-            </div>
+            <button v-for="menu in menus" :key="menu.id" type="button" :class="[activeFilter=== menu.id ? 'bg-[#740053] text-white' :'']" class="flex-shrink-0 text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-2 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2" @click="filterMenuItems(menu)">
+                {{menu.name}}
+            </button>
         </div>
         <div class="">
             <div class="mt-4 flow-root">
