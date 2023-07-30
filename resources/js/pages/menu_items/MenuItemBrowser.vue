@@ -27,13 +27,13 @@
             </div>
         </div>
         <div class="flex overflow-scroll">
-            <span  type="button" :class="[activeFilter===null || activeFilter===undefined ? 'bg-[#740053] text-white' :'', 'text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-4 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 m-2']"  @click="filterMenuItems('All')">
+            <button  type="button" :class="[activeFilter===null || activeFilter===undefined ? 'bg-[#740053] text-white' :'', 'text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-4 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 m-2']"  @click="filterMenuItems('All')">
                 All
-            </span>
+            </button>
             <div v-for="menu in menus">
-                <span :key="menu.id" type="button" :class="[activeFilter=== menu.id ? 'bg-[#740053] text-white' :'']" class="text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-4 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 m-2" @click="filterMenuItems(menu)">
+                <button :key="menu.id" type="button" :class="[activeFilter=== menu.id ? 'bg-[#740053] text-white' :'']" class="text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-4 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 m-2" @click="filterMenuItems(menu)">
                     {{menu.name}}
-                </span>
+                </button>
             </div>
         </div>
         <div class="">
