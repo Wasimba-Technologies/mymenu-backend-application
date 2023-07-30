@@ -27,10 +27,10 @@
             </div>
         </div>
         <div class="flex overflow-auto">
-            <button  type="button" :class="[activeFilter===null || activeFilter===undefined ? 'bg-[#740053] text-white' :'', 'flex-shrink-0 text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-2 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2']"  @click="filterMenuItems('All')">
+            <button  type="button" :class="[activeFilter===null || activeFilter===undefined ? 'bg-[#740053] text-white' :'text-[#740053] bg-white', 'flex-shrink-0  hover:text-white  border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-2 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2']"  @click="filterMenuItems('All')">
                 All
             </button>
-            <button v-for="menu in menus" :key="menu.id" type="button" :class="[activeFilter=== menu.id ? 'bg-[#740053] text-white' :'']" class="flex-shrink-0 text-[#740053] hover:text-white bg-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-2 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2" @click="filterMenuItems(menu)">
+            <button v-for="menu in menus" :key="menu.id" type="button" :class="[activeFilter=== menu.id ? 'bg-[#740053] text-white' :'bg-white text-[#740053]']" class="flex-shrink-0  hover:text-white border border-[#740053] focus:outline-none hover:bg-[#740053] focus:ring-2 focus:ring-[#740053] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2" @click="filterMenuItems(menu)">
                 {{menu.name}}
             </button>
         </div>
@@ -44,7 +44,7 @@
                                 <img :src="menu.image" loading="lazy" class="h-full w-full object-cover object-center"  alt=""/>
                               </span>
                                 <span aria-hidden="true" class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50" />
-                                <span class="relative align-text-bottom text-lg font-bold text-white">50% OFF</span>
+                                <span class="relative align-text-bottom text-lg font-bold text-white">51% OFF</span>
                                 <span class="relative  align-text-bottom text-sm font-semibold text-white">{{ menu.name }}</span>
                             </router-link>
                         </div>
@@ -223,6 +223,7 @@ const filterMenuItems = (item) =>{
 const currentPageTitle = computed(() =>{
     return router.meta.title;
 })
+
 
 
 provide('open', open)
