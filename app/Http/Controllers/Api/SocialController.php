@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Role;
 use App\Models\Scopes\TenantScope;
 use App\Models\User;
+use Carbon\Carbon;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialController extends Controller
@@ -46,6 +47,7 @@ class SocialController extends Controller
                 'role_id'       => $role->id,
                 'auth_provider_id'   => $socialUser->getId(),
                 'auth_provider'      => $provider,
+                'email_verified_at' => Carbon::now()
             ]);
 
             Customer::create([
