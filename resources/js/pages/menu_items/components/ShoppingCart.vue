@@ -30,7 +30,7 @@
                                                         {{ product.menu_item.name }}
                                                     </h3>
                                                 </div>
-                                                <p class="row-span-2 row-end-2 text-gray-900 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right font-extrabold">Tsh {{ new Intl.NumberFormat().format(product.qty * product.menu_item.price) }}</p>
+                                                <p :style="`color: ${secondaryColor};`" class="row-span-2 row-end-2 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right font-extrabold">Tsh {{ new Intl.NumberFormat().format(product.qty * product.menu_item.price) }}</p>
                                                 <div class="flex items-center sm:block sm:flex-none sm:text-center">
                                                     <label :for="`quantity-${productIdx}`" class="sr-only">Quantity, {{ product.menu_item.name }}</label>
                                                     <select :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" class="block max-w-full rounded-md border
@@ -67,7 +67,7 @@
                                 </section>
 
                                 <div class="mt-8 flex justify-end px-4 sm:px-6 lg:px-8">
-                                    <button type="submit" class="bg-[#740053] hover:bg-[#740053] inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:cursor-not-allowed" @click.prevent="placeOrder">
+                                    <button type="submit" :style="`background-color: ${secondaryColor}`" :class="`hover:opacity-90 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:cursor-not-allowed`" @click.prevent="placeOrder">
                                         Place Order
                                     </button>
                                 </div>
@@ -94,7 +94,7 @@ import {
 import {computed, inject, onMounted, ref, watch, watchEffect} from "vue";
 import useOrders from "../../../composables/orders";
 
-const props = defineProps(['show','grandTotal'])
+const props = defineProps(['show','grandTotal', 'secondaryColor'])
 const emit = defineEmits(['handleQtyChange', 'removeCartItem', 'placeOrder'])
 const open = inject('open')
 const products = inject('shopping_cart')

@@ -30,6 +30,8 @@ class RestaurantRequest extends FormRequest
             'address_two' => ['required', 'string'],
             'country' => ['required', 'string'],
             'currency' => ['required', 'string'],
+            'primary_color' => ['required', 'string'],
+            'secondary_color' => ['required', 'string'],
             'plan_id' => ['required', 'integer'],
             'logo' => ['sometimes', 'image']
         ];

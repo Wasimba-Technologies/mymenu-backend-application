@@ -12,7 +12,7 @@ class MenuBrowser extends Controller
 {
     public function browse($id): JsonResponse
     {
-        $table = Table::findOrFail($id)->first();
+        $table = Table::findOrFail($id)->with('tenant')->first();
 
         $tenant_id = $table->tenant_id;
 
@@ -23,7 +23,8 @@ class MenuBrowser extends Controller
         return response()->json([
             'status' => 'success',
             'menu_items' => MenuItemResource::collection($menu_items),
-            'tenant_id' => $tenant_id
+            'tenant_id' => $tenant_id,
+            'tenant' => $table->tenant
         ], 200);
     }
 }

@@ -23,8 +23,10 @@ class RestaurantResource extends JsonResource
             'address_one' => $this->address_one,
             'address_two' => $this->address_two,
             'country' => $this->country,
-            'logo' => env('APP_URL').Storage::url($this->logo),
             'currency' => $this->currency,
+            'primary_color' => $this->primary_color,
+            'secondary_color' => $this->secondary_color,
+            'logo' => env('APP_URL').Storage::url($this->logo),
             'plan' => new PlanResource($this->plan)
         ];
     }

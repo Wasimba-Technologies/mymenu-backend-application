@@ -24,6 +24,8 @@ export default function useTenants(){
             address_two: '',
             country: '',
             currency: '',
+            primary_color: '#EA7987',
+            secondary_color: '#AE2A3F',
             plan_id: '',
             logo: ''
         }
@@ -39,7 +41,7 @@ export default function useTenants(){
             paginationLinks.value = response.data.links
         }).catch(error =>{
             //console.log(error)
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.response.data.message
             })
@@ -53,7 +55,7 @@ export default function useTenants(){
         await axios.get('/api/tenants/'+id).then(response =>{
             tenant.value = response.data.data
         }).catch(error =>{
-            swal({
+            Toast.fire({
                 icon: 'error',
                 title: error.message
             })
@@ -81,7 +83,7 @@ export default function useTenants(){
                 }
                 //After creating a Tenant, Start a 7 days Subscription immediately
                 await storeSubscription(subscription)
-                swal({
+                await Toast.fire({
                     icon: 'success',
                     title: ' Information saved successfully'
                 })
@@ -91,7 +93,7 @@ export default function useTenants(){
                 if(error.response?.data){
                     errors.value = error.response.data.errors
                 }else{
-                    swal({
+                    Toast.fire({
                         icon: 'error',
                         title: error.message
                     })

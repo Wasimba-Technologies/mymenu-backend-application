@@ -137,6 +137,12 @@ export default function useMenuItems() {
             menu_items.value = response.data.menu_items
             localStorage.setItem('X-Tenant-ID',response.data.tenant_id)
             localStorage.setItem('table_id', id)
+            sessionStorage.setItem('tenant' , JSON.stringify({
+                name: response.data.tenant.name,
+                currency: response.data.tenant.currency,
+                primary_color: response.data.tenant.primary_color,
+                secondary_color: response.data.tenant.secondary_color
+            }))
         }).catch(error =>{
             Toast.fire({
                 icon: 'error',

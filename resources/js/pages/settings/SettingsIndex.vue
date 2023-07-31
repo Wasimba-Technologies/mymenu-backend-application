@@ -106,6 +106,23 @@
                                                                 <p class="mt-2 text-sm text-red-600" id="address-one-error" v-for="error in errors?.currency">{{error}}</p>
                                                             </div>
 
+                                                            <div class="col-span-3 sm:col-span-3">
+                                                                <label for="primary-color" class="block text-sm font-medium text-gray-700">Primary color</label>
+                                                                <div class="mt-1">
+                                                                    <input type="color" name="primary_color" id="primary_color"  placeholder="Hex Color" v-model="tenant.primary_color"
+                                                                           :class="[errors?.primary_color === undefined ? 'h-10 valid-input' : 'invalid-input']" required/>
+                                                                </div>
+                                                                <p class="mt-2 text-sm text-red-600" id="primary-color-error" v-for="error in errors?.primary_color">{{error}}</p>
+                                                            </div>
+
+                                                            <div class="col-span-3 sm:col-span-3">
+                                                                <label for="secondary-color" class="block text-sm font-medium text-gray-700">Secondary color</label>
+                                                                <div class="mt-1">
+                                                                    <input type="color" name="secondary_color" id="secondary_color"  placeholder="Hex Color" v-model="tenant.secondary_color"
+                                                                           :class="[errors?.secondary_color === undefined ? 'h-10 valid-input' : 'invalid-input']" required/>                                </div>
+                                                                <p class="mt-2 text-sm text-red-600" id="secondary-color-error" v-for="error in errors?.secondary_color">{{error}}</p>
+                                                            </div>
+
                                                             <div class="col-span-6 sm:col-span-6">
                                                                 <div class="mt-1">
                                                                     <label for="plan" class="block text-sm font-medium text-gray-700">Subscription Plan</label>

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('address_two');
             $table->string('country');
             $table->string('currency',3);
+            $table->string('primary_color');
+            $table->string('secondary_color');
             $table->foreignId('plan_id')->constrained();
             $table->string('logo');
             $table->timestamps();
