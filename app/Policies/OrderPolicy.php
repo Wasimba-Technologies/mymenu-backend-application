@@ -33,7 +33,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order): bool
     {
-        return $user->hasPermission('orders.view');
+        return $user->id == $order->customer_id && $user->hasPermission('orders.view');
     }
 
     /**
