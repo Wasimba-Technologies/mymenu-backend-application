@@ -8,10 +8,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderPaid
+class OrderPaid implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -33,7 +34,12 @@ class OrderPaid
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('orders'.$this->order->id),
+            new PrivateChannel('orders.'.$this->order->id),
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'order.paid';
     }
 }

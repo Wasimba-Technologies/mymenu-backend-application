@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuItemController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderMenuItemController;
-use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\OrderPaymentController;
 use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\PrinterController;
 use App\Http\Controllers\Api\QRCodeController;
@@ -85,7 +85,7 @@ Route::middleware(['auth:sanctum' ,'verified'])->group(
             'order_items', OrderMenuItemController::class
         )->except(['store','show']);
         Route::apiResource(
-            'payments', PaymentController::class
+            'payments', OrderPaymentController::class
         );
         Route::apiResource(
             'plans', PlanController::class

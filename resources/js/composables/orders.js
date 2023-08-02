@@ -71,7 +71,7 @@ export default function useOrders() {
                         title: 'Order placed successfully'
                     })
                     order.value = response.data
-                    await router.push('/order_details/' + response.data?.order.id + '/guest')
+                    await router.push('/order_details/' + response.data?.order.id)
                 }else{
                     await Toast.fire({
                         icon: 'error',

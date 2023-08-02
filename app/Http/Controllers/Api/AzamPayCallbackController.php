@@ -7,10 +7,10 @@ use App\Events\SubscriptionPaid;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AzamPayCallbackRequest;
 use App\Models\Order;
+use App\Models\OrderPayment;
 use App\Models\Subscription;
 use App\Models\SubscriptionPayment;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class AzamPayCallbackController extends Controller
 {
@@ -38,12 +38,20 @@ class AzamPayCallbackController extends Controller
                 $order->status = 'Paid';
                 $order->grand_total = $data->amount;
                 $order->save();
+                OrderPayment::create([
+                    'order_id' => $order->id,
+                    'amount' => $order->grand_total,
+                    'payment_method' => $data->operator,
+                    'payment_channel' => 'AzamPay',
+                    'account_number' => $data->msisdn,
+                    'reference_no' => $data->reference,
+                    'tenant_id' => $order->tenant_id
+                ]);
                 OrderPaid::dispatch($order);
             }
         }
 
         //If payment Failed return un-updated Model
-
         if($data->additionalProperties['property1'] == 'subscription'){
             $subscription = Subscription::findOrFail($data->utilityref);
             SubscriptionPaid::dispatch($subscription);

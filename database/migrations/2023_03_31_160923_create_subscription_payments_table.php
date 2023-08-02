@@ -17,8 +17,9 @@ return new class extends Migration
             $table->unsignedFloat('amount');
             $table->string('status')->default('Paid');
             $table->string('payment_method');
+            $table->string('payment_channel');
             $table->string('account_number');
-            $table->string('transaction_ref');
+            $table->string('reference_no');
             $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
         });

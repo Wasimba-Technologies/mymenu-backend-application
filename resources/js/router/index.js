@@ -30,8 +30,9 @@ import OrderDetailsGuest from "../pages/orders/OrderDetailsGuest.vue";
 import SubscriptionIndex from "../pages/subscriptions/SubscriptionIndex.vue";
 import SocialLoginCallBack from "../pages/auth/SocialLoginCallBack.vue";
 import SubscriptionDetails from "../pages/subscriptions/SubscriptionDetails.vue";
-import SubscriptionPayment from "../pages/subscriptions/SubscriptionPayment.vue";
+import SubscriptionPayment from "../pages/payments/SubscriptionPayment.vue";
 import VerifyOTP from "../pages/auth/VerifyOTP.vue";
+import OrderPayment from "../pages/payments/OrderPayment.vue";
 
 
 
@@ -93,10 +94,16 @@ const routes =[
 
     },
     {
-        path : '/order_details/:id/guest',
+        path : '/order_details/:id/',
         name : 'order_details.guest',
         component : OrderDetailsGuest,
         meta: { title: 'Guest Order Details' }
+    },
+    {
+        path : '/checkout',
+        name : 'checkout',
+        component : OrderPayment,
+        meta: { title: 'Checkout' }
     },
     {
         component: DashboardLayout,

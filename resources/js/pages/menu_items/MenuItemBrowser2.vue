@@ -43,6 +43,7 @@
         @remove-cart-item="removeItem"
         @place-order="placeOrder"
         :grand-total="numFormat(grandTotal)"
+        :currency="tenant.currency"
     />
 
     <LoginModal />
@@ -167,6 +168,8 @@ const filterMenuItems = (item) =>{
 const currentPageTitle = computed(() =>{
     return router.meta.title;
 })
+
+const tenant = JSON.parse(sessionStorage.getItem('tenant'))
 
 
 provide('open', open)

@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('order_payments', function (Blueprint $table) {
             $table->id();
-            $table->string('tenant_id', 32)->nullable();
             $table->foreignId('order_id')->constrained('id')->on('orders');
             $table->unsignedFloat('amount');
-            $table->foreignId('received_by')->constrained('id')->on('users');
+            $table->string('status')->default('Paid');
+            $table->string('payment_method');
+            $table->string('payment_channel');
+            $table->string('account_number');
+            $table->string('reference_no');
+            $table->unsignedBigInteger('received_by')->nullable();
+            $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
         });
     }

@@ -30,7 +30,8 @@
                                                         {{ product.menu_item.name }}
                                                     </h3>
                                                 </div>
-                                                <p :style="`color: ${secondaryColor};`" class="row-span-2 row-end-2 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right font-extrabold">Tsh {{ new Intl.NumberFormat().format(product.qty * product.menu_item.price) }}</p>
+                                                <p :style="`color: ${secondaryColor};`" class="row-span-2 row-end-2 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right font-extrabold">
+                                                    {{ currency }} {{ new Intl.NumberFormat().format(product.qty * product.menu_item.price) }}</p>
                                                 <div class="flex items-center sm:block sm:flex-none sm:text-center">
                                                     <label :for="`quantity-${productIdx}`" class="sr-only">Quantity, {{ product.menu_item.name }}</label>
                                                     <select :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" class="block max-w-full rounded-md border
@@ -55,11 +56,11 @@
                                             <dl class="-my-4 divide-y divide-gray-200 text-sm">
                                                 <div class="flex items-center justify-between py-4">
                                                     <dt class="text-gray-600">Subtotal</dt>
-                                                    <dd class="font-medium text-gray-900">Tsh {{grandTotal}}</dd>
+                                                    <dd class="font-medium text-gray-900">{{currency}} {{grandTotal}}</dd>
                                                 </div>
                                                 <div class="flex items-center justify-between py-4">
                                                     <dt class="text-base font-medium text-gray-900">Order total</dt>
-                                                    <dd class="text-base font-medium text-gray-900">Tsh {{grandTotal}}</dd>
+                                                    <dd class="text-base font-medium text-gray-900">{{currency}} {{grandTotal}}</dd>
                                                 </div>
                                             </dl>
                                         </div>
@@ -94,7 +95,7 @@ import {
 import {computed, inject, onMounted, ref, watch, watchEffect} from "vue";
 import useOrders from "../../../composables/orders";
 
-const props = defineProps(['show','grandTotal', 'secondaryColor'])
+const props = defineProps(['show','currency', 'grandTotal', 'secondaryColor'])
 const emit = defineEmits(['handleQtyChange', 'removeCartItem', 'placeOrder'])
 const open = inject('open')
 const products = inject('shopping_cart')

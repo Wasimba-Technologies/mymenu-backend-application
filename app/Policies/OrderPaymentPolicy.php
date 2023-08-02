@@ -6,7 +6,7 @@ use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class PaymentPolicy
+class OrderPaymentPolicy
 {
     /**
      * Determine whether the user can view any models.

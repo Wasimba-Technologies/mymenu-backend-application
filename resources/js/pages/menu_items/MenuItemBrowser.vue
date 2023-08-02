@@ -93,6 +93,7 @@
         @place-order="placeOrder"
         :grand-total="numFormat(grandTotal)"
         :secondary-color="tenant?.secondary_color"
+        :currency="tenant?.currency"
     />
 
     <LoginModal />

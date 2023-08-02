@@ -8,7 +8,7 @@ use App\Http\Resources\PaymentCollection;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 
-class PaymentController extends Controller
+class OrderPaymentController extends Controller
 {
     /**
      * Display a listing of the resource.

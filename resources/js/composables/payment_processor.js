@@ -26,7 +26,7 @@ export default function usePaymentProcessor(){
             if (result.statusCode === 200){
                 return result?.data?.accessToken
             }else{
-                swal({
+                await Toast.fire({
                     icon: 'error',
                     title: result.title
                 })
@@ -34,7 +34,7 @@ export default function usePaymentProcessor(){
             }
         }catch(err){
             console.error(err);
-            swal({
+            await Toast.fire({
                 icon: 'error',
                 title: err.message
             })
@@ -57,12 +57,12 @@ export default function usePaymentProcessor(){
             })
             const result = await response.json();
             if (result.success){
-                swal({
+                await Toast.fire({
                     icon: 'success',
                     title: 'Payment is Processing'
                 })
             }else{
-                swal({
+                await Toast.fire({
                     icon: 'error',
                     title: result.message
                 })
@@ -81,17 +81,32 @@ export default function usePaymentProcessor(){
         Echo.private(channelStr)
             .listen(eventStr, (e) => {
                 Echo.leaveChannel(channelStr);
-                if (e.subscription.status === 'active') {
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Subscription Paid successfully',
-                        })
-                        router.push({name: 'subscriptions.index'})
-                    } else {
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Subscription Could not be Paid! Contact support.',
-                        })
+                    if (e.subscription){
+                        if (e.subscription.status === 'active') {
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Payment was successfully',
+                            })
+                            router.push({name: 'subscriptions.index'})
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Payment was unsuccessfully! Contact support.',
+                            })
+                        }
+                    }else{
+                        if (e.order.status === 'Paid') {
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Payment was successfully',
+                            })
+                            router.push({path: `/order_details/${e.order.id}`})
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Payment was unsuccessfully! Contact support.',
+                            })
+                        }
                     }
                     paymentLoading.value = false
                 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\Role;
 use App\Models\Subscription;
 use App\Models\User;
@@ -22,4 +23,8 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 Broadcast::channel('subscriptions.{subscriptionId}', function (User $user, int $subscriptionId) {
     return $user->whereRoleId(Role::ADMIN) && ($user->tenant_id === Subscription::findOrNew($subscriptionId)->tenant_id);
+});
+
+Broadcast::channel('orders.{orderId}', function (User $user, int $orderId) {
+    return $user->id === Order::findOrNew($orderId)->customer_id;
 });

@@ -28,7 +28,7 @@ await axios.get('/api/auth/login/'+provider.value+'/callback?code='+callBackCode
         isLoading.value = false
         localStorage.setItem('access_token', res.data.access_token)
         let table_id = localStorage.getItem('table_id')
-        window.location.href = '/browse/'+table_id
+        window.location.href = import.meta.env.VITE_APP_URL + '/browse/'+table_id
     }).catch(err => {
         swal({
             title: "Error",
