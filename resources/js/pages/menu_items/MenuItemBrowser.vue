@@ -1,5 +1,6 @@
 <template>
-    <div class="mt-10 p-4 flex flex-col">
+    <BlurredSpinner v-if="isFetching" />
+    <div class="mt-10 p-4 flex flex-col" v-if="!isFetching">
         <title>MyMenu | Browse Menu</title>
         <div class="mb-4 flex justify-between">
             <h1 :style="`color: ${tenant?.secondary_color}`" :class="`text-2xl font-bold`">{{tenant?.name}}</h1>
@@ -27,10 +28,10 @@
             </div>
         </div>
         <div class="flex overflow-auto">
-            <button  type="button" :style="[activeFilter===null || activeFilter===undefined ? activeFilterStyle : inactiveFilterStyle]" :class="[activeFilter===null || activeFilter===undefined ? activeFilterClass : inactiveFilterClass]" @click="filterMenuItems('All')" @mouseover="addMouseOverStyle($event)" @mouseout="removeMouseOverStyle($event)">
+            <button  type="button" id="menuFilterBtn-All" :style="[activeFilter===null || activeFilter===undefined ? activeFilterStyle : inactiveFilterStyle]" :class="[activeFilter===null || activeFilter===undefined ? activeFilterClass : inactiveFilterClass]" @click="filterMenuItems('All')" @mouseover="addMouseOverStyle('All')" @mouseout="removeMouseOverStyle('All')">
                 All
             </button>
-            <button id="menuFilterBtn" v-for="menu in menus" :key="menu.id" type="button" :style="[activeFilter=== menu.id ? activeFilterStyle : inactiveFilterStyle]" :class="[activeFilter=== menu.id ? activeFilterClass : inactiveFilterClass]" @click="filterMenuItems(menu)" @mouseover="addMouseOverStyle($event)" @mouseout="removeMouseOverStyle($event)">
+            <button  v-for="menu in menus" :id="`menuFilterBtn-${menu.id}`" :key="menu.id" type="button" :style="[activeFilter=== menu.id ? activeFilterStyle : inactiveFilterStyle]" :class="[activeFilter=== menu.id ? activeFilterClass : inactiveFilterClass]" @click="filterMenuItems(menu)" @mouseover="addMouseOverStyle(menu)" @mouseout="removeMouseOverStyle(menu)">
                 {{menu.name}}
             </button>
         </div>
@@ -110,8 +111,9 @@ import useMenus from "../../composables/menus";
 import useOrders from "../../composables/orders";
 import LoginModal from "./components/LoginModal.vue";
 import NoDataSVG from "../../components/NoDataSVG.vue";
+import BlurredSpinner from "../../components/BlurredSpinner.vue";
 
-const {menu_items, browseMenuByTable} = useMenuItems()
+const {menu_items, isFetching, browseMenuByTable} = useMenuItems()
 const {menus, getMenus} = useMenus()
 const {storeOrder, numFormat} = useOrders()
 const open = ref(false)
@@ -120,6 +122,11 @@ const router = useRoute()
 const shopping_cart = ref([])
 const menu_products = ref([])
 const activeFilter = ref(null)
+const tenant = ref(null)
+const activeFilterStyle = ref(null)
+const activeFilterClass = ref("flex-shrink-0  text-white  border focus:outline-none focus:ring-2 font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2")
+const inactiveFilterStyle = ref(null)
+const inactiveFilterClass = ref("flex-shrink-0  text-white  border focus:outline-none focus:ring-2 font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2")
 
 onMounted(async () => {
     await getMenus('')
@@ -127,6 +134,11 @@ onMounted(async () => {
     if (localStorage.getItem('shopping_cart') !== null) {
         shopping_cart.value = JSON.parse(localStorage.getItem('shopping_cart'))
     }
+    tenant.value = JSON.parse(sessionStorage.getItem('tenant'))
+    activeFilterStyle.value = `background-color: ${tenant.value?.secondary_color}; outline-color:${tenant.value?.secondary_color};`
+    activeFilterClass.value = `activeFilterMenuBtn flex-shrink-0  text-white  border focus:outline-none focus:ring-2 focus:ring-[${tenant.value?.secondary_color}] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2`
+    inactiveFilterStyle.value = `background-color: "white"; color: ${tenant.value?.secondary_color};`
+    inactiveFilterClass.value = `flex-shrink-0  border  focus:outline-none focus:ring-2 focus:ring-[${tenant.value?.secondary_color}] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2`
 })
 
 watch(menu_items,() =>{
@@ -210,6 +222,31 @@ const grandTotal = computed(() => {
 });
 
 const filterMenuItems = (item) =>{
+    //Remove activeFilterClass from all elements
+    const elements = document.getElementsByClassName('activeFilterMenuBtn')
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements.item(i)
+        element.style.backgroundColor = "white"
+        element.style.color = tenant?.secondary_color
+        element.classList.remove('activeFilterMenuBtn')
+    }
+
+    //Add a activeFilter class to a clicked item
+    const id = `menuFilterBtn-${item.id}`
+    let element = document.getElementById(id)
+    if (element){
+        element.classList.add('activeFilterMenuBtn')
+        element.style.backgroundColor = tenant.value?.secondary_color
+        element.style.color = "white"
+    }else{
+        element = document.getElementById('menuFilterBtn-All')
+        element.classList.add('activeFilterMenuBtn')
+        if (element && !element.classList.contains('activeFilterMenuBtn')){
+            element.style.backgroundColor = tenant.value?.secondary_color
+            element.style.color = "white"
+        }
+    }
+
     if (item === 'All'){
         activeFilter.value = null
         menu_products.value = menu_items.value
@@ -225,23 +262,33 @@ const currentPageTitle = computed(() =>{
     return router.meta.title;
 })
 
-const tenant = JSON.parse(sessionStorage.getItem('tenant'))
 
-const activeFilterStyle = `background-color: ${tenant?.secondary_color}; color: "white"; outline-color:${tenant?.secondary_color};`
-const activeFilterClass = `text-white flex-shrink-0  hover:text-white border border-[${tenant?.secondary_color}] focus:outline-none focus:ring-2 focus:ring-[${tenant?.secondary_color}] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2`
-
-const inactiveFilterStyle = `background-color: "white"; color: ${tenant?.secondary_color};`
-const inactiveFilterClass = `flex-shrink-0  hover:text-white border border-[${tenant?.secondary_color}] focus:outline-none focus:ring-2 focus:ring-[${tenant?.secondary_color}] font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2`
-
-const addMouseOverStyle = (event) =>{
-    event.currentTarget.style.backgroundColor = tenant.secondary_color
-    event.currentTarget.style.color = "white"
+const addMouseOverStyle = (item) =>{
+    const id = `menuFilterBtn-${item.id}`
+    let element = document.getElementById(id)
+    if (element){
+        element.style.backgroundColor = tenant.value?.secondary_color
+        element.style.color = "white"
+    }else{
+        element = document.getElementById('menuFilterBtn-All')
+        if (element && !element.classList.contains('activeFilterMenuBtn')){
+            element.style.backgroundColor = tenant.value?.secondary_color
+            element.style.color = "white"
+        }
+    }
 }
 
-const removeMouseOverStyle = (event) =>{
-    event.currentTarget.style.backgroundColor = "white"
-    event.currentTarget.style.color = tenant.secondary_color
+const removeMouseOverStyle = (item) => {
+    const id = `menuFilterBtn-${item.id}`
+    const element = document.getElementById(id)
+    if (element && !element.classList.contains('activeFilterMenuBtn')){
+        element.style.backgroundColor = "white"
+        element.style.color = tenant.value?.secondary_color
+    }
 }
+
+
+
 
 
 provide('open', open)
