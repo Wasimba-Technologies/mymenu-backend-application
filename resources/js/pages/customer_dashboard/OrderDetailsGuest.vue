@@ -1,24 +1,10 @@
 <template>
     <BlurredSpinner v-if="isFetching" />
-    <div class="mt-10 p-4 flex flex-col">
+    <CustomerNav />
+    <div class="p-4 flex flex-col">
         <title>MyMenu | My Orders</title>
-        <div class="mb-4 flex justify-between">
-            <h1 :style="`color: ${tenant?.secondary_color}`" :class="`text-2xl font-bold`">{{tenant?.name}}</h1>
-            <div class="flex space-x-2">
-                <!--                <div class="border-2 border-solid border-gray-500  rounded-lg cursor-pointer">-->
-                <!--                    <svg class="m-2 w-4 h-4 flex-shrink-0 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">-->
-                <!--                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>-->
-                <!--                    </svg>-->
-                <!--                </div>-->
-                <div class="border-2 border-solid border-gray-500  rounded-lg cursor-pointer">
-                    <svg class="m-2 h-4 w-4 flex-shrink-0 text-gray-500 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
         <div class="bg-white">
-        <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:pb-24">
+        <div class="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8 lg:pb-24">
             <div class="max-w-xl">
                 <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order summary</h1>
                 <p class="mt-2 text-sm text-gray-500">Check the status of recent orders, pay for orders</p>
@@ -127,18 +113,21 @@
         </div>
     </div>
     </div>
+
 </template>
 
 
 <script setup>
     import useOrders from "../../composables/orders";
-    import usePayments from "../../composables/payments";
     import {useRoute} from "vue-router";
-    import {computed, inject, onMounted} from "vue";
+    import {computed, inject, onMounted, provide, ref} from "vue";
     import BlurredSpinner from "../../components/BlurredSpinner.vue";
     import {ABILITY_TOKEN, useAbility} from "@casl/vue";
     import useAuth from "../../composables/auth";
     import {  QuestionMarkCircleIcon} from '@heroicons/vue/20/solid'
+    import CustomerNav from "./components/CustomerNav.vue";
+    import ShoppingCart from "./components/ShoppingCart.vue";
+    import LoginModal from "./components/LoginModal.vue";
 
 
     const {
@@ -149,8 +138,6 @@
         numFormat,
         getOrder
     } = useOrders()
-
-    const {storePayment, errors} = usePayments()
     const {can} = useAbility()
     const {logout} = useAuth()
     const ability = inject(ABILITY_TOKEN)
@@ -194,10 +181,12 @@
         Rejected: 'bg-gray-100 text-gray-800',
     }
 
-
     const currentPageTitle = computed(() =>{
         return router.meta.title;
     })
+
+    provide('tenant', tenant)
+
 </script>
 
 

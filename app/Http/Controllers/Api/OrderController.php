@@ -10,6 +10,7 @@ use App\Http\Resources\OrderResource;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Restaurant;
+use App\Models\Role;
 use App\Models\Scopes\TenantScope;
 use Illuminate\Http\Response;
 
@@ -20,17 +21,32 @@ class OrderController extends Controller
      */
     public function index(): OrderCollection
     {
-        $this->authorize('viewAny', Order::class);
+        if (request()->user()->role_id != Role::CUSTOMER){
+            $this->authorize('viewAny', Order::class);
+            return new OrderCollection(
+                Order::with(['menu_items','table'])
+                    ->when(request('status'), function($query){
+                        $query->where('status', 'like', '%'.request('status').'%');
+                    })
+                    ->when(request('start_date'), function ($query) {
+                        $query->whereBetween('created_at', [request('start_date'), request('end_date')]);
+                    })
+                    ->with('table')
+                    ->paginate(10)
+            );
+        }
+        //$this->authorize('viewAny', Order::class);
         return new OrderCollection(
             Order::with(['menu_items','table'])
-            ->when(request('status'), function($query){
-                $query->where('status', 'like', '%'.request('status').'%');
-            })
-            ->when(request('start_date'), function ($query) {
-                $query->whereBetween('created_at', [request('start_date'), request('end_date')]);
-            })
-            ->with('table')
-            ->paginate(10)
+                ->when(request('status'), function($query){
+                    $query->where('status', 'like', '%'.request('status').'%');
+                })
+                ->when(request('start_date'), function ($query) {
+                    $query->whereBetween('created_at', [request('start_date'), request('end_date')]);
+                })
+                ->with('table')
+                ->where('customer_id', request()->user()->id)
+                ->paginate(10)
         );
     }
 

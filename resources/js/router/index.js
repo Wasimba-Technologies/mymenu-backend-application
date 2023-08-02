@@ -1,8 +1,8 @@
 import {createRouter, createWebHistory} from "vue-router";
 import NotFound from "../components/NotFound.vue";
 import useAuth from "../composables/auth";
-import DashboardLayout from "../pages/dashboard/DashboardLayout.vue";
-import DashboardIndex from "../pages/dashboard/DashboardIndex.vue";
+import DashboardLayout from "../pages/staff_dashboard/DashboardLayout.vue";
+import DashboardIndex from "../pages/staff_dashboard/DashboardIndex.vue";
 import LiveOrders from "../pages/orders/LiveOrders.vue";
 import RestaurantCreate from "../pages/restaurants/RestaurantCreate.vue";
 import MenuCreate from "../pages/menus/MenuCreate.vue";
@@ -16,7 +16,6 @@ import OrderIndex from "../pages/orders/OrderIndex.vue";
 import RestaurantIndex from "../pages/restaurants/RestaurantIndex.vue";
 import SettingsIndex from "../pages/settings/SettingsIndex.vue";
 import PlanIndex from "../pages/plans/PlanIndex.vue";
-import MenuItemBrowser from "../pages/menu_items/MenuItemBrowser.vue";
 import OrderDetails from "../pages/orders/OrderDetails.vue";
 import TableUpdate from "../pages/tables/TableUpdate.vue";
 import MenuItemUpdate from "../pages/menu_items/MenuItemUpdate.vue";
@@ -26,13 +25,15 @@ import PlanCreate from "../pages/plans/PlanCreate.vue";
 import UserUpdate from "../pages/users/UserUpdate.vue";
 import UserCreate from "../pages/users/UserCreate.vue";
 import UserIndex from "../pages/users/UserIndex.vue";
-import OrderDetailsGuest from "../pages/orders/OrderDetailsGuest.vue";
 import SubscriptionIndex from "../pages/subscriptions/SubscriptionIndex.vue";
 import SocialLoginCallBack from "../pages/auth/SocialLoginCallBack.vue";
 import SubscriptionDetails from "../pages/subscriptions/SubscriptionDetails.vue";
 import SubscriptionPayment from "../pages/payments/SubscriptionPayment.vue";
 import VerifyOTP from "../pages/auth/VerifyOTP.vue";
 import OrderPayment from "../pages/payments/OrderPayment.vue";
+import MenuItemBrowser from "../pages/customer_dashboard/MenuItemBrowser.vue";
+import MyOrders from "../pages/customer_dashboard/MyOrders.vue";
+import OrderDetailsGuest from "../pages/customer_dashboard/OrderDetailsGuest.vue";
 
 
 
@@ -50,8 +51,6 @@ const auth = (to, from, next) => {
 const logoutAndRedirect = async (to, from) => {
     await logout()
 }
-
-
 
 
 const routes =[
@@ -98,6 +97,12 @@ const routes =[
         name : 'order_details.guest',
         component : OrderDetailsGuest,
         meta: { title: 'Guest Order Details' }
+    },
+    {
+        path : '/my_orders',
+        name : 'my_orders',
+        component : MyOrders,
+        meta: { title: 'List of All Orders' }
     },
     {
         path : '/checkout',

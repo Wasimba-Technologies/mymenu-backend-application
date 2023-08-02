@@ -1,32 +1,8 @@
 <template>
     <BlurredSpinner v-if="isFetching" />
-    <div class="mt-10 p-4 flex flex-col" v-if="!isFetching">
+    <CustomerNav />
+    <div class="p-4 flex flex-col" v-if="!isFetching">
         <title>MyMenu | Browse Menu</title>
-        <div class="mb-4 flex justify-between">
-            <h1 :style="`color: ${tenant?.secondary_color}`" :class="`text-2xl font-bold`">{{tenant?.name}}</h1>
-            <div class="flex space-x-2">
-<!--                <div class="border-2 border-solid border-gray-500  rounded-lg cursor-pointer">-->
-<!--                    <svg class="m-2 w-4 h-4 flex-shrink-0 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">-->
-<!--                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>-->
-<!--                    </svg>-->
-<!--                </div>-->
-                <div class="relative border-2 border-solid border-gray-500  rounded-lg cursor-pointer" @click="shopping_cart.length !== 0 ? open = true: open = false">
-                    <svg class="m-2 h-4 w-4 flex-shrink-0 text-gray-500 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
-                    </svg>
-                    <div class="">
-                        <span :class="`absolute -top-1 -right-2 inline-flex items-center rounded-full bg-rose-100 px-1.5 py-0.5 text-xs font-medium text-rose-800`">
-                            {{shopping_cart?.length === undefined ? 0 : shopping_cart?.length}}
-                        </span>
-                    </div>
-                </div>
-                <div class="border-2 border-solid border-gray-500  rounded-lg cursor-pointer">
-                    <svg class="m-2 h-4 w-4 flex-shrink-0 text-gray-500 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
         <div class="flex overflow-auto">
             <button  type="button" id="menuFilterBtn-All" :style="[activeFilter===null || activeFilter===undefined ? activeFilterStyle : inactiveFilterStyle]" :class="[activeFilter===null || activeFilter===undefined ? activeFilterClass : inactiveFilterClass]" @click="filterMenuItems('All')" @mouseover="addMouseOverStyle('All')" @mouseout="removeMouseOverStyle('All')">
                 All
@@ -73,7 +49,7 @@
                     </div>
                     <div class="mt-4 flex justify-between">
                         <p :style="`color: ${tenant?.primary_color};`" :class="`text-xs font-extrabold`">Tsh {{ new Intl.NumberFormat().format(product.price) }}</p>
-                        <span class="" @click="addToShoppingCart(product)">
+                        <span class="" @click="add2ShoppingCart(product)">
                             <svg :style="`background-color: ${tenant?.secondary_color}`" class="h-4 w-4 rounded-full font-bold text-white cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -88,52 +64,58 @@
     </div>
 
     <ShoppingCart
-        @handle-qty-change="handleQtyChange"
-        @remove-cart-item="removeItem"
         @place-order="placeOrder"
+        :currency="tenant?.currency"
+        @remove-cart-item="removeCartItem"
         :grand-total="numFormat(grandTotal)"
         :secondary-color="tenant?.secondary_color"
-        :currency="tenant?.currency"
+        @handle-qty-change="handleCartItemQtyChange"
     />
 
     <LoginModal />
+
 </template>
 
 <script setup>
 
 
 import {computed, onMounted, provide, ref, watch} from "vue";
-import AutoComplete from "../../components/AutoComplete.vue";
-import BrowserNav from "./components/BrowserNav.vue";
 import ShoppingCart from "./components/ShoppingCart.vue";
 import {useRoute} from "vue-router";
 import useMenuItems from "../../composables/menu_items";
 import useMenus from "../../composables/menus";
 import useOrders from "../../composables/orders";
 import LoginModal from "./components/LoginModal.vue";
-import NoDataSVG from "../../components/NoDataSVG.vue";
 import BlurredSpinner from "../../components/BlurredSpinner.vue";
+import CustomerNav from "./components/CustomerNav.vue";
 
 const {menu_items, isFetching, browseMenuByTable} = useMenuItems()
 const {menus, getMenus} = useMenus()
-const {storeOrder, numFormat} = useOrders()
+const {
+    numFormat,
+    storeOrder,
+    shoppingCart,
+    removeCartItem,
+    add2ShoppingCart,
+    handleCartItemQtyChange
+} = useOrders()
 const open = ref(false)
 const openLoginModal = ref(false)
 const router = useRoute()
-const shopping_cart = ref([])
 const menu_products = ref([])
 const activeFilter = ref(null)
 const tenant = ref(null)
 const activeFilterStyle = ref(null)
-const activeFilterClass = ref("flex-shrink-0  text-white  border focus:outline-none focus:ring-2 font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2")
+const activeFilterClass = ref("")
 const inactiveFilterStyle = ref(null)
-const inactiveFilterClass = ref("flex-shrink-0  text-white  border focus:outline-none focus:ring-2 font-medium rounded-full text-xs px-2.5 py-1 mr-2 mb-2")
+const inactiveFilterClass = ref("")
+
 
 onMounted(async () => {
     await getMenus('')
     await browseMenuByTable(router.params.id)
     if (localStorage.getItem('shopping_cart') !== null) {
-        shopping_cart.value = JSON.parse(localStorage.getItem('shopping_cart'))
+        shoppingCart.value = JSON.parse(localStorage.getItem('shopping_cart'))
     }
     tenant.value = JSON.parse(sessionStorage.getItem('tenant'))
     activeFilterStyle.value = `background-color: ${tenant.value?.secondary_color}; outline-color:${tenant.value?.secondary_color};`
@@ -147,51 +129,11 @@ watch(menu_items,() =>{
     menu_products.value = menu_items.value
 })
 
-const addToShoppingCart = (product) => {
-    console.log(product)
-    let index = shopping_cart.value
-        .map(function (el) {
-            return el.menu_item.id;
-        })
-        .indexOf(product.id);
-
-    if (index === -1) {
-        shopping_cart.value.push({
-            'menu_item_id': product.id,
-            'menu_item': product,
-            'qty': 1
-        })
-    } else {
-        //Increment if Product exists and update state
-        shopping_cart.value = shopping_cart.value.map((item) => {
-            if (item.menu_item.id === product.id) {
-                item.qty++;
-            }
-            return item;
-        })
-    }
-
-}
-
-const removeItem = (product) =>{
-    //remove product from products
-    shopping_cart.value = shopping_cart.value.filter((item) => item.menu_item.id !== product.menu_item.id)
-}
-
-const handleQtyChange = (event, product) =>{
-    shopping_cart.value = shopping_cart.value.map((item) => {
-        if (item.menu_item.id === product.menu_item.id) {
-            item.qty = event.target.value
-        }
-        return item;
-    })
-}
-
 const placeOrder =  () => {
     if (localStorage.getItem('access_token') === null){
         openLoginModal.value = true
         open.value = false
-        localStorage.setItem('shopping_cart', JSON.stringify(shopping_cart.value))
+        localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart.value))
         return
     }
     storeOrder(
@@ -202,7 +144,7 @@ const placeOrder =  () => {
             'shipping': 0,
             'tax': 0,
             'grand_total': parseFloat(grandTotal.value),
-            'menu_items': shopping_cart.value,
+            'menu_items': shoppingCart.value,
             'delivery_method': 'Dine-In'
         }
     )
@@ -212,12 +154,12 @@ const placeOrder =  () => {
 }
 
 
-watch(shopping_cart, (new_cart) => {
-    shopping_cart.value = new_cart
+watch(shoppingCart, (new_cart) => {
+    shoppingCart.value = new_cart
 })
 
 const grandTotal = computed(() => {
-    return shopping_cart.value.reduce(
+    return shoppingCart.value.reduce(
         (total, item) => (item.qty * item.menu_item.price) + total, 0
     )
 });
@@ -290,13 +232,11 @@ const removeMouseOverStyle = (item) => {
 
 
 
-
-
 provide('open', open)
-provide('openLoginModal', openLoginModal)
+provide('tenant', tenant)
 provide('menu_items', menu_items)
-provide('shopping_cart', shopping_cart)
-
+provide('shopping_cart', shoppingCart)
+provide('openLoginModal', openLoginModal)
 
 </script>
 

@@ -1,5 +1,6 @@
 import {inject, reactive, ref} from "vue";
 import router from "../router";
+import ShoppingCart from "../pages/customer_dashboard/components/ShoppingCart.vue";
 
 
 export default function useOrders() {
@@ -12,7 +13,7 @@ export default function useOrders() {
     const paginationMetaData = ref({})
     const paginationLinks = ref({})
     const ordersURL = ref('/api/orders?page=1')
-
+    const shoppingCart = ref([])
 
     const orderForm = reactive(
         {
@@ -151,6 +152,44 @@ export default function useOrders() {
             )
     }
 
+    const add2ShoppingCart = (product) => {
+        let index = shoppingCart.value
+            .map(function (el) {
+                return el.menu_item.id;
+            })
+            .indexOf(product.id);
+
+        if (index === -1) {
+            shoppingCart.value.push({
+                'menu_item_id': product.id,
+                'menu_item': product,
+                'qty': 1
+            })
+        } else {
+            //Increment if Product exists and update state
+            shoppingCart.value = shoppingCart.value.map((item) => {
+                if (item.menu_item.id === product.id) {
+                    item.qty++;
+                }
+                return item;
+            })
+        }
+    }
+
+    const removeCartItem = (product) =>{
+        //remove product from products
+        shoppingCart.value = shoppingCart.value.filter((item) => item.menu_item.id !== product.menu_item.id)
+    }
+
+    const handleCartItemQtyChange = (event, product) =>{
+        shoppingCart.value = shoppingCart.value.map((item) => {
+            if (item.menu_item.id === product.menu_item.id) {
+                item.qty = event.target.value
+            }
+            return item;
+        })
+    }
+
     const numFormat= (num) =>{
         return new Intl.NumberFormat().format(num)
     }
@@ -172,10 +211,15 @@ export default function useOrders() {
         isLoading,
         isRejecting,
         printReceipt,
-        paginationLinks,
+        shoppingCart,
+        removeCartItem,
         changeOrdersUrl,
+        paginationLinks,
+        add2ShoppingCart,
         updateOrderStatus,
         paginationMetaData,
+        handleCartItemQtyChange,
+
     }
 
 }
