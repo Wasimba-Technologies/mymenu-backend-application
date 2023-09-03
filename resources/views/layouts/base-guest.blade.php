@@ -16,7 +16,7 @@
 </head>
 <body class="antialiased h-full">
 <div class="h-full">
-    <div class="">
+    <div class="h-full">
         @yield('content')
         <x-footer />
     </div>
