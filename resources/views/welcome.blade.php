@@ -95,7 +95,7 @@
                                     <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/ken-mary.svg" alt="Ken-Mary" />
                                 </div>
                                 <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
-                                    <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/coca-cola-6.svg" alt="Coca" />
+                                    <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/cocacola.svg" alt="Coca" />
                                 </div>
                                 <div class="col-span-1 flex justify-center py-8 px-8 bg-rose-50">
                                     <img class="max-h-12" src="https://cdn.worldvectorlogo.com/logos/pepsi.svg" alt="Pepsi" />
