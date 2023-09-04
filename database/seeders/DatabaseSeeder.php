@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             QrCodeSeeder::class,
-            PlanSeeder::class
+            PlanSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

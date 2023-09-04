@@ -64,11 +64,12 @@ class RoleSeeder extends Seeder
         ]);
 
         $customer = Role::create(['name'=> 'Customer']);
-        $customer->permissions()->attach(
+        $customer->permissions()->attach([
             Permission::where('name', '=', 'menus.viewAny')->first('id')->id,
             Permission::where('name', '=', 'orders.view')->first('id')->id,
             Permission::where('name', '=', 'orders.create')->first('id')->id,
-            Permission::where('name', '=', 'menu_items.viewAny')->first('id')->id,
+            Permission::where('name', '=', 'menu_items.viewAny')->first('id')->id
+                ]
         );
     }
 }
