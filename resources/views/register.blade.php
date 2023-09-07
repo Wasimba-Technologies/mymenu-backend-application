@@ -19,7 +19,8 @@
                         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Register your account</h2>
                         <p class="mt-2 text-sm text-gray-600">
                             Or
-                            <a href="/login" class="font-medium text-rose-600 hover:text-rose-500">Login to your account</a>
+                            <a href="{{env('FRONT_END_URL').'/login'}}"
+                               class="font-medium text-rose-600 hover:text-rose-500">Login to your account</a>
                         </p>
                     </div>
 
@@ -37,55 +38,63 @@
                                     <label for="name" class="block text-sm font-medium text-gray-700">Names</label>
                                     <div class="mt-1">
                                         <input id="name" name="name" type="text" autocomplete="name" required
-                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" />
+                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm"/>
                                         <p class="mt-2 text-sm font-extrabold text-red-600" id="name-error">
-{{--                                            @error('name')--}}
-{{--                                            {{$message}}--}}
-{{--                                            @enderror--}}
+                                            {{--                                            @error('name')--}}
+                                            {{--                                            {{$message}}--}}
+                                            {{--                                            @enderror--}}
 
                                         </p>
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                                    <label for="email" class="block text-sm font-medium text-gray-700">Email
+                                        address</label>
                                     <div class="mt-1">
                                         <input id="email" name="email" type="email" autocomplete="email" required
-                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" />
+                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm"/>
                                         <p class="mt-2 text-sm font-extrabold text-red-600" id="email-error">
                                         </p>
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="tel" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                    <label for="tel" class="block text-sm font-medium text-gray-700">Phone
+                                        Number</label>
                                     <div class="mt-1">
-                                        <input id="phone_number" name="phone_number" type="tel" autocomplete="tel" required
-                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" />
+                                        <input id="phone_number" name="phone_number" type="tel" autocomplete="tel"
+                                               required
+                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm"/>
                                         <p class="mt-2 text-sm font-extrabold text-red-600" id="phone-number-error">
                                         </p>
                                     </div>
                                 </div>
                                 <div class="space-y-1">
-                                    <label for="password" class="block text-sm font-medium text-gray-700"> Password </label>
+                                    <label for="password" class="block text-sm font-medium text-gray-700">
+                                        Password </label>
                                     <div class="mt-1">
-                                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                                        <input id="password" name="password" type="password"
+                                               autocomplete="current-password" required
                                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
-                                               shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" />
-                                        <p class="mt-2 text-sm font-extrabold text-red-600" id="password-error" >
+                                               shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm"/>
+                                        <p class="mt-2 text-sm font-extrabold text-red-600" id="password-error">
                                         </p>
                                     </div>
                                 </div>
 
                                 <div class="space-y-1">
-                                    <label for="password" class="block text-sm font-medium text-gray-700"> Confirm Password </label>
+                                    <label for="password" class="block text-sm font-medium text-gray-700"> Confirm
+                                        Password </label>
                                     <div class="mt-1">
-                                        <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required
-                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" />
-                                        <p class="mt-2 text-sm font-extrabold text-red-600" id="password-confirmation-error">
+                                        <input id="password_confirmation" name="password_confirmation" type="password"
+                                               autocomplete="current-password" required
+                                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm"/>
+                                        <p class="mt-2 text-sm font-extrabold text-red-600"
+                                           id="password-confirmation-error">
                                         </p>
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="submit"  id="btnRegister" class="w-full btn-sm-submit" >
+                                    <button type="submit" id="btnRegister" class="w-full btn-sm-submit">
                                         Register
                                     </button>
                                 </div>
@@ -95,7 +104,8 @@
                 </div>
             </div>
             <div class="hidden lg:block relative w-0 flex-1">
-                <img class="absolute inset-0 h-full w-full object-cover blur-sm" src="https://menusavvy.com/channel/menusavvy/img/photos/cocktail.jpg" alt="" />
+                <img class="absolute inset-0 h-full w-full object-cover blur-sm"
+                     src="https://menusavvy.com/channel/menusavvy/img/photos/cocktail.jpg" alt=""/>
             </div>
         </div>
     </div>
@@ -118,35 +128,35 @@
                 window.location.pathname = '/register-restaurant'
             }).catch(err => {
                 if (err.response.status === 422) {
-                    for(let error in err.response.data.errors?.name){
+                    for (let error in err.response.data.errors?.name) {
                         document.getElementById('name-error').innerHTML = err.response.data.errors?.name[error]
                     }
-                    for(let error in err.response.data.errors?.phone_number){
+                    for (let error in err.response.data.errors?.phone_number) {
                         document.getElementById('phone-number-error').innerHTML = err.response.data.errors?.phone_number[error]
                     }
-                    for(let error in err.response.data.errors?.email){
+                    for (let error in err.response.data.errors?.email) {
                         document.getElementById('email-error').innerHTML = err.response.data.errors?.email[error]
                     }
-                    for(let error in err.response.data.errors?.password){
+                    for (let error in err.response.data.errors?.password) {
                         document.getElementById('password-error').innerHTML = err.response.data.errors?.password[error]
                     }
-                    for(let error in err.response.data.errors?.password_confirmation){
+                    for (let error in err.response.data.errors?.password_confirmation) {
                         document.getElementById('password-confirmation-error').innerHTML = err.response.data.errors?.password_confirmation[error]
                     }
                 }
             }).finally(
                 () => document.getElementById("btnRegister").disabled = false
-        )
+            )
         }
 
         const form = document.getElementById("registerOwnerForm");
         form.addEventListener("submit", registerOwner);
 
-        const resetErrors = () =>{
+        const resetErrors = () => {
             document.getElementById('name-error').innerHTML = ""
             document.getElementById('phone-number-error').innerHTML = ""
             document.getElementById('email-error').innerHTML = ""
-            document.getElementById('password-error').innerHTML =""
+            document.getElementById('password-error').innerHTML = ""
             document.getElementById('password-confirmation-error').innerHTML = ""
         }
     </script>
