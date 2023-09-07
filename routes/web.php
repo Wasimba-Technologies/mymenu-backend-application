@@ -19,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 $pricing = [
     'tiers' =>
-        (object)array (
+        (object) array(
             0 =>
-                (object)array (
+                (object) array(
                     'title' => 'Free',
                     'price' => 0,
                     'frequency' => '/month',
                     'description' => 'If you run a small restaurant or bar, or just need the basics, this plan is great.',
                     'features' =>
-                        array (
+                        array(
                             0 => 'Full access to QR tool',
                             1 => ' Access to the menu creation tool',
                             2 => 'Unlimited views',
@@ -38,13 +38,13 @@ $pricing = [
                     'mostPopular' => false,
                 ),
             1 =>
-                (object)array (
+                (object) array(
                     'title' => 'Starter',
                     'price' => 9,
                     'frequency' => '/month',
                     'description' => 'For bigger restaurants and bars. Offer a full menu. Limitless plan.',
                     'features' =>
-                        array (
+                        array(
                             0 => 'Full access to QR tool',
                             1 => ' Access to the menu creation tool',
                             2 => 'Unlimited views',
@@ -56,13 +56,13 @@ $pricing = [
                     'mostPopular' => true,
                 ),
             2 =>
-                (object)array (
+                (object) array(
                     'title' => 'Pro',
                     'price' => 49,
                     'frequency' => '/month',
                     'description' => 'Dedicated support and infrastructure for your company.',
                     'features' =>
-                        array (
+                        array(
                             0 => 'Full access to QR tool',
                             1 => ' Access to the menu creation tool',
                             2 => 'Unlimited views',
@@ -77,9 +77,7 @@ $pricing = [
 ];
 
 
-
-
-Route::get('/',[WelcomeController::class, 'index']);
+Route::get('/', [WelcomeController::class, 'index']);
 
 Route::view(
     '/pricing', 'pricing', ['pricing' => $pricing,]
@@ -90,10 +88,6 @@ Route::view(
 
 Route::view(
     '/register', 'register'
-);
-
-Route::view(
-    '/login', 'login'
 );
 
 
