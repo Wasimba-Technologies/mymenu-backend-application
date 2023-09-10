@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->json('ingredients')->nullable();
+            $table->json('addons')->nullable();
+            $table->json('allergens')->nullable();
+            $table->json('variations')->nullable();
+            $table->string('type');
             $table->string('price');
             $table->string('image')->nullable();
             $table->foreignId('menu_id')->constrained('id')->on('menus');
