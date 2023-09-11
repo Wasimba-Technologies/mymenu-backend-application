@@ -24,7 +24,7 @@ class MenuItemResource extends JsonResource
 //            'image' => $this->image ? Storage::disk('public')->url($this->image) : null,
             'image' => $this->image,
             'ingredients' => IngredientResource::collection($this->whenLoaded('ingredients')),
-            'addons' => $this->addons,
+            'addons' => AddonResource::collection($this->whenLoaded('addons')),
             'variations' => $this->variations,
             'allergens' => $this->allergens,
             'menu' => new MenuResource($this->menu),

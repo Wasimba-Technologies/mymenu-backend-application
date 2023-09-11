@@ -64,7 +64,7 @@ class MenuItemController extends Controller
     public function show(MenuItem $menu_item): MenuItemResource
     {
         $this->authorize('view', $menu_item);
-        return new MenuItemResource($menu_item->load('ingredients'));
+        return new MenuItemResource($menu_item->load('ingredients','addons'));
     }
 
     /**
