@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
+use App\Http\Resources\IngredientResource;
 use App\Models\Ingredient;
 
 class IngredientController extends Controller
@@ -14,7 +15,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        return IngredientResource::collection(Ingredient::all());
     }
 
     /**
@@ -22,7 +23,8 @@ class IngredientController extends Controller
      */
     public function store(StoreIngredientRequest $request)
     {
-        //
+        $ingredient = Ingredient::create($request->validated());
+        return new IngredientResource($ingredient);
     }
 
     /**
@@ -30,7 +32,8 @@ class IngredientController extends Controller
      */
     public function show(Ingredient $ingredient)
     {
-        //
+        //show the ingredient
+        return new IngredientResource($ingredient);
     }
 
     /**
@@ -38,7 +41,8 @@ class IngredientController extends Controller
      */
     public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
     {
-        //
+        $ingredient->update($request->validated());
+        return new IngredientResource($ingredient);
     }
 
     /**
@@ -46,6 +50,7 @@ class IngredientController extends Controller
      */
     public function destroy(Ingredient $ingredient)
     {
-        //
+        $ingredient->delete();
+        return response()->noContent();
     }
 }
