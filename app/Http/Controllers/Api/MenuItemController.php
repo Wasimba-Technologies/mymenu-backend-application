@@ -50,6 +50,7 @@ class MenuItemController extends Controller
             //$data['tenant_id'] = $request->header('X-TENANT-ID');
             $menu_item = MenuItem::create($data);
             $menu_item->ingredients()->attach($request->ingredients);
+            $menu_item->addons()->attach($request->addons);
             return new MenuItemResource($menu_item);
         }
         return response()->json([
