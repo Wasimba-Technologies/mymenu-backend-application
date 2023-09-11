@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAddonRequest;
 use App\Http\Requests\UpdateAddonRequest;
+use App\Http\Resources\AddonResource;
 use App\Models\Addon;
+use function React\Promise\all;
 
 class AddonController extends Controller
 {
@@ -14,7 +16,7 @@ class AddonController extends Controller
      */
     public function index()
     {
-        //
+        return AddonResource::collection(Addon::all());
     }
 
     /**
@@ -22,7 +24,9 @@ class AddonController extends Controller
      */
     public function store(StoreAddonRequest $request)
     {
-        //
+        //store addon
+        $addon = Addon::create($request->validated());
+        return new AddonResource($addon);
     }
 
     /**
@@ -30,7 +34,7 @@ class AddonController extends Controller
      */
     public function show(Addon $addon)
     {
-        //
+        return new AddonResource($addon);
     }
 
     /**
@@ -38,7 +42,8 @@ class AddonController extends Controller
      */
     public function update(UpdateAddonRequest $request, Addon $addon)
     {
-        //
+        $addon->update($request->validated());
+        return new AddonResource($addon);
     }
 
     /**
@@ -46,6 +51,7 @@ class AddonController extends Controller
      */
     public function destroy(Addon $addon)
     {
-        //
+        $addon->delete();
+        return response()->noContent();
     }
 }
