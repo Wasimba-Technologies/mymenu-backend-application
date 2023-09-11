@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VariationController;
+use App\Http\Controllers\Api\VariationValueController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Models\Scopes\TenantScope;
 use Illuminate\Http\Request;
@@ -65,6 +66,10 @@ Route::apiResource(
 )->only('index');
 
 Route::apiResource(
+    'variation_values', VariationValueController::class
+)->only('index');
+
+Route::apiResource(
     'order_items', OrderMenuItemController::class
 )->only(['store','show']);
 
@@ -100,6 +105,10 @@ Route::middleware(['auth:sanctum' ,'verified'])->group(
 
         Route::apiResource(
             'variations', VariationController::class
+        )->except(['index']);
+
+        Route::apiResource(
+            'variation_values', VariationValueController::class
         )->except(['index']);
 
 
