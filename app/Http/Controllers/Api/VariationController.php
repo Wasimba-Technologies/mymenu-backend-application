@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVariationRequest;
 use App\Http\Requests\UpdateVariationRequest;
+use App\Http\Resources\VariationResource;
 use App\Models\Variation;
 
 class VariationController extends Controller
@@ -14,7 +15,7 @@ class VariationController extends Controller
      */
     public function index()
     {
-        //
+        return VariationResource::collection(Variation::all());
     }
 
     /**
@@ -22,7 +23,8 @@ class VariationController extends Controller
      */
     public function store(StoreVariationRequest $request)
     {
-        //
+        $variation = Variation::create($request->validated());
+        return new VariationResource($variation);
     }
 
     /**
@@ -30,7 +32,7 @@ class VariationController extends Controller
      */
     public function show(Variation $variation)
     {
-        //
+        return new VariationResource($variation);
     }
 
     /**
@@ -38,7 +40,8 @@ class VariationController extends Controller
      */
     public function update(UpdateVariationRequest $request, Variation $variation)
     {
-        //
+        $variation->update($request->validated());
+        return new VariationResource($variation);
     }
 
     /**
@@ -46,6 +49,7 @@ class VariationController extends Controller
      */
     public function destroy(Variation $variation)
     {
-        //
+        $variation->delete();
+        return response()->noContent();
     }
 }
