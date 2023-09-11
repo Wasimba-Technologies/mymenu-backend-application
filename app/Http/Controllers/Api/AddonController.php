@@ -15,7 +15,10 @@ class AddonController extends Controller
      */
     public function index()
     {
-        return AddonResource::collection(Addon::all());
+        return AddonResource::collection(Addon::when(
+            request()->has('name'),
+            fn ($query) => $query->where('name', request()->name)
+        )->all());
     }
 
     /**
