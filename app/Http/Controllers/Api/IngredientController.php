@@ -15,7 +15,12 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        return IngredientResource::collection(Ingredient::all());
+        return IngredientResource::collection(Ingredient::when(
+            request()->has('name'),
+            function ($query) {
+                return $query->where('name', request()->name);
+            }
+        )->all());
     }
 
     /**
