@@ -7,7 +7,6 @@ use App\Http\Requests\StoreAddonRequest;
 use App\Http\Requests\UpdateAddonRequest;
 use App\Http\Resources\AddonResource;
 use App\Models\Addon;
-use function React\Promise\all;
 
 class AddonController extends Controller
 {
