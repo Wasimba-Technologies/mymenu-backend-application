@@ -45,4 +45,9 @@ class MenuItem extends Model
         return $this->belongsToMany(Addon::class, 'addon_menu_item');
     }
 
+    public function variation_values(): BelongsToMany
+    {
+        return $this->belongsToMany(VariationValue::class, 'menu_item_variation_value');
+    }
+
 }
