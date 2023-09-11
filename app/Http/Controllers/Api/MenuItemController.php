@@ -49,6 +49,7 @@ class MenuItemController extends Controller
             $data = $this->getDataAndSaveImage('images', $request);
             //$data['tenant_id'] = $request->header('X-TENANT-ID');
             $menu_item = MenuItem::create($data);
+            $menu_item->ingredients()->attach($request->ingredients);
             return new MenuItemResource($menu_item);
         }
         return response()->json([
@@ -63,7 +64,7 @@ class MenuItemController extends Controller
     public function show(MenuItem $menu_item): MenuItemResource
     {
         $this->authorize('view', $menu_item);
-        return new MenuItemResource($menu_item);
+        return new MenuItemResource($menu_item->load('ingredients'));
     }
 
     /**
