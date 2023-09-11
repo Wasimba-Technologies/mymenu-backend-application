@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AzamPayCallbackController;
+use App\Http\Controllers\Api\IngredientController;
 use App\Http\Controllers\Api\MenuBrowser;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuItemController;
@@ -49,6 +50,9 @@ Route::apiResource(
     'menu_items', MenuItemController::class
 )->only('index');
 
+Route::apiResource(
+    'ingredients', IngredientController::class
+)->only('index');
 
 Route::apiResource(
     'order_items', OrderMenuItemController::class
@@ -74,6 +78,12 @@ Route::middleware(['auth:sanctum' ,'verified'])->group(
         Route::apiResource(
             'menu_items', MenuItemController::class
         )->except('index');
+
+        //ingredients route
+        Route::apiResource(
+            'ingredients', IngredientController::class
+        )->except('index');
+
         Route::apiResource(
             'tables', TableController::class
         );

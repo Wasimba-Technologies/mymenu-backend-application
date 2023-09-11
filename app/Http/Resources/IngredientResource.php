@@ -14,6 +14,12 @@ class IngredientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'is_incrementing' => $this->is_incrementing,
+            'price' => $this->price,
+            'type' => $this->type,
+        ];
     }
 }

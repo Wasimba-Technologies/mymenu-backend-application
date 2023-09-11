@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->boolean('is_incrementing')->default(true);
+            $table->decimal('price', 12);
+            $table->string('type')->default('button');
             $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
         });
