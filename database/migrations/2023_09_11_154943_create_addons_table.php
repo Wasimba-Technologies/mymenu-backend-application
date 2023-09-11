@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('addons', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('type')->default('checkbox');
+            $table->boolean('is_incrementing')->default(false);
+            $table->decimal('price', 12);
             $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
         });
