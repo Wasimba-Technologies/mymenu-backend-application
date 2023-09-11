@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ingredient_menu_item', function (Blueprint $table) {
-            $table->id();
-            $table->string('tenant_id', 32)->nullable();
-            $table->timestamps();
+            $table->foreignId('ingredient_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('menu_item_id')->constrained()->cascadeOnDelete();
         });
     }
 
