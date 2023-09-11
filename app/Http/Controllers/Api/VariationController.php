@@ -15,7 +15,10 @@ class VariationController extends Controller
      */
     public function index()
     {
-        return VariationResource::collection(Variation::all());
+        return VariationResource::collection(Variation::when(
+            request()->has('name'),
+            fn ($query) => $query->where('name', request()->name)
+        )->all());
     }
 
     /**
