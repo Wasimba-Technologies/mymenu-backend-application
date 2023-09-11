@@ -40,4 +40,9 @@ class MenuItem extends Model
         return $this->belongsToMany(Ingredient::class, 'ingredient_menu_item');
     }
 
+    public function addons(): BelongsToMany
+    {
+        return $this->belongsToMany(Addon::class, 'addon_menu_item');
+    }
+
 }
