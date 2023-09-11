@@ -14,6 +14,14 @@ class VariationValueResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'variation_name' => $this->whenLoaded('variation', function () {
+                return $this->variation->name;
+            }),
+            'name' => $this->name,
+            'is_incrementing' => $this->is_incrementing,
+            'type' => $this->type,
+            'price' => $this->price,
+        ];
     }
 }
