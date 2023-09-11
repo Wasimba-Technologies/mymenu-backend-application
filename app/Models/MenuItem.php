@@ -35,4 +35,9 @@ class MenuItem extends Model
         );
     }
 
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class, 'ingredient_menu_item');
+    }
+
 }
