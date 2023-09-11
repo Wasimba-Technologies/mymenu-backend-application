@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVariationValueRequest;
 use App\Http\Requests\UpdateVariationValueRequest;
+use App\Http\Resources\VariationValueResource;
 use App\Models\VariationValue;
 
 class VariationValueController extends Controller
@@ -14,7 +15,18 @@ class VariationValueController extends Controller
      */
     public function index()
     {
-        //
+        return VariationValueResource::collection(
+            VariationValue::with('variation')
+            //query by variationValue.name
+            ->when(function ($query) {
+                return request()->has('name') ? $query->where('name', request()->name) : $query;
+            })
+            //query by variation.name
+            ->when(function ($query) {
+                return request()->has('variation') ? $query->whereHas('variation', function ($query) {
+                    $query->where('name', request()->variation);
+                }) : $query;
+            })->get());
     }
 
     /**
@@ -22,7 +34,8 @@ class VariationValueController extends Controller
      */
     public function store(StoreVariationValueRequest $request)
     {
-        //
+        $value = VariationValue::create($request->validated());
+        return new VariationValueResource($value);
     }
 
     /**
@@ -30,7 +43,7 @@ class VariationValueController extends Controller
      */
     public function show(VariationValue $variationValue)
     {
-        //
+        return new VariationValueResource($variationValue);
     }
 
     /**
@@ -38,7 +51,8 @@ class VariationValueController extends Controller
      */
     public function update(UpdateVariationValueRequest $request, VariationValue $variationValue)
     {
-        //
+        $variationValue->update($request->validated());
+        return new VariationValueResource($variationValue);
     }
 
     /**
@@ -46,6 +60,7 @@ class VariationValueController extends Controller
      */
     public function destroy(VariationValue $variationValue)
     {
-        //
+        $variationValue->delete();
+        return response()->noContent();
     }
 }
