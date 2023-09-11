@@ -25,7 +25,7 @@ class MenuItemResource extends JsonResource
             'image' => $this->image,
             'ingredients' => IngredientResource::collection($this->whenLoaded('ingredients')),
             'addons' => AddonResource::collection($this->whenLoaded('addons')),
-            'variations' => $this->variations,
+            'variations' => VariationValueResource::collection($this->whenLoaded('variation_values')),
             'allergens' => $this->allergens,
             'menu' => new MenuResource($this->menu),
         ];
