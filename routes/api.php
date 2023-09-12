@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AddonController;
+use App\Http\Controllers\Api\AllergenController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AzamPayCallbackController;
 use App\Http\Controllers\Api\IngredientController;
@@ -70,6 +71,10 @@ Route::apiResource(
 )->only('index');
 
 Route::apiResource(
+    'allergens', AllergenController::class
+)->only('index');
+
+Route::apiResource(
     'order_items', OrderMenuItemController::class
 )->only(['store','show']);
 
@@ -109,6 +114,10 @@ Route::middleware(['auth:sanctum' ,'verified'])->group(
 
         Route::apiResource(
             'variation_values', VariationValueController::class
+        )->except(['index']);
+
+        Route::apiResource(
+            'allergens', AllergenController::class
         )->except(['index']);
 
 
