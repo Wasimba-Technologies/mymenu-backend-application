@@ -18,7 +18,7 @@ class IngredientController extends Controller
         return IngredientResource::collection(Ingredient::when(
             request()->has('name'),
             function ($query) {
-                return $query->where('name', request()->name);
+                return $query->where('name', 'like', '%' . request('name') . '%');
             }
         )->all());
     }
