@@ -14,4 +14,9 @@ class Allergen extends Model
     use HasFactory, BelongsToTenant;
 
         protected $guarded = ['id'];
+
+        public function menu_items()
+        {
+            return $this->belongsToMany(MenuItem::class, 'allergen_menu_item');
+        }
 }

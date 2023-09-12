@@ -50,4 +50,9 @@ class MenuItem extends Model
         return $this->belongsToMany(VariationValue::class, 'menu_item_variation_value');
     }
 
+    public function allergens(): BelongsToMany
+    {
+        return $this->belongsToMany(Allergen::class, 'allergen_menu_item');
+    }
+
 }
