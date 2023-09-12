@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAllergenRequest;
 use App\Http\Requests\UpdateAllergenRequest;
+use App\Http\Resources\AllergenResource;
 use App\Models\Allergen;
 
 class AllergenController extends Controller
@@ -14,7 +15,10 @@ class AllergenController extends Controller
      */
     public function index()
     {
-        //
+        return AllergenResource::collection(Allergen::when(
+            request('name'),
+            fn ($query) => $query->where('name', 'LIKE', '%' . request('name') . '%')
+        )->all());
     }
 
     /**
@@ -22,7 +26,8 @@ class AllergenController extends Controller
      */
     public function store(StoreAllergenRequest $request)
     {
-        //
+        $allergen = Allergen::create($request->validated());
+        return new AllergenResource($allergen);
     }
 
     /**
@@ -30,7 +35,7 @@ class AllergenController extends Controller
      */
     public function show(Allergen $allergen)
     {
-        //
+        return new AllergenResource($allergen);
     }
 
     /**
@@ -38,7 +43,8 @@ class AllergenController extends Controller
      */
     public function update(UpdateAllergenRequest $request, Allergen $allergen)
     {
-        //
+        $allergen->update($request->validated());
+        return new AllergenResource($allergen);
     }
 
     /**
@@ -46,6 +52,7 @@ class AllergenController extends Controller
      */
     public function destroy(Allergen $allergen)
     {
-        //
+        $allergen->delete();
+        return response()->noContent();
     }
 }
