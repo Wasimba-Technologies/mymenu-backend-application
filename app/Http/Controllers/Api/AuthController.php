@@ -63,6 +63,7 @@ class AuthController extends Controller
      */
         public function login(LoginRequest $request): JsonResponse
         {
+            $request = (object)$request->validated();
 
             if(!Auth::attempt($request->only(['email', 'password']))){
                         throw ValidationException::withMessages([
