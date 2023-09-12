@@ -36,9 +36,13 @@ use Illuminate\Support\Facades\Route;
 
 //Public End Points
 Route::post('auth/register', [AuthController::class, 'register']);
+
+//Login end points
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::get('auth/login/{provider}/callback',[SocialController::class, 'callback']);
 Route::get('auth/login/{provider}',[SocialController::class, 'redirect']);
+
+
 Route::post('azampay/checkout/callback', [AzamPayCallbackController::class, 'store']);
 Route::get('browse/{id}', [MenuBrowser::class, 'browse']);
 Route::apiResource(
