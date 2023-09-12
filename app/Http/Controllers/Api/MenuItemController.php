@@ -52,6 +52,7 @@ class MenuItemController extends Controller
             $menu_item->ingredients()->attach($request->ingredients);
             $menu_item->addons()->attach($request->addons);
             $menu_item->variation_values()->attach($request->variation_values);
+            $menu_item->allergens()->attach($request->allergens);
             return new MenuItemResource($menu_item);
         }
         return response()->json([
@@ -66,7 +67,7 @@ class MenuItemController extends Controller
     public function show(MenuItem $menu_item): MenuItemResource
     {
         $this->authorize('view', $menu_item);
-        return new MenuItemResource($menu_item->load('ingredients','addons', 'variation_values'));
+        return new MenuItemResource($menu_item->load('ingredients','addons', 'variation_values', 'allergens'));
     }
 
     /**
