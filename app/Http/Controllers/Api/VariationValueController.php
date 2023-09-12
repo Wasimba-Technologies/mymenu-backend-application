@@ -19,12 +19,12 @@ class VariationValueController extends Controller
             VariationValue::with('variation')
             //query by variationValue.name
             ->when(function ($query) {
-                return request()->has('name') ? $query->where('name', request()->name) : $query;
+                return request()->has('name') ? $query->where('name', 'like', '%' . request('variation') . '%') : $query;
             })
             //query by variation.name
             ->when(function ($query) {
                 return request()->has('variation') ? $query->whereHas('variation', function ($query) {
-                    $query->where('name', request()->variation);
+                    $query->where('name', 'like', '%' . request('variation') . '%');
                 }) : $query;
             })->get());
     }
