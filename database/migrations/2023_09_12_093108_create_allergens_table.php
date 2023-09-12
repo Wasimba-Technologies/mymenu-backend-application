@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('allergens', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('tenant_id', 32)->nullable();
             $table->timestamps();
         });
