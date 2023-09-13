@@ -28,20 +28,6 @@ class StoreMenuItemRequest extends FormRequest
             'price' => ['required', 'string'],
             'image' => ['sometimes', 'image'],
             'menu_id' => ['required', 'string'],
-            'ingredients' => ['sometimes', 'array'],
-            'addons' => ['sometimes', 'array'],
-            'variations' => ['sometimes', 'array'],
-            'allergens' => ['sometimes', 'array'],
-            //validate array contents
-            'ingredients.name' => ['required', 'string'],
-            'ingredients.quantity' => ['required', 'integer'],
-            'ingredients.price' => ['required', 'integer'],
-            'addons.name' => ['required', 'string'],
-            'addons.quantity' => ['required', 'integer'],
-            'addons.price' => ['required', 'string'],
-            'variations.name' => ['required', 'string'],
-            'variations.price' => ['required', 'integer'],
-            'allergens.name' => ['required', 'string'],
         ];
     }
 }
