@@ -35,4 +35,24 @@ class MenuItem extends Model
         );
     }
 
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class, 'ingredient_menu_item');
+    }
+
+    public function addons(): BelongsToMany
+    {
+        return $this->belongsToMany(Addon::class, 'addon_menu_item');
+    }
+
+    public function variation_values(): BelongsToMany
+    {
+        return $this->belongsToMany(VariationValue::class, 'menu_item_variation_value');
+    }
+
+    public function allergens(): BelongsToMany
+    {
+        return $this->belongsToMany(Allergen::class, 'allergen_menu_item');
+    }
+
 }

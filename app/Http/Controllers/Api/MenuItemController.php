@@ -8,12 +8,10 @@ use App\Http\Requests\UpdateMenuItemRequest;
 use App\Http\Resources\MenuItemCollection;
 use App\Http\Resources\MenuItemResource;
 use App\Models\MenuItem;
-use App\Models\Order;
 use App\Models\Restaurant;
 use App\Models\Scopes\TenantScope;
 use App\Traits\HasImage;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 /**
@@ -49,6 +47,10 @@ class MenuItemController extends Controller
             $data = $this->getDataAndSaveImage('images', $request);
             //$data['tenant_id'] = $request->header('X-TENANT-ID');
             $menu_item = MenuItem::create($data);
+            $menu_item->ingredients()->attach($request->ingredients);
+            $menu_item->addons()->attach($request->addons);
+            $menu_item->variation_values()->attach($request->variation_values);
+            $menu_item->allergens()->attach($request->allergens);
             return new MenuItemResource($menu_item);
         }
         return response()->json([
@@ -63,7 +65,7 @@ class MenuItemController extends Controller
     public function show(MenuItem $menu_item): MenuItemResource
     {
         $this->authorize('view', $menu_item);
-        return new MenuItemResource($menu_item);
+        return new MenuItemResource($menu_item->load('ingredients','addons', 'variation_values', 'allergens'));
     }
 
     /**

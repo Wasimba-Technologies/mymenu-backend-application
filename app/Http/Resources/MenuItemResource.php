@@ -23,6 +23,10 @@ class MenuItemResource extends JsonResource
             'price' => $this->price,
 //            'image' => $this->image ? Storage::disk('public')->url($this->image) : null,
             'image' => $this->image,
+            'ingredients' => IngredientResource::collection($this->whenLoaded('ingredients')),
+            'addons' => AddonResource::collection($this->whenLoaded('addons')),
+            'variations' => VariationValueResource::collection($this->whenLoaded('variation_values')),
+            'allergens' => AllergenResource::collection($this->whenLoaded('allergens')),
             'menu' => new MenuResource($this->menu),
         ];
     }

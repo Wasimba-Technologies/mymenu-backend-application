@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\AddonController;
+use App\Http\Controllers\Api\AllergenController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AzamPayCallbackController;
+use App\Http\Controllers\Api\IngredientController;
 use App\Http\Controllers\Api\MenuBrowser;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuItemController;
@@ -16,6 +19,8 @@ use App\Http\Controllers\Api\SocialController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\VariationController;
+use App\Http\Controllers\Api\VariationValueController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Models\Scopes\TenantScope;
 use Illuminate\Http\Request;
@@ -49,6 +54,25 @@ Route::apiResource(
     'menu_items', MenuItemController::class
 )->only('index');
 
+Route::apiResource(
+    'ingredients', IngredientController::class
+)->only('index');
+
+Route::apiResource(
+    'addons', AddonController::class
+)->only('index');
+
+Route::apiResource(
+    'variations', VariationController::class
+)->only('index');
+
+Route::apiResource(
+    'variation_values', VariationValueController::class
+)->only('index');
+
+Route::apiResource(
+    'allergens', AllergenController::class
+)->only('index');
 
 Route::apiResource(
     'order_items', OrderMenuItemController::class
@@ -74,6 +98,29 @@ Route::middleware(['auth:sanctum' ,'verified'])->group(
         Route::apiResource(
             'menu_items', MenuItemController::class
         )->except('index');
+
+        //ingredients route
+        Route::apiResource(
+            'ingredients', IngredientController::class
+        )->except('index');
+
+        Route::apiResource(
+            'addons', AddonController::class
+        )->except('index');
+
+        Route::apiResource(
+            'variations', VariationController::class
+        )->except(['index']);
+
+        Route::apiResource(
+            'variation_values', VariationValueController::class
+        )->except(['index']);
+
+        Route::apiResource(
+            'allergens', AllergenController::class
+        )->except(['index']);
+
+
         Route::apiResource(
             'tables', TableController::class
         );
