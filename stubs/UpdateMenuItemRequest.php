@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace stubs;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;

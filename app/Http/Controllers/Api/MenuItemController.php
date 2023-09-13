@@ -4,17 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMenuItemRequest;
-use App\Http\Requests\UpdateMenuItemRequest;
 use App\Http\Resources\MenuItemCollection;
 use App\Http\Resources\MenuItemResource;
 use App\Models\MenuItem;
-use App\Models\Order;
 use App\Models\Restaurant;
 use App\Models\Scopes\TenantScope;
 use App\Traits\HasImage;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use stubs\UpdateMenuItemRequest;
 
 /**
  * @method static count()
