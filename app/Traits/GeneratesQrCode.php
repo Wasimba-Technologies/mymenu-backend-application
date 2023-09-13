@@ -41,7 +41,7 @@ trait GeneratesQrCode
 
         $qr_image_path = storage_path().'/app/public/'. 'qrcodes/'.$table->tenant_id;
         if (! File::exists($qr_image_path)) {
-            File::makeDirectory($qr_image_path);
+            File::makeDirectory($qr_image_path,0777, true);
         }
 
         // Save it to a file
