@@ -18,7 +18,7 @@ class AddonController extends Controller
         return AddonResource::collection(Addon::when(
             request()->has('name'),
             fn ($query) => $query->where('name', 'like', '%' . request('name') . '%')
-        )->all());
+        )->get());
     }
 
     /**

@@ -20,7 +20,7 @@ class IngredientController extends Controller
             function ($query) {
                 return $query->where('name', 'like', '%' . request('name') . '%');
             }
-        )->all());
+        )->get());
     }
 
     /**

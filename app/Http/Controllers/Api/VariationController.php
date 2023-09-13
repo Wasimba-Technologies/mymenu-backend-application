@@ -18,7 +18,7 @@ class VariationController extends Controller
         return VariationResource::collection(Variation::when(
             request()->has('name'),
             fn ($query) => $query->where('name', 'like', '%' . request('name') . '%')
-        )->all());
+        )->get());
     }
 
     /**

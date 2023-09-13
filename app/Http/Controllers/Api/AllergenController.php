@@ -18,7 +18,7 @@ class AllergenController extends Controller
         return AllergenResource::collection(Allergen::when(
             request('name'),
             fn ($query) => $query->where('name', 'LIKE', '%' . request('name') . '%')
-        )->all());
+        )->get());
     }
 
     /**
